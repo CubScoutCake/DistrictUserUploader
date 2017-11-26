@@ -33,7 +33,7 @@ class AuthUsersTable extends Table
         parent::initialize($config);
 
         $this->setTable('auth_users');
-        $this->setDisplayField('id');
+        $this->setDisplayField('full_name');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');

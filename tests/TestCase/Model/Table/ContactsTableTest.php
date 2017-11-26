@@ -25,10 +25,7 @@ class ContactsTableTest extends TestCase
      */
     public $fixtures = [
         'app.contacts',
-        'app.wps',
-        'app.mcs',
         'app.wp_roles',
-        'app.contact'
     ];
 
     /**

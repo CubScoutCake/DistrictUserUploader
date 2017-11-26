@@ -25,7 +25,7 @@ class WpRolesTableTest extends TestCase
      */
     public $fixtures = [
         'app.wp_roles',
-        'app.contact'
+        'app.contacts'
     ];
 
     /**

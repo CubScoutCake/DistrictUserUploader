@@ -17,7 +17,7 @@ class WpRolesControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'app.wp_roles',
-        'app.contact'
+        'app.contacts'
     ];
 
     /**

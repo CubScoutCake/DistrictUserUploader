@@ -17,8 +17,6 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
- * @property \App\Model\Entity\Wp $wp
- * @property \App\Model\Entity\Mc $mc
  * @property \App\Model\Entity\WpRole $wp_role
  */
 class Contact extends Entity
@@ -43,8 +41,13 @@ class Contact extends Entity
         'wp_role_id' => true,
         'created' => true,
         'modified' => true,
-        'wp' => true,
-        'mc' => true,
         'wp_role' => true
     ];
+
+	protected function _getFullName()
+	{
+		return $this->_properties['first_name'] . ' ' . $this->_properties['last_name'];
+	}
+
+	protected $_virtual = ['full_name'];
 }

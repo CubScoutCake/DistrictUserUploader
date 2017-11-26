@@ -17,10 +17,7 @@ class ContactsControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'app.contacts',
-        'app.wps',
-        'app.mcs',
         'app.wp_roles',
-        'app.contact'
     ];
 
     /**

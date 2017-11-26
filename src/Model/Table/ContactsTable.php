@@ -9,8 +9,6 @@ use Cake\Validation\Validator;
 /**
  * Contacts Model
  *
- * @property \App\Model\Table\WpsTable|\Cake\ORM\Association\BelongsTo $Wps
- * @property \App\Model\Table\McsTable|\Cake\ORM\Association\BelongsTo $Mcs
  * @property \App\Model\Table\WpRolesTable|\Cake\ORM\Association\BelongsTo $WpRoles
  *
  * @method \App\Model\Entity\Contact get($primaryKey, $options = [])
@@ -37,19 +35,11 @@ class ContactsTable extends Table
         parent::initialize($config);
 
         $this->setTable('contacts');
-        $this->setDisplayField('id');
+        $this->setDisplayField('full_name');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Wps', [
-            'foreignKey' => 'wp_id',
-            'joinType' => 'INNER'
-        ]);
-        $this->belongsTo('Mcs', [
-            'foreignKey' => 'mc_id',
-            'joinType' => 'INNER'
-        ]);
         $this->belongsTo('WpRoles', [
             'foreignKey' => 'wp_role_id',
             'joinType' => 'INNER'
@@ -73,6 +63,18 @@ class ContactsTable extends Table
             ->requirePresence('membership_number', 'create')
             ->notEmpty('membership_number')
             ->add('membership_number', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+
+	    $validator
+		    ->integer('wp_id')
+		    ->requirePresence('wp_id', 'create')
+		    ->notEmpty('wp_id')
+		    ->add('wp_id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+
+	    $validator
+		    ->integer('mc_id')
+		    ->requirePresence('mc_id', 'create')
+		    ->notEmpty('mc_id')
+		    ->add('mc_id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->scalar('first_name')
@@ -105,9 +107,9 @@ class ContactsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->isUnique(['email']));
-        $rules->add($rules->existsIn(['wp_id'], 'Wps'));
-        $rules->add($rules->existsIn(['mc_id'], 'Mcs'));
         $rules->add($rules->isUnique(['membership_number']));
+	    $rules->add($rules->isUnique(['wp_id']));
+	    $rules->add($rules->isUnique(['mc_id']));
         $rules->add($rules->existsIn(['wp_role_id'], 'WpRoles'));
 
         return $rules;
