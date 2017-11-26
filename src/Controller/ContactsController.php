@@ -21,7 +21,7 @@ class ContactsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Wps', 'Mcs', 'WpRoles']
+            'contain' => ['WpRoles']
         ];
         $contacts = $this->paginate($this->Contacts);
 
@@ -39,7 +39,7 @@ class ContactsController extends AppController
     public function view($id = null)
     {
         $contact = $this->Contacts->get($id, [
-            'contain' => ['Wps', 'Mcs', 'WpRoles']
+            'contain' => ['WpRoles']
         ]);
 
         $this->set('contact', $contact);
@@ -63,10 +63,8 @@ class ContactsController extends AppController
             }
             $this->Flash->error(__('The contact could not be saved. Please, try again.'));
         }
-        $wps = $this->Contacts->Wps->find('list', ['limit' => 200]);
-        $mcs = $this->Contacts->Mcs->find('list', ['limit' => 200]);
         $wpRoles = $this->Contacts->WpRoles->find('list', ['limit' => 200]);
-        $this->set(compact('contact', 'wps', 'mcs', 'wpRoles'));
+        $this->set(compact('contact', 'wpRoles'));
         $this->set('_serialize', ['contact']);
     }
 
@@ -91,10 +89,8 @@ class ContactsController extends AppController
             }
             $this->Flash->error(__('The contact could not be saved. Please, try again.'));
         }
-        $wps = $this->Contacts->Wps->find('list', ['limit' => 200]);
-        $mcs = $this->Contacts->Mcs->find('list', ['limit' => 200]);
         $wpRoles = $this->Contacts->WpRoles->find('list', ['limit' => 200]);
-        $this->set(compact('contact', 'wps', 'mcs', 'wpRoles'));
+        $this->set(compact('contact', 'wpRoles'));
         $this->set('_serialize', ['contact']);
     }
 

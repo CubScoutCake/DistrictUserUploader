@@ -36,7 +36,7 @@ class WpRolesController extends AppController
     public function view($id = null)
     {
         $wpRole = $this->WpRoles->get($id, [
-            'contain' => ['Contact']
+            'contain' => ['Contacts']
         ]);
 
         $this->set('wpRole', $wpRole);

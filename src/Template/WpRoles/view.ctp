@@ -11,8 +11,8 @@
         <li><?= $this->Form->postLink(__('Delete Wp Role'), ['action' => 'delete', $wpRole->id], ['confirm' => __('Are you sure you want to delete # {0}?', $wpRole->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Wp Roles'), ['action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Wp Role'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Contact'), ['controller' => 'Contact', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Contact'), ['controller' => 'Contact', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Contact'), ['controller' => 'Contacts', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Contact'), ['controller' => 'Contacts', 'action' => 'add']) ?> </li>
     </ul>
 </nav>
 <div class="wpRoles view large-9 medium-8 columns content">
@@ -65,9 +65,9 @@
                 <td><?= h($contact->created) ?></td>
                 <td><?= h($contact->modified) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'Contact', 'action' => 'view', $contact->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'Contact', 'action' => 'edit', $contact->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Contact', 'action' => 'delete', $contact->id], ['confirm' => __('Are you sure you want to delete # {0}?', $contact->id)]) ?>
+                    <?= $this->Html->link(__('View'), ['controller' => 'Contacts', 'action' => 'view', $contact->id]) ?>
+                    <?= $this->Html->link(__('Edit'), ['controller' => 'Contacts', 'action' => 'edit', $contact->id]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Contacts', 'action' => 'delete', $contact->id], ['confirm' => __('Are you sure you want to delete # {0}?', $contact->id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

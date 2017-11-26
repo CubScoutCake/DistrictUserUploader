@@ -40,7 +40,7 @@ class WpRolesTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->hasMany('Contact', [
+        $this->hasMany('Contacts', [
             'foreignKey' => 'wp_role_id'
         ]);
     }
