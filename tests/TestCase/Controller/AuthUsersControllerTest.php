@@ -26,7 +26,15 @@ class AuthUsersControllerTest extends IntegrationTestCase
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get(['controller' => 'AuthUsers', 'action' => 'index']);
+
+        $this->assertRedirectContains('/login');
+
+	    $this->session(['Auth.User.id' => 1]);
+
+	    $this->get(['controller' => 'AuthUsers', 'action' => 'index']);
+
+	    $this->assertResponseOk();
     }
 
     /**
@@ -36,7 +44,15 @@ class AuthUsersControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+	    $this->get(['controller' => 'AuthUsers', 'action' => 'view', 1]);
+
+	    $this->assertRedirectContains('/login');
+
+	    $this->session(['Auth.User.id' => 1]);
+
+	    $this->get(['controller' => 'AuthUsers', 'action' => 'view', 1]);
+
+	    $this->assertResponseOk();
     }
 
     /**
@@ -46,7 +62,15 @@ class AuthUsersControllerTest extends IntegrationTestCase
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+	    $this->get(['controller' => 'AuthUsers', 'action' => 'add']);
+
+	    $this->assertRedirectContains('/login');
+
+	    $this->session(['Auth.User.id' => 1]);
+
+	    $this->get(['controller' => 'AuthUsers', 'action' => 'add']);
+
+	    $this->assertResponseOk();
     }
 
     /**
@@ -56,7 +80,15 @@ class AuthUsersControllerTest extends IntegrationTestCase
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+	    $this->get(['controller' => 'AuthUsers', 'action' => 'edit', 1]);
+
+	    $this->assertRedirectContains('/login');
+
+	    $this->session(['Auth.User.id' => 1]);
+
+	    $this->get(['controller' => 'AuthUsers', 'action' => 'edit', 1]);
+
+	    $this->assertResponseOk();
     }
 
     /**
@@ -66,6 +98,17 @@ class AuthUsersControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+	    $this->get(['controller' => 'AuthUsers', 'action' => 'delete']);
+
+	    $this->assertRedirectContains('/login');
+
+	    $this->session(['Auth.User.id' => 1]);
+
+	    $this->enableCsrfToken();
+	    $this->enableSecurityToken();
+
+	    $this->post(['controller' => 'AuthUsers', 'action' => 'delete', 1]);
+
+	    $this->assertRedirect();
     }
 }

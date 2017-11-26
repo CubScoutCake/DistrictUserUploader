@@ -40,5 +40,11 @@ class WpRolesFixture extends TestFixture
             'created' => 1511693181,
             'modified' => 1511693181
         ],
+	    [
+		    'id' => 2,
+		    'wp_role' => 'Lorem akg',
+		    'created' => 1511693181,
+		    'modified' => 1511693181
+	    ],
     ];
 }

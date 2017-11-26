@@ -20,53 +20,96 @@ class WpRolesControllerTest extends IntegrationTestCase
         'app.contacts'
     ];
 
-    /**
-     * Test index method
-     *
-     * @return void
-     */
-    public function testIndex()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
+	/**
+	 * Test index method
+	 *
+	 * @return void
+	 */
+	public function testIndex()
+	{
+		$this->get(['controller' => 'WpRoles', 'action' => 'index']);
 
-    /**
-     * Test view method
-     *
-     * @return void
-     */
-    public function testView()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
+		$this->assertRedirectContains('/login');
 
-    /**
-     * Test add method
-     *
-     * @return void
-     */
-    public function testAdd()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
+		$this->session(['Auth.User.id' => 1]);
 
-    /**
-     * Test edit method
-     *
-     * @return void
-     */
-    public function testEdit()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
+		$this->get(['controller' => 'WpRoles', 'action' => 'index']);
 
-    /**
-     * Test delete method
-     *
-     * @return void
-     */
-    public function testDelete()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
+		$this->assertResponseOk();
+	}
+
+	/**
+	 * Test view method
+	 *
+	 * @return void
+	 */
+	public function testView()
+	{
+		$this->get(['controller' => 'WpRoles', 'action' => 'view', 1]);
+
+		$this->assertRedirectContains('/login');
+
+		$this->session(['Auth.User.id' => 1]);
+
+		$this->get(['controller' => 'WpRoles', 'action' => 'view', 1]);
+
+		$this->assertResponseOk();
+	}
+
+	/**
+	 * Test add method
+	 *
+	 * @return void
+	 */
+	public function testAdd()
+	{
+		$this->get(['controller' => 'WpRoles', 'action' => 'add']);
+
+		$this->assertRedirectContains('/login');
+
+		$this->session(['Auth.User.id' => 1]);
+
+		$this->get(['controller' => 'WpRoles', 'action' => 'add']);
+
+		$this->assertResponseOk();
+	}
+
+	/**
+	 * Test edit method
+	 *
+	 * @return void
+	 */
+	public function testEdit()
+	{
+		$this->get(['controller' => 'WpRoles', 'action' => 'edit', 1]);
+
+		$this->assertRedirectContains('/login');
+
+		$this->session(['Auth.User.id' => 1]);
+
+		$this->get(['controller' => 'WpRoles', 'action' => 'edit', 1]);
+
+		$this->assertResponseOk();
+	}
+
+	/**
+	 * Test delete method
+	 *
+	 * @return void
+	 */
+	public function testDelete()
+	{
+		$this->get(['controller' => 'WpRoles', 'action' => 'delete', 2]);
+
+		$this->assertRedirectContains('/login');
+
+		$this->session(['Auth.User.id' => 1]);
+
+		$this->enableCsrfToken();
+		$this->enableSecurityToken();
+
+		$this->post(['controller' => 'WpRoles', 'action' => 'delete', 2]);
+
+		$this->assertRedirect();
+	}
 }
