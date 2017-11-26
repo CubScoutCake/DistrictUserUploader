@@ -33,6 +33,11 @@ script:
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+  - vendor/bin/test-reporter
 
 notifications:
   email: false
+
+addons:
+    code_climate:
+        repo_token: CodeClimateTokenForReplacement

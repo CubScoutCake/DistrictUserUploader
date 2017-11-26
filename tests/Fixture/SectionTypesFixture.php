@@ -36,9 +36,9 @@ class SectionTypesFixture extends TestFixture
             'id' => 1,
             'section_type' => 'Lorem ipsum dolor sit amet'
         ],
-	    [
-		    'id' => 2,
-		    'section_type' => 'Lorem fsk dolor sit amet'
-	    ],
+        [
+            'id' => 2,
+            'section_type' => 'Lorem fsk dolor sit amet'
+        ],
     ];
 }

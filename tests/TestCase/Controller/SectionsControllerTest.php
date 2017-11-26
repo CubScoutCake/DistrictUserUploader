@@ -20,96 +20,96 @@ class SectionsControllerTest extends IntegrationTestCase
         'app.section_types'
     ];
 
-	/**
-	 * Test index method
-	 *
-	 * @return void
-	 */
-	public function testIndex()
-	{
-		$this->get(['controller' => 'Sections', 'action' => 'index']);
+    /**
+     * Test index method
+     *
+     * @return void
+     */
+    public function testIndex()
+    {
+        $this->get(['controller' => 'Sections', 'action' => 'index']);
 
-		$this->assertRedirectContains('/login');
+        $this->assertRedirectContains('/login');
 
-		$this->session(['Auth.User.id' => 1]);
+        $this->session(['Auth.User.id' => 1]);
 
-		$this->get(['controller' => 'Sections', 'action' => 'index']);
+        $this->get(['controller' => 'Sections', 'action' => 'index']);
 
-		$this->assertResponseOk();
-	}
+        $this->assertResponseOk();
+    }
 
-	/**
-	 * Test view method
-	 *
-	 * @return void
-	 */
-	public function testView()
-	{
-		$this->get(['controller' => 'Sections', 'action' => 'view', 1]);
+    /**
+     * Test view method
+     *
+     * @return void
+     */
+    public function testView()
+    {
+        $this->get(['controller' => 'Sections', 'action' => 'view', 1]);
 
-		$this->assertRedirectContains('/login');
+        $this->assertRedirectContains('/login');
 
-		$this->session(['Auth.User.id' => 1]);
+        $this->session(['Auth.User.id' => 1]);
 
-		$this->get(['controller' => 'Sections', 'action' => 'view', 1]);
+        $this->get(['controller' => 'Sections', 'action' => 'view', 1]);
 
-		$this->assertResponseOk();
-	}
+        $this->assertResponseOk();
+    }
 
-	/**
-	 * Test add method
-	 *
-	 * @return void
-	 */
-	public function testAdd()
-	{
-		$this->get(['controller' => 'Sections', 'action' => 'add']);
+    /**
+     * Test add method
+     *
+     * @return void
+     */
+    public function testAdd()
+    {
+        $this->get(['controller' => 'Sections', 'action' => 'add']);
 
-		$this->assertRedirectContains('/login');
+        $this->assertRedirectContains('/login');
 
-		$this->session(['Auth.User.id' => 1]);
+        $this->session(['Auth.User.id' => 1]);
 
-		$this->get(['controller' => 'Sections', 'action' => 'add']);
+        $this->get(['controller' => 'Sections', 'action' => 'add']);
 
-		$this->assertResponseOk();
-	}
+        $this->assertResponseOk();
+    }
 
-	/**
-	 * Test edit method
-	 *
-	 * @return void
-	 */
-	public function testEdit()
-	{
-		$this->get(['controller' => 'Sections', 'action' => 'edit', 1]);
+    /**
+     * Test edit method
+     *
+     * @return void
+     */
+    public function testEdit()
+    {
+        $this->get(['controller' => 'Sections', 'action' => 'edit', 1]);
 
-		$this->assertRedirectContains('/login');
+        $this->assertRedirectContains('/login');
 
-		$this->session(['Auth.User.id' => 1]);
+        $this->session(['Auth.User.id' => 1]);
 
-		$this->get(['controller' => 'Sections', 'action' => 'edit', 1]);
+        $this->get(['controller' => 'Sections', 'action' => 'edit', 1]);
 
-		$this->assertResponseOk();
-	}
+        $this->assertResponseOk();
+    }
 
-	/**
-	 * Test delete method
-	 *
-	 * @return void
-	 */
-	public function testDelete()
-	{
-		$this->get(['controller' => 'Sections', 'action' => 'delete']);
+    /**
+     * Test delete method
+     *
+     * @return void
+     */
+    public function testDelete()
+    {
+        $this->get(['controller' => 'Sections', 'action' => 'delete']);
 
-		$this->assertRedirectContains('/login');
+        $this->assertRedirectContains('/login');
 
-		$this->session(['Auth.User.id' => 1]);
+        $this->session(['Auth.User.id' => 1]);
 
-		$this->enableCsrfToken();
-		$this->enableSecurityToken();
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
 
-		$this->post(['controller' => 'Sections', 'action' => 'delete', 1]);
+        $this->post(['controller' => 'Sections', 'action' => 'delete', 1]);
 
-		$this->assertRedirect();
-	}
+        $this->assertRedirect();
+    }
 }

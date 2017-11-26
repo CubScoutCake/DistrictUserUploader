@@ -30,11 +30,11 @@ class AuthUsersControllerTest extends IntegrationTestCase
 
         $this->assertRedirectContains('/login');
 
-	    $this->session(['Auth.User.id' => 1]);
+        $this->session(['Auth.User.id' => 1]);
 
-	    $this->get(['controller' => 'AuthUsers', 'action' => 'index']);
+        $this->get(['controller' => 'AuthUsers', 'action' => 'index']);
 
-	    $this->assertResponseOk();
+        $this->assertResponseOk();
     }
 
     /**
@@ -44,15 +44,15 @@ class AuthUsersControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-	    $this->get(['controller' => 'AuthUsers', 'action' => 'view', 1]);
+        $this->get(['controller' => 'AuthUsers', 'action' => 'view', 1]);
 
-	    $this->assertRedirectContains('/login');
+        $this->assertRedirectContains('/login');
 
-	    $this->session(['Auth.User.id' => 1]);
+        $this->session(['Auth.User.id' => 1]);
 
-	    $this->get(['controller' => 'AuthUsers', 'action' => 'view', 1]);
+        $this->get(['controller' => 'AuthUsers', 'action' => 'view', 1]);
 
-	    $this->assertResponseOk();
+        $this->assertResponseOk();
     }
 
     /**
@@ -62,15 +62,15 @@ class AuthUsersControllerTest extends IntegrationTestCase
      */
     public function testAdd()
     {
-	    $this->get(['controller' => 'AuthUsers', 'action' => 'add']);
+        $this->get(['controller' => 'AuthUsers', 'action' => 'add']);
 
-	    $this->assertRedirectContains('/login');
+        $this->assertRedirectContains('/login');
 
-	    $this->session(['Auth.User.id' => 1]);
+        $this->session(['Auth.User.id' => 1]);
 
-	    $this->get(['controller' => 'AuthUsers', 'action' => 'add']);
+        $this->get(['controller' => 'AuthUsers', 'action' => 'add']);
 
-	    $this->assertResponseOk();
+        $this->assertResponseOk();
     }
 
     /**
@@ -80,15 +80,15 @@ class AuthUsersControllerTest extends IntegrationTestCase
      */
     public function testEdit()
     {
-	    $this->get(['controller' => 'AuthUsers', 'action' => 'edit', 1]);
+        $this->get(['controller' => 'AuthUsers', 'action' => 'edit', 1]);
 
-	    $this->assertRedirectContains('/login');
+        $this->assertRedirectContains('/login');
 
-	    $this->session(['Auth.User.id' => 1]);
+        $this->session(['Auth.User.id' => 1]);
 
-	    $this->get(['controller' => 'AuthUsers', 'action' => 'edit', 1]);
+        $this->get(['controller' => 'AuthUsers', 'action' => 'edit', 1]);
 
-	    $this->assertResponseOk();
+        $this->assertResponseOk();
     }
 
     /**
@@ -98,17 +98,17 @@ class AuthUsersControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-	    $this->get(['controller' => 'AuthUsers', 'action' => 'delete']);
+        $this->get(['controller' => 'AuthUsers', 'action' => 'delete']);
 
-	    $this->assertRedirectContains('/login');
+        $this->assertRedirectContains('/login');
 
-	    $this->session(['Auth.User.id' => 1]);
+        $this->session(['Auth.User.id' => 1]);
 
-	    $this->enableCsrfToken();
-	    $this->enableSecurityToken();
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
 
-	    $this->post(['controller' => 'AuthUsers', 'action' => 'delete', 1]);
+        $this->post(['controller' => 'AuthUsers', 'action' => 'delete', 1]);
 
-	    $this->assertRedirect();
+        $this->assertRedirect();
     }
 }

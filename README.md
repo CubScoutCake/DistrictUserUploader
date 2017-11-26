@@ -6,6 +6,7 @@ Integrates with Wordpress & Mailchimp
 
 ### Master Branch
 [![Build Status](https://travis-ci.org/CubScoutCake/DistrictUserUploader.svg?branch=master)](https://travis-ci.org/CubScoutCake/DistrictUserUploader)
+[![Maintainability](https://api.codeclimate.com/v1/badges/5a99f7b8768a612865fa/maintainability)](https://codeclimate.com/github/CubScoutCake/DistrictUserUploader/maintainability)
 
 ### Development Branch
 

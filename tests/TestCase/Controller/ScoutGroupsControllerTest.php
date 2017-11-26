@@ -19,96 +19,96 @@ class ScoutGroupsControllerTest extends IntegrationTestCase
         'app.scout_groups'
     ];
 
-	/**
-	 * Test index method
-	 *
-	 * @return void
-	 */
-	public function testIndex()
-	{
-		$this->get(['controller' => 'ScoutGroups', 'action' => 'index']);
+    /**
+     * Test index method
+     *
+     * @return void
+     */
+    public function testIndex()
+    {
+        $this->get(['controller' => 'ScoutGroups', 'action' => 'index']);
 
-		$this->assertRedirectContains('/login');
+        $this->assertRedirectContains('/login');
 
-		$this->session(['Auth.User.id' => 1]);
+        $this->session(['Auth.User.id' => 1]);
 
-		$this->get(['controller' => 'ScoutGroups', 'action' => 'index']);
+        $this->get(['controller' => 'ScoutGroups', 'action' => 'index']);
 
-		$this->assertResponseOk();
-	}
+        $this->assertResponseOk();
+    }
 
-	/**
-	 * Test view method
-	 *
-	 * @return void
-	 */
-	public function testView()
-	{
-		$this->get(['controller' => 'ScoutGroups', 'action' => 'view', 1]);
+    /**
+     * Test view method
+     *
+     * @return void
+     */
+    public function testView()
+    {
+        $this->get(['controller' => 'ScoutGroups', 'action' => 'view', 1]);
 
-		$this->assertRedirectContains('/login');
+        $this->assertRedirectContains('/login');
 
-		$this->session(['Auth.User.id' => 1]);
+        $this->session(['Auth.User.id' => 1]);
 
-		$this->get(['controller' => 'ScoutGroups', 'action' => 'view', 1]);
+        $this->get(['controller' => 'ScoutGroups', 'action' => 'view', 1]);
 
-		$this->assertResponseOk();
-	}
+        $this->assertResponseOk();
+    }
 
-	/**
-	 * Test add method
-	 *
-	 * @return void
-	 */
-	public function testAdd()
-	{
-		$this->get(['controller' => 'ScoutGroups', 'action' => 'add']);
+    /**
+     * Test add method
+     *
+     * @return void
+     */
+    public function testAdd()
+    {
+        $this->get(['controller' => 'ScoutGroups', 'action' => 'add']);
 
-		$this->assertRedirectContains('/login');
+        $this->assertRedirectContains('/login');
 
-		$this->session(['Auth.User.id' => 1]);
+        $this->session(['Auth.User.id' => 1]);
 
-		$this->get(['controller' => 'ScoutGroups', 'action' => 'add']);
+        $this->get(['controller' => 'ScoutGroups', 'action' => 'add']);
 
-		$this->assertResponseOk();
-	}
+        $this->assertResponseOk();
+    }
 
-	/**
-	 * Test edit method
-	 *
-	 * @return void
-	 */
-	public function testEdit()
-	{
-		$this->get(['controller' => 'ScoutGroups', 'action' => 'edit', 1]);
+    /**
+     * Test edit method
+     *
+     * @return void
+     */
+    public function testEdit()
+    {
+        $this->get(['controller' => 'ScoutGroups', 'action' => 'edit', 1]);
 
-		$this->assertRedirectContains('/login');
+        $this->assertRedirectContains('/login');
 
-		$this->session(['Auth.User.id' => 1]);
+        $this->session(['Auth.User.id' => 1]);
 
-		$this->get(['controller' => 'ScoutGroups', 'action' => 'edit', 1]);
+        $this->get(['controller' => 'ScoutGroups', 'action' => 'edit', 1]);
 
-		$this->assertResponseOk();
-	}
+        $this->assertResponseOk();
+    }
 
-	/**
-	 * Test delete method
-	 *
-	 * @return void
-	 */
-	public function testDelete()
-	{
-		$this->get(['controller' => 'ScoutGroups', 'action' => 'delete']);
+    /**
+     * Test delete method
+     *
+     * @return void
+     */
+    public function testDelete()
+    {
+        $this->get(['controller' => 'ScoutGroups', 'action' => 'delete']);
 
-		$this->assertRedirectContains('/login');
+        $this->assertRedirectContains('/login');
 
-		$this->session(['Auth.User.id' => 1]);
+        $this->session(['Auth.User.id' => 1]);
 
-		$this->enableCsrfToken();
-		$this->enableSecurityToken();
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
 
-		$this->post(['controller' => 'ScoutGroups', 'action' => 'delete', 1]);
+        $this->post(['controller' => 'ScoutGroups', 'action' => 'delete', 1]);
 
-		$this->assertRedirect();
-	}
+        $this->assertRedirect();
+    }
 }
