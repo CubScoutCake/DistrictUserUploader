@@ -64,17 +64,17 @@ class ContactsTable extends Table
             ->notEmpty('membership_number')
             ->add('membership_number', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
-	    $validator
-		    ->integer('wp_id')
-		    ->requirePresence('wp_id', 'create')
-		    ->notEmpty('wp_id')
-		    ->add('wp_id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+        $validator
+            ->integer('wp_id')
+            ->requirePresence('wp_id', 'create')
+            ->notEmpty('wp_id')
+            ->add('wp_id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
-	    $validator
-		    ->integer('mc_id')
-		    ->requirePresence('mc_id', 'create')
-		    ->notEmpty('mc_id')
-		    ->add('mc_id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+        $validator
+            ->integer('mc_id')
+            ->requirePresence('mc_id', 'create')
+            ->notEmpty('mc_id')
+            ->add('mc_id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->scalar('first_name')
@@ -108,8 +108,8 @@ class ContactsTable extends Table
     {
         $rules->add($rules->isUnique(['email']));
         $rules->add($rules->isUnique(['membership_number']));
-	    $rules->add($rules->isUnique(['wp_id']));
-	    $rules->add($rules->isUnique(['mc_id']));
+        $rules->add($rules->isUnique(['wp_id']));
+        $rules->add($rules->isUnique(['mc_id']));
         $rules->add($rules->existsIn(['wp_role_id'], 'WpRoles'));
 
         return $rules;

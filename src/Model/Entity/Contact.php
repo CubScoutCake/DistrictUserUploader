@@ -44,10 +44,15 @@ class Contact extends Entity
         'wp_role' => true
     ];
 
-	protected function _getFullName()
-	{
-		return $this->_properties['first_name'] . ' ' . $this->_properties['last_name'];
-	}
+    /**
+     * Full Name Virtual Field
+     *
+     * @return string
+     */
+    protected function _getFullName()
+    {
+        return $this->_properties['first_name'] . ' ' . $this->_properties['last_name'];
+    }
 
-	protected $_virtual = ['full_name'];
+    protected $_virtual = ['full_name'];
 }

@@ -47,19 +47,31 @@ class AuthUser extends Entity
         'password'
     ];
 
-	protected function _setPassword($value)
-	{
-		if (strlen($value)) {
-			$hasher = new DefaultPasswordHasher();
+    /**
+     * Password Hashing
+     *
+     * @param string $value The password to be hashed
+     *
+     * @return bool|string
+     */
+    protected function _setPassword($value)
+    {
+        if (strlen($value)) {
+            $hasher = new DefaultPasswordHasher();
 
-			return $hasher->hash($value);
-		}
-	}
+            return $hasher->hash($value);
+        }
+    }
 
-	protected function _getFullName()
-	{
-		return $this->_properties['first_name'] . ' ' . $this->_properties['last_name'];
-	}
+    /**
+     * Full Name Virtual Field
+     *
+     * @return string
+     */
+    protected function _getFullName()
+    {
+        return $this->_properties['first_name'] . ' ' . $this->_properties['last_name'];
+    }
 
-	protected $_virtual = ['full_name'];
+    protected $_virtual = ['full_name'];
 }
