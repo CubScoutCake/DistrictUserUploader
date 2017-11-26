@@ -21,13 +21,11 @@ matrix:
       env: PHPCS=1
 
 before_script:
-  - if [[ $PHPCS = 1 ]]; then composer require cakephp/cakephp-codesniffer:~2.1; fi
   - if [[ $PHPCS != 1 ]]; then composer install; fi
-  - if [[ $PHPCS != 1 ]]; then composer require phpunit/phpunit:"^5.7|^6.0"; fi
   - if [[ $PHPCS != 1 ]]; then composer run-script post-install-cmd --no-interaction; fi
   - psql -c 'create database cake;' -U postgres
   - sh -c "bin/cake migrations migrate"
-  - sh -c "bin/cake database seed"
+#  - sh -c "bin/cake database seed"
 
 script:
   - if [[ $PHPCS != 1 ]]; then composer test; fi
