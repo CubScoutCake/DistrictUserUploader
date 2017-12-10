@@ -1,37 +1,43 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Contact $contact
+ * @var \App\Model\Entity\AuthUser[]|\Cake\Collection\CollectionInterface $authUsers
  */
+
+$this->Breadcrumbs->add(
+	'Contacts',
+	['controller' => 'Contacts', 'action' => 'index']
+);
+
+$this->Breadcrumbs->add(
+	'Edit Contact',
+	['controller' => 'Contacts', 'action' => 'edit', $contact->id],
+	['class' => 'breadcrumb-item active']
+);
+
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $contact->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $contact->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Contacts'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Wp Roles'), ['controller' => 'WpRoles', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Wp Role'), ['controller' => 'WpRoles', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="contacts form large-9 medium-8 columns content">
-    <?= $this->Form->create($contact) ?>
-    <fieldset>
-        <legend><?= __('Edit Contact') ?></legend>
-        <?php
-            echo $this->Form->control('membership_number');
-            echo $this->Form->control('first_name');
-            echo $this->Form->control('last_name');
-            echo $this->Form->control('email');
-            echo $this->Form->control('wp_role_id', ['options' => $wpRoles]);
-            echo $this->Form->control('wp_id', ['type' => 'number', 'empty' => true]);
-            echo $this->Form->control('mc_id', ['type' => 'number', 'empty' => true]);
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<div class="row">
+    <div class="col" >
+        <h2><i class="fas fa-address-card fa-fw"></i><?= __(' Edit Contact') ?></h2>
+        <?= $this->Form->create($contact) ?>
+        <fieldset>
+            <?php
+                echo $this->Form->control('membership_number');
+                echo $this->Form->control('first_name');
+                echo $this->Form->control('last_name');
+                echo $this->Form->control('email');
+                echo $this->Form->control('address_line_1');
+                echo $this->Form->control('address_line_2');
+                echo $this->Form->control('city');
+                echo $this->Form->control('county');
+                echo $this->Form->control('postcode');
+                echo $this->Form->control('group_admin', ['options' => $groups, 'empty' => true]);
+                echo $this->Form->control('wp_role_id', ['options' => $wpRoles]);
+                echo $this->Form->control('wp_id', ['type' => 'number', 'empty' => true, 'label' => 'WordPress ID']);
+                echo $this->Form->control('mc_id', ['type' => 'number', 'empty' => true, 'label' => 'MailChimp ID']);
+            ?>
+        </fieldset>
+        <?= $this->Form->button(__('Submit')) ?>
+        <?= $this->Form->end() ?>
+    </div>
 </div>

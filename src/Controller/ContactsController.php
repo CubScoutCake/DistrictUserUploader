@@ -76,7 +76,8 @@ class ContactsController extends AppController
             $this->Flash->error(__('The contact could not be saved. Please, try again.'));
         }
         $wpRoles = $this->Contacts->WpRoles->find('list', ['limit' => 200]);
-        $this->set(compact('contact', 'wpRoles'));
+        $groups = $this->Contacts->AdminGroups->find('list', ['limit' => 200]);
+        $this->set(compact('contact', 'wpRoles', 'groups'));
         $this->set('_serialize', ['contact']);
     }
 
@@ -102,7 +103,8 @@ class ContactsController extends AppController
             $this->Flash->error(__('The contact could not be saved. Please, try again.'));
         }
         $wpRoles = $this->Contacts->WpRoles->find('list', ['limit' => 200]);
-        $this->set(compact('contact', 'wpRoles'));
+        $groups = $this->Contacts->AdminGroups->find('list', ['limit' => 200]);
+        $this->set(compact('contact', 'wpRoles', 'groups'));
         $this->set('_serialize', ['contact']);
     }
 

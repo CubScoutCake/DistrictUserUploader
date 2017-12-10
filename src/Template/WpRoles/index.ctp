@@ -1,53 +1,67 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\WpRole[]|\Cake\Collection\CollectionInterface $wpRoles
+ * @var \App\Model\Entity\AuthUser[]|\Cake\Collection\CollectionInterface $authUsers
  */
+
+$this->Breadcrumbs->add(
+	'Contacts',
+	['controller' => 'Contacts', 'action' => 'index']
+);
+
+$this->Breadcrumbs->add(
+	'WordPress Roles',
+	['controller' => 'WpRoles', 'action' => 'index'],
+	['class' => 'breadcrumb-item active']
+);
+
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Wp Role'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Contact'), ['controller' => 'Contact', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Contact'), ['controller' => 'Contact', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="wpRoles index large-9 medium-8 columns content">
-    <h3><?= __('Wp Roles') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('wp_role') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($wpRoles as $wpRole): ?>
-            <tr>
-                <td><?= $this->Number->format($wpRole->id) ?></td>
-                <td><?= h($wpRole->wp_role) ?></td>
-                <td><?= h($wpRole->created) ?></td>
-                <td><?= h($wpRole->modified) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $wpRole->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $wpRole->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $wpRole->id], ['confirm' => __('Are you sure you want to delete # {0}?', $wpRole->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+<div class="row">
+    <div class="col" >
+        <h2><i class="fab fa-wordpress-simple fa-fw"></i><?= __('WordPress Roles') ?></h2>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('wp_role') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('created') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
+                    <th scope="col" class="actions"><?= __('Actions') ?></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($wpRoles as $wpRole): ?>
+                    <tr>
+                        <td><?= $this->Number->format($wpRole->id) ?></td>
+                        <td><?= h($wpRole->wp_role) ?></td>
+                        <td><?= h($wpRole->created) ?></td>
+                        <td><?= h($wpRole->modified) ?></td>
+                        <td class="actions">
+			                <?= $this->Html->link(__('View'), ['action' => 'view', $wpRole->id]) ?>
+			                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $wpRole->id]) ?>
+			                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $wpRole->id], ['confirm' => __('Are you sure you want to delete # {0}?', $wpRole->id)]) ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col">
+                    <div class="paginator">
+                        <ul class="pagination justify-content-left">
+					        <?= $this->Paginator->first('<< ' . __('first')) ?>
+					        <?= $this->Paginator->prev('< ' . __('previous')) ?>
+					        <?= $this->Paginator->numbers() ?>
+					        <?= $this->Paginator->next(__('next') . ' >') ?>
+					        <?= $this->Paginator->last(__('last') . ' >>') ?>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col">
+                    <p class="text-muted text-right"><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

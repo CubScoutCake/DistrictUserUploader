@@ -44,6 +44,13 @@ class ContactsTable extends Table
             'foreignKey' => 'wp_role_id',
             'joinType' => 'INNER'
         ]);
+
+        $this->belongsTo('AdminGroups', [
+            'className' => 'ScoutGroups',
+            'foreignKey' => 'admin_group',
+            'property' => 'scout_group',
+            'propertyName' => 'admin_group',
+        ]);
     }
 
     /**
@@ -92,6 +99,31 @@ class ContactsTable extends Table
             ->notEmpty('email')
             ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
+        $validator
+            ->scalar('address_line_1')
+            ->allowEmpty('address_line_1')
+            ->maxLength('address_line_1', 255);
+
+        $validator
+            ->scalar('address_line_2')
+            ->allowEmpty('address_line_2')
+            ->maxLength('address_line_2', 255);
+
+        $validator
+            ->scalar('city')
+            ->allowEmpty('city')
+            ->maxLength('city', 255);
+
+        $validator
+            ->scalar('county')
+            ->allowEmpty('county')
+            ->maxLength('county', 255);
+
+        $validator
+            ->scalar('postcode')
+            ->allowEmpty('postcode')
+            ->maxLength('postcode', 9);
+
         return $validator;
     }
 
@@ -109,6 +141,7 @@ class ContactsTable extends Table
         $rules->add($rules->isUnique(['wp_id']));
         $rules->add($rules->isUnique(['mc_id']));
         $rules->add($rules->existsIn(['wp_role_id'], 'WpRoles'));
+        $rules->add($rules->existsIn(['admin_group'], 'AdminGroups'));
 
         return $rules;
     }
@@ -127,6 +160,22 @@ class ContactsTable extends Table
         $entity->first_name = ucwords(strtolower($entity->first_name));
         $entity->last_name = ucwords(strtolower($entity->last_name));
 
+        $entity->address_line_1 = ucwords(strtolower($entity->address_line_1));
+        $entity->address_line_2 = ucwords(strtolower($entity->address_line_2));
+        $entity->city = ucwords(strtolower($entity->city));
+        $entity->county = ucwords(strtolower($entity->county));
+        $entity->postcode = strtoupper($entity->postcode);
+
         return true;
+    }
+
+    /**
+     * @param Cake/Orm/Query $query The Query to be Modified
+     *
+     * @return mixed
+     */
+    public function findNew($query)
+    {
+        return $query->where(['wp_id IS' => null]);
     }
 }

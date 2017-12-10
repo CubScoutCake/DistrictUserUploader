@@ -13,6 +13,7 @@
  */
 namespace App\View;
 
+use App\View\Helper\MyPageHelper;
 use BootstrapUI\View\UIViewTrait;
 use Cake\View\View;
 
@@ -39,6 +40,9 @@ class AppView extends View
      */
     public function initialize()
     {
-        $this->initializeUI(['layout' => false]);
+        $this->loadHelper('Html', ['className' => 'BootstrapUI.Html']);
+        $this->loadHelper('Form', ['className' => 'BootstrapUI.Form']);
+        $this->loadHelper('Flash', ['className' => 'BootstrapUI.Flash', 'class' => ['alert', 'alert-dismissible', 'fade', 'in', 'show']]);
+        $this->loadHelper('Paginator', ['className' => 'MyPage']);
     }
 }

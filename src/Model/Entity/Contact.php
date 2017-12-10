@@ -14,10 +14,17 @@ use Cake\ORM\Entity;
  * @property string $last_name
  * @property string $email
  * @property int $wp_role_id
+ * @property int $admin_group_id
+ * @property string $address_line_1
+ * @property string $address_line_2
+ * @property string $city
+ * @property string $county
+ * @property string $postcode
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
  * @property \App\Model\Entity\WpRole $wp_role
+ * @property \App\Model\Entity\ScoutGroup $admin_group
  */
 class Contact extends Entity
 {
@@ -41,7 +48,13 @@ class Contact extends Entity
         'wp_role_id' => true,
         'created' => true,
         'modified' => true,
-        'wp_role' => true
+        'wp_role' => true,
+        'address_line_1' => true,
+        'address_line_2' => true,
+        'city' => true,
+        'county' => true,
+        'postcode' => true,
+        'admin_group' => true,
     ];
 
     /**

@@ -17,6 +17,7 @@ class ContactsControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'app.contacts',
+        'app.scout_groups',
         'app.wp_roles',
     ];
 
