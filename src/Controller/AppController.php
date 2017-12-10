@@ -61,6 +61,10 @@ class AppController extends Controller
                     'userModel' => 'AuthUsers'
                 ]
             ],
+            'flash' => [
+                'element' => 'error',
+                'key' => 'auth'
+            ],
             'loginAction' => [
                 'controller' => 'AuthUsers',
                 'action' => 'login'
