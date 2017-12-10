@@ -27,6 +27,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->meta('icon') ?>
 
     <?= $this->element('style'); ?>
+	<?= $this->element('script'); ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
@@ -34,14 +35,40 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 </head>
 <body>
     <?= $this->cell('NavBar') ?>
-    <?= $this->cell('SideBar') ?>
+    <div class="container-fluid">
+        <div class="row">
+            <?= $this->cell('SideBar') ?>
 
-    <?= $this->Flash->render() ?>
-    <?= $this->Flash->render('auth') ?>
-    <div class="container clearfix">
-        <?= $this->fetch('content') ?>
+            <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+
+<!--                <div class="row">-->
+<!--                    <div class="col">-->
+                        <nav aria-label="breadcrumb" role="navigation">
+                            <?php
+                            $this->Breadcrumbs->prepend(
+                                'Home',
+                                ['controller' => 'Landing', 'action' => 'welcome'],
+                                ['class' => 'breadcrumb-item']
+                            );
+
+                            echo $this->Breadcrumbs->render(
+                                ['class' => 'breadcrumb'],
+                                ['class' => 'breadcrumb-item']
+                            );
+                            ?>
+                        </nav>
+<!--                    </div>-->
+<!--                </div>-->
+
+	            <?= $this->Flash->render() ?>
+	            <?= $this->Flash->render('auth') ?>
+
+	            <?= $this->fetch('content') ?>
+
+            </main>
+            <footer>
+            </footer>
+        </div>
     </div>
-    <footer>
-    </footer>
 </body>
 </html>
