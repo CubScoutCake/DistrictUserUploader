@@ -35,8 +35,7 @@ class PagesController extends AppController
      * @param array ...$path Path segments.
      * @return \Cake\Http\Response|null
      * @throws \Cake\Network\Exception\ForbiddenException When a directory traversal attempt.
-     * @throws \Cake\Network\Exception\NotFoundException When the view file could not
-     *   be found or \Cake\View\Exception\MissingTemplateException in debug mode.
+     * @throws \Cake\Network\Exception\NotFoundException When the view file could not be found or \Cake\View\Exception\MissingTemplateException in debug mode.
      */
     public function display(...$path)
     {
@@ -67,40 +66,40 @@ class PagesController extends AppController
         }
     }
 
-	/**
-	 * Displays a view
-	 *
-	 * @param array ...$path Path segments.
-	 * @return \Cake\Http\Response|null
-	 * @throws \Cake\Network\Exception\ForbiddenException When a directory traversal attempt.
-	 * @throws \Cake\Network\Exception\NotFoundException When the view file could not
-	 *   be found or \Cake\View\Exception\MissingTemplateException in debug mode.
-	 */
-    public function list() {
-	    $count = count($path);
-	    if (!$count) {
-		    return $this->redirect('/');
-	    }
-	    if (in_array('..', $path, true) || in_array('.', $path, true)) {
-		    throw new ForbiddenException();
-	    }
-	    $page = $subpage = null;
+    /**
+     * Displays a list
+     *
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Network\Exception\ForbiddenException When a directory traversal attempt.
+     * @throws \Cake\Network\Exception\NotFoundException When the view file could not
+     *   be found or \Cake\View\Exception\MissingTemplateException in debug mode.
+     */
+    public function list()
+    {
+        $count = count($path);
+        if (!$count) {
+            return $this->redirect('/');
+        }
+        if (in_array('..', $path, true) || in_array('.', $path, true)) {
+            throw new ForbiddenException();
+        }
+        $page = $subpage = null;
 
-	    if (!empty($path[0])) {
-		    $page = $path[0];
-	    }
-	    if (!empty($path[1])) {
-		    $subpage = $path[1];
-	    }
-	    $this->set(compact('page', 'subpage'));
+        if (!empty($path[0])) {
+            $page = $path[0];
+        }
+        if (!empty($path[1])) {
+            $subpage = $path[1];
+        }
+        $this->set(compact('page', 'subpage'));
 
-	    try {
-		    $this->render(implode('/', $path));
-	    } catch (MissingTemplateException $exception) {
-		    if (Configure::read('debug')) {
-			    throw $exception;
-		    }
-		    throw new NotFoundException();
-	    }
+        try {
+            $this->render(implode('/', $path));
+        } catch (MissingTemplateException $exception) {
+            if (Configure::read('debug')) {
+                throw $exception;
+            }
+            throw new NotFoundException();
+        }
     }
 }

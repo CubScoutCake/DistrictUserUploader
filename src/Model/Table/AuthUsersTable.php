@@ -102,41 +102,42 @@ class AuthUsersTable extends Table
         return $rules;
     }
 
-	/**
-	 * Stores emails as lower case.
-	 *
-	 * @param \Cake\Event\Event $event The event being processed.
-	 * @return bool
-	 */
-	public function beforeRules($event)
-	{
-		$entity = $event->data['entity'];
+    /**
+     * Stores emails as lower case.
+     *
+     * @param \Cake\Event\Event $event The event being processed.
+     * @return bool
+     */
+    public function beforeRules($event)
+    {
+        $entity = $event->data['entity'];
 
-		$entity->email = strtolower($entity->email);
-		$entity->first_name = ucwords(strtolower($entity->first_name));
-		$entity->last_name = ucwords(strtolower($entity->last_name));
+        $entity->email = strtolower($entity->email);
+        $entity->first_name = ucwords(strtolower($entity->first_name));
+        $entity->last_name = ucwords(strtolower($entity->last_name));
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Hashes the password before save
-	 *
-	 * @param \Cake\Event\Event $event The event trigger.
-	 * @return true
-	 */
-	public function beforeSave($event)
-	{
-		$entity = $event->data['entity'];
-		// Make a password for basic auth.
-		if ($entity->isNew()) {
-			$hasher = new DefaultPasswordHasher();
-			// Generate an API 'token'
-			$entity->api_key_plain = sha1(Text::uuid());
-			// Bcrypt the token so BasicAuthenticate can check
-			// it during login.
-			$entity->api_key = $hasher->hash($entity->api_key_plain);
-		}
-		return true;
-	}
+    /**
+     * Hashes the password before save
+     *
+     * @param \Cake\Event\Event $event The event trigger.
+     * @return true
+     */
+    public function beforeSave($event)
+    {
+        $entity = $event->data['entity'];
+        // Make a password for basic auth.
+        if ($entity->isNew()) {
+            $hasher = new DefaultPasswordHasher();
+            // Generate an API 'token'
+            $entity->api_key_plain = sha1(Text::uuid());
+            // Bcrypt the token so BasicAuthenticate can check
+            // it during login.
+            $entity->api_key = $hasher->hash($entity->api_key_plain);
+        }
+
+        return true;
+    }
 }

@@ -24,7 +24,7 @@ class ContactsController extends AppController
     {
         $this->request->allowMethod('get');
 
-	    $contacts = $this->Contacts->find('all', [
+        $contacts = $this->Contacts->find('all', [
             'fields' => [
                 'id',
                 'membership_number',

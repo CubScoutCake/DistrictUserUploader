@@ -29,16 +29,17 @@ class ContactsController extends AppController
         $this->set('_serialize', ['contacts']);
     }
 
-
-	/**
-	 * Create Sync Method
-	 */
-	public function sync()
-	{
-		if($this->request->is('post')){
-			$incomingUsers = $this->request->getData('users');
-		}
-	}
+    /**
+     * Create Sync Method
+     *
+     * @return void
+     */
+    public function sync()
+    {
+        if ($this->request->is('post')) {
+            $incomingUsers = $this->request->getData('users');
+        }
+    }
 
     /**
      * View method
