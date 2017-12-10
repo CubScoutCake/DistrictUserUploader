@@ -17,8 +17,6 @@
     <fieldset>
         <legend><?= __('Add Contact') ?></legend>
         <?php
-            echo $this->Form->control('wp_id');
-            echo $this->Form->control('mc_id');
             echo $this->Form->control('membership_number');
             echo $this->Form->control('first_name');
             echo $this->Form->control('last_name');

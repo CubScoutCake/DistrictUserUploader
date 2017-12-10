@@ -23,13 +23,13 @@
     <fieldset>
         <legend><?= __('Edit Contact') ?></legend>
         <?php
-            echo $this->Form->control('wp_id');
-            echo $this->Form->control('mc_id');
             echo $this->Form->control('membership_number');
             echo $this->Form->control('first_name');
             echo $this->Form->control('last_name');
             echo $this->Form->control('email');
             echo $this->Form->control('wp_role_id', ['options' => $wpRoles]);
+            echo $this->Form->control('wp_id', ['type' => 'number', 'empty' => true]);
+            echo $this->Form->control('mc_id', ['type' => 'number', 'empty' => true]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

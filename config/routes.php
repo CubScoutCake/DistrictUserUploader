@@ -45,16 +45,16 @@ Router::defaultRouteClass(DashedRoute::class);
 
 Router::scope('/', function (RouteBuilder $routes) {
     /**
-     * Here, we are connecting '/' (base path) to a controller called 'Pages',
+     * Here, we are connecting '/' (base path) to a controller called 'Landing',
      * its action called 'display', and we pass a param to select the view file
-     * to use (in this case, src/Template/Pages/home.ctp)...
+     * to use (in this case, src/Template/Landing/home.ctp)...
      */
-    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+    $routes->connect('/', ['controller' => 'Landing', 'action' => 'display', 'home']);
 
     /**
-     * ...and connect the rest of 'Pages' controller's URLs.
+     * ...and connect the rest of 'Landing' controller's URLs.
      */
-    $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
+    $routes->connect('/pages/*', ['controller' => 'Landing', 'action' => 'display']);
 
     /**
      * Connect catchall routes for all controllers.
@@ -73,6 +73,15 @@ Router::scope('/', function (RouteBuilder $routes) {
      * routes you want in your application.
      */
     $routes->fallbacks(DashedRoute::class);
+});
+
+Router::prefix('api', function (RouteBuilder $routes) {
+	// Because you are in the admin scope,
+	// you do not need to include the /admin prefix
+	// or the admin route element.
+	$routes->connect('/', ['controller' => 'Landing', 'action' => 'welcome']);
+
+	$routes->fallbacks(DashedRoute::class);
 });
 
 /**

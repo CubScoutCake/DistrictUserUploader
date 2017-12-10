@@ -35,7 +35,7 @@ class WpRolesTable extends Table
         parent::initialize($config);
 
         $this->setTable('wp_roles');
-        $this->setDisplayField('id');
+        $this->setDisplayField('wp_role');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
@@ -59,7 +59,7 @@ class WpRolesTable extends Table
 
         $validator
             ->scalar('wp_role')
-            ->maxLength('wp_role', 11)
+            ->maxLength('wp_role', 255)
             ->requirePresence('wp_role', 'create')
             ->notEmpty('wp_role')
             ->add('wp_role', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);

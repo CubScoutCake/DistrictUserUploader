@@ -56,7 +56,7 @@ class InitialBuild extends AbstractMigration
     	$table
 		    ->addColumn('wp_role', 'string', [
 			    'default' => null,
-			    'limit' => 11,
+			    'limit' => 255,
 			    'null' => false,
 		    ])
 		    ->addTimestamps('created','modified')
@@ -73,12 +73,12 @@ class InitialBuild extends AbstractMigration
 		    ->addColumn('wp_id', 'integer', [
 			    'default' => null,
 			    'limit' => 11,
-			    'null' => false,
+			    'null' => true,
 		    ])
 		    ->addColumn('mc_id', 'integer', [
 			    'default' => null,
 			    'limit' => 11,
-			    'null' => false,
+			    'null' => true,
 		    ])
 		    ->addColumn('membership_number', 'integer', [
 			    'default' => null,

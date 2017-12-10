@@ -1,5 +1,6 @@
 ---
 version: "2"         # required to adjust maintainability checks
+
 checks:
   argument-count:
     config:
@@ -31,9 +32,10 @@ checks:
   identical-code:
     config:
       threshold: 40 # language-specific defaults. an override will affect all languages.
+
 engines:
   csslint:
-    enabled: true
+    enabled: false
   duplication:
     enabled: true
     config:
@@ -44,10 +46,23 @@ engines:
   fixme:
     enabled: true
   phpmd:
-    enabled: true
+    enabled: false
+
+plugins:
+  phpcodesniffer:
+      enabled: true
+      config:
+      	standard: "PHPCS"
+  sonar-php:
+        enabled: true
+        config:
+          tests_patterns:
+            - tests/TestCase/**
+
 ratings:
   paths:
   - "**.php"
+
 exclude_paths:
 - "**/config/"
 - "**/spec/"

@@ -218,7 +218,6 @@ return [
      * See vendor\cakephp\cakephp\src\Database\Driver for complete list
      */
     'Datasources' => [
-
 	    'default' => [
 		    'className' => 'Cake\Database\Connection',
 		    'driver' => 'Cake\Database\Driver\Postgres',

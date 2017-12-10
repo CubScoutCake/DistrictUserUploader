@@ -66,14 +66,12 @@ class ContactsTable extends Table
 
         $validator
             ->integer('wp_id')
-            ->requirePresence('wp_id', 'create')
-            ->notEmpty('wp_id')
+	        ->allowEmpty('wp_id')
             ->add('wp_id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->integer('mc_id')
-            ->requirePresence('mc_id', 'create')
-            ->notEmpty('mc_id')
+	        ->allowEmpty('mc_id')
             ->add('mc_id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
@@ -114,4 +112,21 @@ class ContactsTable extends Table
 
         return $rules;
     }
+
+	/**
+	 * Stores emails as lower case.
+	 *
+	 * @param \Cake\Event\Event $event The event being processed.
+	 * @return bool
+	 */
+	public function beforeRules($event)
+	{
+		$entity = $event->data['entity'];
+
+		$entity->email = strtolower($entity->email);
+		$entity->first_name = ucwords(strtolower($entity->first_name));
+		$entity->last_name = ucwords(strtolower($entity->last_name));
+
+		return true;
+	}
 }
