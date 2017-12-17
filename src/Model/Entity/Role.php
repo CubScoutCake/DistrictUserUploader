@@ -4,15 +4,16 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * ScoutGroup Entity
+ * Role Entity
  *
  * @property int $id
- * @property string $scout_group
- * @property int $number_stripped
- * @property \Cake\I18n\FrozenTime $created
- * @property \Cake\I18n\FrozenTime $modified
+ * @property int $role_type_id
+ * @property int $section_id
+ *
+ * @property \App\Model\Entity\RoleType $role_type
+ * @property \App\Model\Entity\Section $section
  */
-class ScoutGroup extends Entity
+class Role extends Entity
 {
 
     /**
@@ -25,10 +26,9 @@ class ScoutGroup extends Entity
      * @var array
      */
     protected $_accessible = [
-        'scout_group' => true,
-        'number_stripped' => true,
-        'created' => true,
-        'modified' => true,
-        'wp_group_id' => true,
+        'role_type_id' => true,
+        'section_id' => true,
+        'role_type' => true,
+        'section' => true
     ];
 }

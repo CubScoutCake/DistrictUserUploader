@@ -62,6 +62,10 @@ class ScoutGroupsTable extends Table
             ->integer('number_stripped')
             ->allowEmpty('number_stripped');
 
+        $validator
+            ->integer('wp_scout_group_id')
+            ->allowEmpty('wp_scout_group_id');
+
         return $validator;
     }
 
@@ -75,6 +79,7 @@ class ScoutGroupsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->isUnique(['scout_group']));
+        $rules->add($rules->isUnique(['wp_scout_group_id']));
 
         return $rules;
     }
