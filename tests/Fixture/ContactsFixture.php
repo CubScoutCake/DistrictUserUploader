@@ -57,7 +57,7 @@ class ContactsFixture extends TestFixture
             'membership_number' => 1,
             'first_name' => 'Lorem ipsum dolor sit amet',
             'last_name' => 'Lorem ipsum dolor sit amet',
-            'email' => 'Lorem ipsum dolor sit amet',
+            'email' => 'email@llama.com',
             'wp_role_id' => 1,
             'created' => 1512948950,
             'modified' => 1512948950,

@@ -64,6 +64,7 @@ class Installer
         }
 
         static::setSecuritySalt($rootDir, $io);
+        static::setCookieSecuritySalt($rootDir, $io);
 
         if (class_exists('\Cake\Codeception\Console\Installer')) {
             \Cake\Codeception\Console\Installer::customizeCodeceptionBinary($event);
@@ -194,6 +195,50 @@ class Installer
 
         if ($count == 0) {
             $io->write('No Security.salt placeholder to replace.');
+
+            return;
+        }
+
+        $result = file_put_contents($config, $content);
+        if ($result) {
+            $io->write('Updated Security.salt value in config/' . $file);
+
+            return;
+        }
+        $io->write('Unable to update Security.salt value.');
+    }
+
+    /**
+     * Set the security.salt value in the application's config file.
+     *
+     * @param string $dir The application's root directory.
+     * @param \Composer\IO\IOInterface $io IO interface to write to console.
+     * @return void
+     */
+    public static function setCookieSecuritySalt($dir, $io)
+    {
+        $newKey = hash('sha256', Security::randomBytes(64));
+        static::setCookieSecuritySaltInFile($dir, $io, $newKey, 'app.php');
+    }
+
+    /**
+     * Set the security.salt value in a given file
+     *
+     * @param string $dir The application's root directory.
+     * @param \Composer\IO\IOInterface $io IO interface to write to console.
+     * @param string $newKey key to set in the file
+     * @param string $file A path to a file relative to the application's root
+     * @return void
+     */
+    public static function setCookieSecuritySaltInFile($dir, $io, $newKey, $file)
+    {
+        $config = $dir . '/config/' . $file;
+        $content = file_get_contents($config);
+
+        $content = str_replace('__COOKIE_SALT__', $newKey, $content, $count);
+
+        if ($count == 0) {
+            $io->write('No Security.cookieKey placeholder to replace.');
 
             return;
         }

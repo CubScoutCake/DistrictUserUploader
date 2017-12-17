@@ -219,3 +219,5 @@ if (Configure::read('debug')) {
 Plugin::load('Migrations');
 
 Plugin::load('BootstrapUI');
+
+Plugin::load('JacobAGTyler/GitHubIssueSubmitter', ['bootstrap' => false, 'routes' => true]);
