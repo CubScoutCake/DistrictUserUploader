@@ -5,7 +5,13 @@
  */
 
 $this->Breadcrumbs->add(
-	__('Sections'),
+	'Scout Groups',
+	['controller' => 'ScoutGroups', 'action' => 'index']
+);
+
+$this->Breadcrumbs->add(
+	'Sections',
+	['controller' => 'Sections', 'action' => 'index'],
 	['class' => 'breadcrumb-item active']
 );
 
@@ -41,21 +47,23 @@ $this->Breadcrumbs->add(
                 <?php endforeach; ?>
                 </tbody>
             </table>
-            <div class="row">
-                <div class="col">
-                    <div class="paginator">
-                        <ul class="pagination justify-content-left">
-					        <?= $this->Paginator->first('<< ' . __('first')) ?>
-					        <?= $this->Paginator->prev('< ' . __('previous')) ?>
-					        <?= $this->Paginator->numbers() ?>
-					        <?= $this->Paginator->next(__('next') . ' >') ?>
-					        <?= $this->Paginator->last(__('last') . ' >>') ?>
-                        </ul>
-                    </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="paginator">
+                    <ul class="pagination justify-content-center">
+                        <?= $this->Paginator->first('<<') ?>
+                        <?= $this->Paginator->prev('<') ?>
+                        <?= $this->Paginator->numbers() ?>
+                        <?= $this->Paginator->next('>') ?>
+                        <?= $this->Paginator->last('>>') ?>
+                    </ul>
                 </div>
-                <div class="col">
-                    <p class="text-muted text-right"><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p class="text-muted text-center"><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
             </div>
         </div>
     </div>

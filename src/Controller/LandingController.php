@@ -31,11 +31,23 @@ use Cake\View\Exception\MissingTemplateException;
 class LandingController extends AppController
 {
     /**
-     * @param int $eventId The ID of the Event
-     * @return void
+     * @return \Cake\Http\Response|null
      */
-    public function welcome($eventId = null)
+    public function welcome()
     {
+        $loggedIn = ( is_numeric($this->Auth->user('id')) );
+
+        $this->set(compact('loggedIn'));
+
+        if ($this->request->is('post')) {
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
+
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+            $this->Flash->error('Your username or password is incorrect.');
+        }
     }
 
     /**

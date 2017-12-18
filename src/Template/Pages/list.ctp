@@ -23,7 +23,7 @@ $this->layout = false;
 
 if (!Configure::read('debug')) :
     throw new NotFoundException(
-        'Please replace src/Template/Landing/home.ctp with your own version or re-enable debug mode.'
+        'Please replace src/Template/Landing/welcome.ctp with your own version or re-enable debug mode.'
     );
 endif;
 

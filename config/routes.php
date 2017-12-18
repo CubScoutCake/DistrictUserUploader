@@ -47,9 +47,9 @@ Router::scope('/', function (RouteBuilder $routes) {
     /**
      * Here, we are connecting '/' (base path) to a controller called 'Landing',
      * its action called 'display', and we pass a param to select the view file
-     * to use (in this case, src/Template/Landing/home.ctp)...
+     * to use (in this case, src/Template/Landing/welcome.ctp)...
      */
-    $routes->connect('/', ['controller' => 'Landing', 'action' => 'display', 'home']);
+    $routes->connect('/', ['controller' => 'Landing', 'action' => 'welcome']);
 
     /**
      * ...and connect the rest of 'Landing' controller's URLs.
