@@ -68,13 +68,14 @@ class FileUploadsController extends AppController
         if ($this->request->is('post')) {
             $fileMeta = $this->request->getData('file_name');
 
-            $file = new File($fileMeta['tmp_name'], false, 0644);
+            $file = new File($fileMeta['tmp_name'], false);
             $plainString = $fileMeta['name'] . 'FILE UPLOAD' . $fileUpload->id;
             $b64 = base64_encode($plainString);
-            $path = WWW_ROOT . DS . 'files' . DS . 'FileUploads' . DS . $b64;
+            $path = WWW_ROOT . 'files' . DS . 'FileUploads' . DS . $b64;
 
             $dir = new Folder();
             $dir->create($path);
+            $dir->chmod($path, 0755, true);
 
             $file->copy($path . DS . $fileMeta['name']);
 
