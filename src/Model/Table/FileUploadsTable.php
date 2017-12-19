@@ -5,6 +5,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Josegonzalez\Upload\Validation\UploadValidation;
 
 /**
  * FileUploads Model
@@ -55,6 +56,8 @@ class FileUploadsTable extends Table
      */
     public function validationDefault(Validator $validator)
     {
+//	    $validator->setProvider('upload', UploadValidation::class);
+
         $validator
             ->integer('id')
             ->allowEmpty('id', 'create');

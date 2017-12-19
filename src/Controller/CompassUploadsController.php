@@ -57,7 +57,8 @@ class CompassUploadsController extends AppController
         $files = TableRegistry::get('FileUploads');
         $file = $files->get($fileId);
 
-        $data = $this->CompassUploads->importCsv('/Users/jacob/Downloads/CompassExport-3.csv');
+        $filePath = $file->file_path . DS . $file->file_name;
+        $data = $this->CompassUploads->importCsv($filePath);
 
         $entities = $this->CompassUploads->newEntities($data);
 

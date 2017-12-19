@@ -29,3 +29,4 @@ nbproject/* # NetBeans
 .vscode # Visual Studio Code
 .sass-cache/ # Sass preprocessor
 /config/Migrations/schema-dump-default.lock
+/webroot/files/

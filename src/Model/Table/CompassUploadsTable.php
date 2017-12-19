@@ -156,7 +156,7 @@ class CompassUploadsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['email']));
+        $rules->add($rules->isUnique(['email', 'file_upload_id']));
         $rules->add($rules->existsIn(['file_upload_id'], 'FileUploads'));
 
         return $rules;

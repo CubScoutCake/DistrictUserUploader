@@ -18,9 +18,7 @@
     <?= $this->Form->create($fileUpload, ['type' => 'file']) ?>
     <fieldset>
         <legend><?= __('Add File Upload') ?></legend>
-        <?php
-            echo $this->Form->file('submitted_file');
-        ?>
+	    <?php echo $this->Form->input('file_name', ['type' => 'file']);  ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>

@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Filesystem\File;
+use Cake\Filesystem\Folder;
 
 /**
  * FileUploads Controller
@@ -64,16 +66,28 @@ class FileUploadsController extends AppController
 	    ];*/
 
         if ($this->request->is('post')) {
-            $fileMeta = $this->request->getData('submitted_file');
+            $fileMeta = $this->request->getData('file_name');
 
+            $file = new File($fileMeta['tmp_name'], false, 0644);
+            $plainString = $fileMeta['name'] . 'FILE UPLOAD' . $fileUpload->id;
+            $b64 = base64_encode($plainString);
+            $path = WWW_ROOT . DS . 'files' . DS . 'FileUploads' . DS . $b64;
+
+            $dir = new Folder();
+            $dir->create($path);
+
+            $file->copy($path . DS . $fileMeta['name']);
+
+            $fileUpload->file_path = $path;
             $fileUpload->file_name = $fileMeta['name'];
-            $fileUpload->file_path = $fileMeta['tmp_name'];
             $fileUpload->auth_user_id = $this->Auth->user('id');
+
+            //$fileUpload = $this->FileUploads->patchEntity($fileUpload, $this->request->getData());
 
             if ($this->FileUploads->save($fileUpload)) {
                 $this->Flash->success(__('The file upload has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'CompassUploads', 'action' => 'import', $fileUpload->id]);
             }
             $this->Flash->error(__('The file upload could not be saved. Please, try again.'));
         }
