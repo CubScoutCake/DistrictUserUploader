@@ -86,4 +86,16 @@ class RoleTypesTableTest extends TestCase
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
+
+    /**
+     * Test findOrMakeRoleType Method
+     *
+     * @return void
+     */
+    public function testFindOrMakeRoleType()
+    {
+        $response = $this->RoleTypes->findOrMakeRoleType('Happy Fishy');
+
+        $this->assertInstanceOf('\Cake\ORM\Entity', $response);
+    }
 }

@@ -134,7 +134,7 @@ class ContactsTableTest extends TestCase
             'email' => 'alan.j.mann@gmail.com',
         ];
 
-        $response = $this->Contacts->findContactOrCreate($goodArray);
+        $response = $this->Contacts->findOrMakeContact($goodArray);
         $this->assertInstanceOf('Cake\ORM\Entity', $response);
     }
 }

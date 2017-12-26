@@ -20,6 +20,7 @@ $this->Breadcrumbs->add(
                 <tr>
                     <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('scout_group') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('group_alias') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('number_stripped') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
@@ -31,6 +32,7 @@ $this->Breadcrumbs->add(
                     <tr>
                         <td><?= $this->Number->format($scoutGroup->id) ?></td>
                         <td><?= h($scoutGroup->scout_group) ?></td>
+                        <td><?= h($scoutGroup->group_alias) ?></td>
                         <td><?= $this->Number->format($scoutGroup->number_stripped) ?></td>
                         <td><?= h($scoutGroup->created) ?></td>
                         <td><?= h($scoutGroup->modified) ?></td>

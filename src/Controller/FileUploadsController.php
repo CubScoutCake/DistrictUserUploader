@@ -125,8 +125,7 @@ class FileUploadsController extends AppController
                 $overall += 1;
 
                 if ($test) {
-                    $cArray = $compass->toArray();
-                    $merged = $this->Merge->contactUpload($cArray);
+                    $merged = $this->Merge->contactUpload($compass->id);
 
                     $total += 1;
 

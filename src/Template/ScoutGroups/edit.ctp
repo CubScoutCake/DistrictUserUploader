@@ -22,7 +22,7 @@
         <legend><?= __('Edit Scout Group') ?></legend>
         <?php
             echo $this->Form->control('scout_group');
-            echo $this->Form->control('number_stripped');
+            echo $this->Form->control('group_alias');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

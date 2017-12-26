@@ -35,7 +35,7 @@ class FileUploadsTable extends Table
         parent::initialize($config);
 
         $this->setTable('file_uploads');
-        $this->setDisplayField('file_upload');
+        $this->setDisplayField('file_name');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
@@ -44,7 +44,9 @@ class FileUploadsTable extends Table
             'foreignKey' => 'auth_user_id'
         ]);
         $this->hasMany('CompassUploads', [
-            'foreignKey' => 'file_upload_id'
+            'foreignKey' => 'file_upload_id',
+            'dependent' => true,
+            'cascadeCallbacks' => true,
         ]);
     }
 

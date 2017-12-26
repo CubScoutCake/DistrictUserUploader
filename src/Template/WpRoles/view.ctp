@@ -1,20 +1,21 @@
 <?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\WpRole $wpRole
- */
+$this->Breadcrumbs->add(
+	'Contacts',
+	['controller' => 'Contacts', 'action' => 'index']
+);
+
+$this->Breadcrumbs->add(
+	'Wordpress Roles',
+	['controller' => 'WpRoles', 'action' => 'index'],
+	['class' => 'breadcrumb-item']
+);
+
+$this->Breadcrumbs->add(
+	'View Wordpress Role #' . $wpRole->id,
+	['controller' => 'WpRoles', 'action' => 'view', $wpRole->id],
+	['class' => 'active']
+);
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Wp Role'), ['action' => 'edit', $wpRole->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Wp Role'), ['action' => 'delete', $wpRole->id], ['confirm' => __('Are you sure you want to delete # {0}?', $wpRole->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Wp Roles'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Wp Role'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Contact'), ['controller' => 'Contacts', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Contact'), ['controller' => 'Contacts', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
 <div class="wpRoles view large-9 medium-8 columns content">
     <h3><?= h($wpRole->id) ?></h3>
     <table class="vertical-table">

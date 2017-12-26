@@ -135,6 +135,19 @@ class CompassUpload extends Entity
         //}
         //$roleSection = trim($roleSection);
 
+        $entityMap = [
+            'Hertfordshire' => 'County',
+            'Bedfordshire' => 'County',
+            'Letchworth And Baldock' => 'District',
+            'UK Scout Network' => 'Network',
+            'Derbyshire' => 'County',
+            'Scout Active Support Unit' => 'SAS'
+        ];
+
+        if (key_exists($group, $entityMap)) {
+            return $entityMap[$group];
+        }
+
         if ($section <> $group) {
             return $section;
         }

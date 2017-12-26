@@ -1,8 +1,20 @@
 <?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Section $section
- */
+$this->Breadcrumbs->add(
+	'Scout Groups',
+	['controller' => 'ScoutGroups', 'action' => 'index']
+);
+
+$this->Breadcrumbs->add(
+	'Sections',
+	['controller' => 'Sections', 'action' => 'index'],
+	['class' => 'breadcrumb-item']
+);
+
+$this->Breadcrumbs->add(
+	'Section Types',
+	['controller' => 'SectionTypes', 'action' => 'index'],
+	['class' => 'active']
+);
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">

@@ -100,9 +100,7 @@ class CompassUploadsController extends AppController
     {
         $this->loadComponent('Merge');
 
-        $contact = $this->CompassUploads->get($contactId)->toArray();
-
-        $response = $this->Merge->contactUpload($contact);
+        $response = $this->Merge->contactUpload($contactId);
 
         if ($response instanceof Entity) {
             $this->Flash->success('Uploaded Record Merged.');

@@ -60,6 +60,8 @@ class ContactsTable extends Table
 
         $this->hasMany('Roles', [
             'foreignKey' => 'contact_id',
+            'dependent' => true,
+            'cascadeCallbacks' => true,
         ]);
 
         $this->belongsToMany('RoleTypes', [
@@ -205,58 +207,64 @@ class ContactsTable extends Table
      *
      * @return \App\Model\Entity\Contact|bool
      */
-    public function findContactOrCreate(array $ContactArray)
+    public function findOrMakeContact(array $ContactArray)
     {
-        if (isset($ContactArray['membership_number']) && isset($ContactArray['email']) && isset($ContactArray['first_name']) && isset($ContactArray['last_name'])) {
-            $contactQuery = $this
-                ->query()
-                ->where([
-                    'OR' => [
-                        'membership_number' => $ContactArray['membership_number'],
-                        [
-                            'email' => $ContactArray['email'],
-                            'first_name' => $ContactArray['first_name'],
-                            'last_name' => $ContactArray['last_name'],
-                        ]
-                    ]
-                ]);
+        if (!isset($ContactArray['membership_number'])
+            || !isset($ContactArray['email'])
+            || !isset($ContactArray['first_name'])
+            || !isset($ContactArray['last_name'])
+        ) {
+            return false;
+        }
 
-            $row = $contactQuery->first();
-
-            if ($row == null) {
-                $row = $this->newEntity();
-            }
-
-            $contact = $row;
-
-            $contact = $this->patchEntity($contact, [
-                'email' => $ContactArray['email'],
-                'first_name' => $ContactArray['first_name'],
-                'last_name' => $ContactArray['last_name'],
+        $contactQuery = $this
+        ->query()
+        ->where([
+            'OR' => [
                 'membership_number' => $ContactArray['membership_number'],
-                'address_line_1' => $ContactArray['address_line1'],
-                'address_line_2' => $ContactArray['address_line2'],
-                'city' => $ContactArray['address_town'],
-                'county' => $ContactArray['address_county'],
-                'postcode' => $ContactArray['postcode']
-            ]);
+                [
+                    'email' => $ContactArray['email'],
+                    'first_name' => $ContactArray['first_name'],
+                    'last_name' => $ContactArray['last_name'],
+                ]
+            ]
+        ]);
 
-            if (empty($contact->wp_role_id)) {
-                $wpRoles = TableRegistry::get('WpRoles');
-                $leaderRole = $wpRoles->find()->where(['wp_role' => 'Leader'])->first();
+        $row = $contactQuery->first();
 
-                $id = $leaderRole->id;
-                if (!is_numeric($id)) {
-                    $id = 1;
-                }
-                $contact = $contact->set('wp_role_id', $id);
+        if ($row == null) {
+            $row = $this->newEntity();
+        }
+
+        $contact = $row;
+
+        $contact = $this->patchEntity($contact, [
+            'email' => $ContactArray['email'],
+            'first_name' => $ContactArray['first_name'],
+            'last_name' => $ContactArray['last_name'],
+            'membership_number' => $ContactArray['membership_number'],
+            'address_line_1' => $ContactArray['address_line1'],
+            'address_line_2' => $ContactArray['address_line2'],
+            'city' => $ContactArray['address_town'],
+            'county' => $ContactArray['address_county'],
+            'postcode' => $ContactArray['postcode']
+        ]);
+
+        if (empty($contact->wp_role_id)) {
+            $wpRoles = TableRegistry::get('WpRoles');
+            $leaderRole = $wpRoles->find()->where(['wp_role' => 'Leader'])->first();
+
+            $id = $leaderRole->id;
+            if (!is_numeric($id)) {
+                $id = 1;
             }
+            $contact = $contact->set('wp_role_id', $id);
+        }
 
-            $response = $this->save($contact);
+        $response = $this->save($contact);
 
-            if ($response instanceof Entity) {
-                return $response;
-            }
+        if ($response instanceof Entity) {
+            return $response;
         }
 
         return false;

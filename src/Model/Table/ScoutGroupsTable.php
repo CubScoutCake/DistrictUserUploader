@@ -9,6 +9,8 @@ use Cake\Validation\Validator;
 /**
  * ScoutGroups Model
  *
+ * @property \App\Model\Table\SectionsTable|\Cake\ORM\Association\HasMany $Sections
+ *
  * @method \App\Model\Entity\ScoutGroup get($primaryKey, $options = [])
  * @method \App\Model\Entity\ScoutGroup newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\ScoutGroup[] newEntities(array $data, array $options = [])
@@ -33,10 +35,16 @@ class ScoutGroupsTable extends Table
         parent::initialize($config);
 
         $this->setTable('scout_groups');
-        $this->setDisplayField('scout_group');
+        $this->setDisplayField('group_alias');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+
+        $this->hasMany('Sections', [
+            'foreignKey' => 'scout_group_id',
+            'dependent' => true,
+            'cascadeCallbacks' => true,
+        ]);
     }
 
     /**
@@ -63,6 +71,12 @@ class ScoutGroupsTable extends Table
             ->allowEmpty('number_stripped');
 
         $validator
+            ->scalar('group_alias')
+            ->maxLength('group_alias', 255)
+            ->requirePresence('group_alias', false)
+            ->allowEmpty('group_alias');
+
+        $validator
             ->integer('wp_scout_group_id')
             ->allowEmpty('wp_scout_group_id');
 
@@ -80,7 +94,31 @@ class ScoutGroupsTable extends Table
     {
         $rules->add($rules->isUnique(['scout_group']));
         $rules->add($rules->isUnique(['wp_scout_group_id']));
+        $rules->add($rules->isUnique(['group_alias']));
 
         return $rules;
+    }
+
+    /**
+     * Hashes the password before save
+     *
+     * @param \Cake\Event\Event $event The event trigger.
+     * @return true
+     */
+    public function beforeSave($event)
+    {
+        $entity = $event->data['entity'];
+        // Make a password for basic auth.
+        preg_match('/[0-9]+/', $entity->scout_group, $strippedArray);
+
+        if (key_exists(0, $strippedArray)) {
+            $entity->number_stripped = $strippedArray[0];
+        }
+
+        if (empty($entity->group_alias)) {
+            $entity->group_alias = $entity->scout_group;
+        }
+
+        return true;
     }
 }

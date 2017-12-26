@@ -114,7 +114,7 @@ class SectionsTable extends Table
             $scoutGroups = TableRegistry::get('ScoutGroups');
             $sectionTypes = TableRegistry::get('SectionTypes');
 
-            $group = $scoutGroups->findOrCreate([ 'scout_group' => $sectionArr['group'] ]);
+            $group = $scoutGroups->findOrCreate([ 'scout_group' => $sectionArr['group'] ], null, ['atomic' => false]);
 
             if ($group instanceof Entity) {
                 $groupId = $group->id;
@@ -154,7 +154,7 @@ class SectionsTable extends Table
                     'section' => $sectionArr['section'],
                     'scout_group_id' => $groupId,
                     'section_type_id' => $typeId,
-                ]);
+                ], null, ['atomic' => false]);
 
                 if ($section instanceof Entity) {
                     return $section;

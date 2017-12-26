@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Table;
 
+use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -11,6 +12,7 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\SectionTypesTable|\Cake\ORM\Association\BelongsTo $SectionTypes
  * @property \App\Model\Table\ContactsTable|\Cake\ORM\Association\BelongsToMany $Contacts
+ * @property \App\Model\Table\RolesTable|\Cake\ORM\Association\HasMany $Roles
  *
  * @method \App\Model\Entity\RoleType get($primaryKey, $options = [])
  * @method \App\Model\Entity\RoleType newEntity($data = null, array $options = [])
@@ -88,5 +90,36 @@ class RoleTypesTable extends Table
         $rules->add($rules->existsIn(['section_type_id'], 'SectionTypes'));
 
         return $rules;
+    }
+
+    /**
+     * @param string $role The Name of The Role Type
+     *
+     * @return \Cake\ORM\Entity|bool
+     */
+    public function findOrMakeRoleType($role)
+    {
+        if (!isset($role) || empty($role)) {
+            return false;
+        }
+
+        $roleType = $this->findOrCreate(['role_type' => $role]);
+
+        if ($roleType instanceof Entity) {
+            if (empty($roleType->role_abbreviation)) {
+                $abbrev = $role;
+                if (preg_match_all('/\b(\w)/', strtoupper($role), $exploded)) {
+                    $abbrev = implode('', $exploded[1]); // $v is now SOQTU
+                }
+
+                $roleType->set('role_abbreviation', $abbrev);
+
+                $this->save($roleType);
+            }
+
+            return $roleType;
+        }
+
+        return false;
     }
 }

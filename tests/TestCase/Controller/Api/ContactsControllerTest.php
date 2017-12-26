@@ -40,13 +40,11 @@ class ContactsControllerTest extends IntegrationTestCase
     {
         $this->markTestIncomplete('Not implemented yet.');
 
+        $this->session(['Auth.User.id' => 1]);
         $this->configRequest([
-            'headers' => [
-                'accept' => 'application/json',
-                'authorization' => 'Bearer: basic-token'
-            ]
+            'headers' => ['Accept' => 'application/json']
         ]);
-        $this->get('/api/contacts');
+        $result = $this->get('/api/contacts');
 
         // Check that the response was a 200
         $this->assertResponseOk();
@@ -54,8 +52,8 @@ class ContactsControllerTest extends IntegrationTestCase
         $expected = [
             ['id' => 1, 'lng' => 66, 'lat' => 45],
         ];
-        $expected = json_encode($expected);
-        $this->assertEquals($expected, $this->_response->body());
+        $expected = json_encode($expected, JSON_PRETTY_PRINT);
+        $this->assertEquals($expected, $this->_response->getBody());
     }
 
     /**

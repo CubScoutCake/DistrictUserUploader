@@ -9,6 +9,7 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $scout_group
  * @property int $number_stripped
+ * @property string $group_alias
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  */
@@ -30,5 +31,6 @@ class ScoutGroup extends Entity
         'created' => true,
         'modified' => true,
         'wp_group_id' => true,
+        'group_alias' => true,
     ];
 }

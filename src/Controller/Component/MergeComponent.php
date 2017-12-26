@@ -21,115 +21,90 @@ class MergeComponent extends Component
     protected $_defaultConfig = [];
 
     /**
-     * @param array $mergeContact The Uploaded Contact to be merged
+     * @param int $uploadId The ID of the Upload
      *
      * @return bool The value to be set
      *
      */
-    public function contactUpload(array $mergeContact)
+    public function contactUpload($uploadId)
     {
-        $contacts = TableRegistry::get('Contacts');
+        $compassUploads = TableRegistry::get('CompassUploads');
 
-        if (key_exists('membership_number', $mergeContact)
-            && key_exists('first_name', $mergeContact)
-            || key_exists('email', $mergeContact)
+        $compassUpload = $compassUploads->get($uploadId)->toArray();
+
+        return $this->integrateContact($compassUpload);
+    }
+
+    /**
+     * @param array $mergeContact The Contact Data to be merged - Must contain all keys.
+     *
+     * @return bool|\Cake\Datasource\EntityInterface
+     */
+    public function integrateContact(array $mergeContact)
+    {
+        if (!key_exists('membership_number', $mergeContact)
+            || !key_exists('first_name', $mergeContact)
+            || !key_exists('email', $mergeContact)
+            || !key_exists('clean_role', $mergeContact)
+            || !key_exists('clean_group', $mergeContact)
+            || !key_exists('clean_section', $mergeContact)
         ) {
-            $contact = $contacts->findContactOrCreate($mergeContact);
-
-            if (!empty($mergeContact['clean_section']) && !empty($mergeContact['clean_role']) && !empty($mergeContact['clean_group'])) {
-                $sectionTypes = TableRegistry::get('SectionTypes');
-                $roleTypes = TableRegistry::get('RoleTypes');
-                $sections = TableRegistry::get('Sections');
-
-                $terms = explode(' ', $mergeContact['clean_section']);
-
-                $termMatch = 0;
-                $scoutMatch = 0;
-
-                $types = $sectionTypes->find('all')->toArray();
-
-                foreach ($types as $type) {
-                    $sectionType = strtoupper(Inflector::singularize($type->section_type));
-                    foreach ($terms as $term) {
-                        $term = strtoupper(Inflector::singularize($term));
-                    }
-
-                    if (in_array($sectionType, $terms)) {
-                        $termMatch += 1;
-                        if ($sectionType == 'SCOUT') {
-                            $scoutMatch += 1;
-                            $scoutId = $type->id;
-                        }
-                        $termId = $type->id;
-                    }
-                }
-
-                if ($termMatch == 1 && isset($termId)) {
-                    $typeId = $termId;
-                } elseif ($scoutMatch == 1 && isset($scoutId)) {
-                    $typeId = $scoutId;
-                }
-
-                $roleType = $roleTypes->findOrCreate(['role_type' => $mergeContact['clean_role']]);
-
-                if ($roleType instanceof Entity) {
-                    $roleTypeId = $roleType->id;
-
-                    if (empty($roleType->role_abbreviation)) {
-                        $abbrev = $mergeContact['clean_role'];
-                        if (preg_match_all('/\b(\w)/', strtoupper($mergeContact['clean_role']), $exploded)) {
-                            $abbrev = implode('', $exploded[1]); // $v is now SOQTU
-                        }
-
-                        $roleType->set('role_abbreviation', $abbrev);
-
-                        $roleTypes->save($roleType);
-                    }
-                }
-
-                if (isset($groupId) && isset($typeId)) {
-                    $section = $sections->findOrCreate([
-                        'section' => $mergeContact['clean_section'],
-                        'scout_group_id' => $groupId,
-                        'section_type_id' => $typeId,
-                    ]);
-
-                    if ($section instanceof Entity) {
-                        $sectionId = $section->id;
-                    }
-                }
-
-                if (isset($sectionId) && isset($roleTypeId)) {
-                    $contact = $contacts->patchEntity(
-                        $contact,
-                        [
-                            'role' => [
-                                'section_id' => $sectionId,
-                                'role_type_id' => $roleTypeId,
-                                'provisional' => $mergeContact['provisional'],
-                            ]
-                        ],
-                        [
-                            'associated' => [
-                                'Roles',
-                            ]
-                        ]
-                    );
-
-                    $contact->setDirty('Roles', true);
-
-                    $contacts->save($contact, [
-                        'associated' => [
-                            'Roles',
-                        ]
-                    ]);
-                }
-            }
-
-            return $contact;
+            return false;
         }
 
-        return false;
+        $contacts = TableRegistry::get('Contacts');
+
+        $contact = $contacts->findOrMakeContact($mergeContact);
+
+        if (!($contact instanceof Entity)) {
+            return false;
+        }
+
+        $roleTypes = TableRegistry::get('RoleTypes');
+        $sections = TableRegistry::get('Sections');
+
+        $sectionCreate = [
+            'group' => $mergeContact['clean_group'],
+            'section' => $mergeContact['clean_section'],
+        ];
+        $section = $sections->findOrMakeSection($sectionCreate);
+
+//	    debug($section);
+
+        if ($section instanceof Entity) {
+            $sectionId = $section->id;
+        }
+
+        $roleType = $roleTypes->findOrMakeRoleType($mergeContact['clean_role']);
+
+//	    debug($roleType);
+
+        if ($roleType instanceof Entity) {
+            $roleTypeId = $roleType->id;
+        }
+
+        if (isset($sectionId) && isset($roleTypeId)) {
+            $roles = TableRegistry::get('Roles');
+
+            $roleArray = [
+                    'section_id' => $sectionId,
+                    'role_type_id' => $roleTypeId,
+                    'contact_id' => $contact->id,
+                    'provisional' => $mergeContact['provisional'],
+                ];
+
+//	    	debug($roleArray);
+
+            $role = $roles->newEntity($roleArray);
+
+//	    	debug($role);
+
+            $role = $roles->save($role);
+
+//		    debug($role);
+        }
+
+        return $contact;
     }
 
     /**
@@ -161,7 +136,6 @@ class MergeComponent extends Component
             'Group Executive Committee Member',
             'District Badge Secretary',
             'Group Chairman',
-
         ];
 
         if (in_array($compassUpload->clean_role, $allowedRoles) && !$compassUpload->provisional) {
