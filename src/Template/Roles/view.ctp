@@ -32,5 +32,9 @@
             <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($role->id) ?></td>
         </tr>
+        <tr>
+            <th scope="row"><?= __('Contact Id') ?></th>
+            <td><?= $this->Number->format($role->contact_id) ?></td>
+        </tr>
     </table>
 </div>

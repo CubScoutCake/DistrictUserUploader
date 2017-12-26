@@ -25,7 +25,8 @@ class SectionTypesTableTest extends TestCase
      */
     public $fixtures = [
         'app.section_types',
-        'app.sections'
+        'app.sections',
+        'app.scout_groups',
     ];
 
     /**

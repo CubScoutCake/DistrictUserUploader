@@ -33,7 +33,7 @@ class ScoutGroupsTable extends Table
         parent::initialize($config);
 
         $this->setTable('scout_groups');
-        $this->setDisplayField('id');
+        $this->setDisplayField('scout_group');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');

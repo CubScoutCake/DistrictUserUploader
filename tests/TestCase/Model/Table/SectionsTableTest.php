@@ -25,7 +25,12 @@ class SectionsTableTest extends TestCase
      */
     public $fixtures = [
         'app.sections',
-        'app.section_types'
+        'app.section_types',
+        'app.contacts',
+        'app.wp_roles',
+        'app.scout_groups',
+        'app.roles',
+        'app.role_types'
     ];
 
     /**
@@ -80,5 +85,40 @@ class SectionsTableTest extends TestCase
     public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test findOrMakeSection method
+     *
+     * @return void
+     */
+    public function testFindOrMakeSection()
+    {
+        // Test Success
+        $goodArray = [
+            'group' => '4th Letchworth',
+            'section' => 'Cub Scout 1'
+        ];
+
+        $response = $this->Sections->findOrMakeSection($goodArray);
+        $this->assertInstanceOf('Cake\ORM\Entity', $response);
+
+        // Test Array Malformation
+        $badArray = [
+            'grp' => '5th Letchworth',
+            'section' => 'Cub Scout 1'
+        ];
+
+        $response = $this->Sections->findOrMakeSection($badArray);
+        $this->assertFalse($response);
+
+        // Test Empty Section
+        $badArray = [
+            'grp' => '5th Letchworth',
+            'section' => 'Cub Scout 1'
+        ];
+
+        $response = $this->Sections->findOrMakeSection($badArray);
+        $this->assertFalse($response);
     }
 }

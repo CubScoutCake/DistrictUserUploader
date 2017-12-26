@@ -51,7 +51,6 @@ class ContactsFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => 1,
             'wp_id' => 1,
             'mc_id' => 1,
             'membership_number' => 1,

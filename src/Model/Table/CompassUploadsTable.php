@@ -161,4 +161,25 @@ class CompassUploadsTable extends Table
 
         return $rules;
     }
+
+    /**
+     * Stores emails as lower case.
+     *
+     * @param \Cake\Event\Event $event The event being processed.
+     * @return bool
+     */
+    public function beforeRules($event)
+    {
+        $entity = $event->data['entity'];
+
+        $entity->email = strtolower($entity->email);
+        $entity->forenames = ucwords(strtolower($entity->first_name));
+        $entity->surname = ucwords(strtolower($entity->last_name));
+
+        if (empty($entity->address_county)) {
+            $entity->address_county = 'Hertfordshire';
+        }
+
+        return true;
+    }
 }

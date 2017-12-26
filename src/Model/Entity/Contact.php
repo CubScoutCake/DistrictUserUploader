@@ -25,6 +25,8 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\WpRole $wp_role
  * @property \App\Model\Entity\ScoutGroup $admin_group
+ * @property \App\Model\Entity\Section $section
+ * @property \App\Model\Entity\RoleType $role_type
  */
 class Contact extends Entity
 {
@@ -55,6 +57,8 @@ class Contact extends Entity
         'county' => true,
         'postcode' => true,
         'admin_group' => true,
+        'role_type' => true,
+        'section' => true,
     ];
 
     /**

@@ -36,7 +36,6 @@ class ScoutGroupsFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => 1,
             'scout_group' => 'Lorem ipsum dolor sit amet',
             'number_stripped' => 1,
             'created' => 1511693333,

@@ -4,6 +4,9 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
+use Cake\Http\Response;
+use Cake\ORM\Entity;
+use Cake\ORM\TableRegistry;
 
 /**
  * FileUploads Controller
@@ -51,7 +54,7 @@ class FileUploadsController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -94,6 +97,72 @@ class FileUploadsController extends AppController
         }
         $this->set(compact('fileUpload'));
         $this->set('_serialize', ['fileUpload']);
+    }
+
+    /**
+     * @param int $fileUploadId The Id of the File to be processed
+     *
+     * @return Response
+     */
+    public function autoMerge($fileUploadId)
+    {
+        $fileUpload = $this->FileUploads->get($fileUploadId, ['contain' => 'CompassUploads']);
+
+        $this->loadComponent('Merge');
+
+        if (!empty($fileUpload->compass_uploads)) {
+            $total = 0;
+            $fail = 0;
+            $success = 0;
+            $overall = 0;
+
+            $deleteFail = 0;
+            $compassUploads = TableRegistry::get('CompassUploads');
+
+            foreach ($fileUpload->compass_uploads as $compass) {
+                $test = $this->Merge->autoMerge($compass->id);
+
+                $overall += 1;
+
+                if ($test) {
+                    $cArray = $compass->toArray();
+                    $merged = $this->Merge->contactUpload($cArray);
+
+                    $total += 1;
+
+                    if ($merged instanceof Entity) {
+                        $success += 1;
+
+                        $delRecord = $compassUploads->get($compass->id);
+                        if (!$compassUploads->delete($delRecord)) {
+                            $deleteFail += 1;
+                        }
+                    } else {
+                        $fail += 1;
+                    }
+                }
+            }
+
+            $unsynced = $overall - $total;
+
+            if ($success > 0) {
+                $this->Flash->success($success . ' Records Merged of ' . $total . ' Total (' . $unsynced . ' Ignored).');
+            }
+
+            if ($fail > 0) {
+                $this->Flash->error($fail . ' Records Failed to Merge of ' . $total . ' Total (' . $unsynced . ' Ignored).');
+            }
+
+            if ($deleteFail > 0) {
+                $this->Flash->error($deleteFail . ' Records Failed to Delete of ' . $success . ' Successful Records.');
+            }
+
+            if ($total == 0) {
+                $this->Flash->success('No Records to Automatically Sync.');
+            }
+        }
+
+        return $this->redirect(['action' => 'view', $fileUploadId]);
     }
 
     /**

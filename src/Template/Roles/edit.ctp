@@ -27,6 +27,7 @@
         <?php
             echo $this->Form->control('role_type_id', ['options' => $roleTypes]);
             echo $this->Form->control('section_id', ['options' => $sections]);
+            echo $this->Form->control('contact_id');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

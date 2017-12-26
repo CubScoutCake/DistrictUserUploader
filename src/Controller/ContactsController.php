@@ -91,11 +91,26 @@ class ContactsController extends AppController
     public function edit($id = null)
     {
         $contact = $this->Contacts->get($id, [
-            'contain' => []
+            'contain' => ['Sections', 'RoleTypes']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $contact = $this->Contacts->patchEntity($contact, $this->request->getData());
-            if ($this->Contacts->save($contact)) {
+            $contact = $this->Contacts->patchEntity($contact, $this->request->getData(), [
+                'associated' => [
+                    'Sections',
+                    'RoleTypes._joinData',
+                    'RoleTypes'
+                ]
+            ]);
+            $contact->setDirty('Sections', true);
+            $contact->setDirty('RoleTypes', true);
+            $contact->setDirty('RoleTypes._joinData', true);
+            if ($this->Contacts->save($contact, [
+                'associated' => [
+                    'Sections',
+                    'RoleTypes._joinData',
+                    'RoleTypes'
+                ]
+            ])) {
                 $this->Flash->success(__('The contact has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
@@ -104,7 +119,9 @@ class ContactsController extends AppController
         }
         $wpRoles = $this->Contacts->WpRoles->find('list', ['limit' => 200]);
         $groups = $this->Contacts->AdminGroups->find('list', ['limit' => 200]);
-        $this->set(compact('contact', 'wpRoles', 'groups'));
+        $roleTypes = $this->Contacts->RoleTypes->find('list', ['limit' => 200]);
+        $sectionTypes = $this->Contacts->Sections->SectionTypes->find('list', ['limit' => 200]);
+        $this->set(compact('contact', 'wpRoles', 'groups', 'roleTypes', 'sectionTypes'));
         $this->set('_serialize', ['contact']);
     }
 

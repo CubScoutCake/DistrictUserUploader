@@ -1,15 +1,21 @@
 <?php
 namespace App\Model\Table;
 
+use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\ORM\TableRegistry;
+use Cake\Utility\Inflector;
 use Cake\Validation\Validator;
 
 /**
  * Sections Model
  *
  * @property \App\Model\Table\SectionTypesTable|\Cake\ORM\Association\BelongsTo $SectionTypes
+ * @property \App\Model\Table\ContactsTable|\Cake\ORM\Association\BelongsToMany $Contacts
+ * @property \App\Model\Table\ScoutGroupsTable|\Cake\ORM\Association\BelongsTo $ScoutGroups
+ * @property \App\Model\Table\RolesTable|\Cake\ORM\Association\HasMany $Roles
  *
  * @method \App\Model\Entity\Section get($primaryKey, $options = [])
  * @method \App\Model\Entity\Section newEntity($data = null, array $options = [])
@@ -43,6 +49,19 @@ class SectionsTable extends Table
         $this->belongsTo('SectionTypes', [
             'foreignKey' => 'section_type_id',
             'joinType' => 'INNER'
+        ]);
+
+        $this->belongsTo('ScoutGroups', [
+            'foreignKey' => 'scout_group_id',
+            'joinType' => 'INNER'
+        ]);
+
+        $this->belongsToMany('Contacts', [
+            'through' => 'Roles',
+        ]);
+
+        $this->hasMany('Roles', [
+            'foreignKey' => 'section_id',
         ]);
     }
 
@@ -79,7 +98,70 @@ class SectionsTable extends Table
     {
         $rules->add($rules->isUnique(['section']));
         $rules->add($rules->existsIn(['section_type_id'], 'SectionTypes'));
+        $rules->add($rules->existsIn(['scout_group_id'], 'ScoutGroups'));
 
         return $rules;
+    }
+
+    /**
+     * @param array $sectionArr Requires Group & Section Keys to Create
+     *
+     * @return \App\Model\Entity\Section|bool
+     */
+    public function findOrMakeSection(array $sectionArr)
+    {
+        if (isset($sectionArr['group']) && isset($sectionArr['section'])) {
+            $scoutGroups = TableRegistry::get('ScoutGroups');
+            $sectionTypes = TableRegistry::get('SectionTypes');
+
+            $group = $scoutGroups->findOrCreate([ 'scout_group' => $sectionArr['group'] ]);
+
+            if ($group instanceof Entity) {
+                $groupId = $group->id;
+            }
+
+            $terms = explode(' ', $sectionArr['section']);
+
+            $termMatch = 0;
+            $scoutMatch = 0;
+
+            $types = $sectionTypes->find('all')->toArray();
+
+            foreach ($types as $type) {
+                $sectionType = strtoupper(Inflector::singularize($type->section_type));
+                foreach ($terms as $pos => $term) {
+                    $terms[$pos] = strtoupper(Inflector::singularize($term));
+                }
+
+                if (in_array($sectionType, $terms)) {
+                    $termMatch += 1;
+                    if ($sectionType == 'SCOUT') {
+                        $scoutMatch += 1;
+                        $scoutId = $type->id;
+                    }
+                    $termId = $type->id;
+                }
+            }
+
+            if ($termMatch == 1 && isset($termId)) {
+                $typeId = $termId;
+            } elseif ($scoutMatch == 1 && isset($scoutId)) {
+                $typeId = $scoutId;
+            }
+
+            if (isset($groupId) && isset($typeId)) {
+                $section = $this->findOrCreate([
+                    'section' => $sectionArr['section'],
+                    'scout_group_id' => $groupId,
+                    'section_type_id' => $typeId,
+                ]);
+
+                if ($section instanceof Entity) {
+                    return $section;
+                }
+            }
+        }
+
+        return false;
     }
 }

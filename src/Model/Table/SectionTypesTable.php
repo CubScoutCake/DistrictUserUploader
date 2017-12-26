@@ -33,7 +33,7 @@ class SectionTypesTable extends Table
         parent::initialize($config);
 
         $this->setTable('section_types');
-        $this->setDisplayField('id');
+        $this->setDisplayField('section_type');
         $this->setPrimaryKey('id');
 
         $this->hasMany('Sections', [

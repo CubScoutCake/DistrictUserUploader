@@ -18,6 +18,14 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="<?php echo $this->Url->build([
+			    'controller' => 'FileUploads',
+			    'action' => 'index',
+			    'prefix' => false]); ?>">
+                <i class="fas fa-upload fa-fw"></i> File uploads
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo $this->Url->build([
 		        'controller' => 'ScoutGroups',
 		        'action' => 'index',
 		        'prefix' => false]); ?>">

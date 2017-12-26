@@ -36,7 +36,7 @@ class WpRolesFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'wp_role' => 'Lorem ips',
+            'wp_role' => 'Leader',
             'created' => 1511693181,
             'modified' => 1511693181
         ],

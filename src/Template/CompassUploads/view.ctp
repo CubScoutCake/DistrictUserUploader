@@ -71,12 +71,28 @@
             <td><?= h($compassUpload->role) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('Provisional') ?></th>
+            <td><?= $compassUpload->provisional ? 'Yes' : 'No' ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Clean Role') ?></th>
+            <td><?= h($compassUpload->clean_role) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('Location') ?></th>
             <td><?= h($compassUpload->location) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('Clean Section') ?></th>
+            <td><?= !empty($compassUpload->clean_section) ? $compassUpload->clean_section : '' ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Clean Group') ?></th>
+            <td><?= h($compassUpload->clean_group) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('Phone') ?></th>
-            <td><?= h($compassUpload->Phone) ?></td>
+            <td><?= h($compassUpload->phone) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Email') ?></th>

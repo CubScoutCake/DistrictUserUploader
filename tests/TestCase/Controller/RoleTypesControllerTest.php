@@ -19,7 +19,10 @@ class RoleTypesControllerTest extends IntegrationTestCase
         'app.role_types',
         'app.section_types',
         'app.sections',
-        'app.roles'
+        'app.scout_groups',
+        'app.roles',
+        'app.contacts',
+        'app.wp_roles',
     ];
 
     /**

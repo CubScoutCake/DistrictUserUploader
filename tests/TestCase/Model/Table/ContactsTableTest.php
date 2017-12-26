@@ -26,6 +26,11 @@ class ContactsTableTest extends TestCase
     public $fixtures = [
         'app.contacts',
         'app.wp_roles',
+        'app.roles',
+        'app.role_types',
+        'app.section_types',
+        'app.sections',
+        'app.scout_groups'
     ];
 
     /**
@@ -80,5 +85,56 @@ class ContactsTableTest extends TestCase
     public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test beforeRules method
+     *
+     * @return void
+     */
+    public function testBeforeRules()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test findNew method
+     *
+     * @return void
+     */
+    public function testFindNew()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test findContactOrCreate method
+     *
+     * @return void
+     */
+    public function testFindContactOrCreate()
+    {
+        $goodArray = [
+            'file_upload_id' => 1,
+            'membership_number' => 895271,
+            'title' => 'Mr',
+            'first_name' => 'Alan',
+            'last_name' => 'Mann',
+            'address' => ' 24 Broughton Hill Letchworth Garden City. SG6 1QB',
+            'address_line1' => '24 Broughton Hill',
+            'address_line2' => '',
+            'address_line3' => '',
+            'address_town' => 'Letchworth Garden City',
+            'address_county' => '',
+            'postcode' => 'SG6 1QB',
+            'address_country' => 'United Kingdom',
+            'role' => 'Assistant Section Leader - Beaver Scouts',
+            'location' => 'Beaver Section @ 4th Letchworth (St Pauls)',
+            'phone' => '01462637289',
+            'email' => 'alan.j.mann@gmail.com',
+        ];
+
+        $response = $this->Contacts->findContactOrCreate($goodArray);
+        $this->assertInstanceOf('Cake\ORM\Entity', $response);
     }
 }

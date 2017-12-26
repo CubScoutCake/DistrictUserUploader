@@ -10,7 +10,7 @@ use Cake\Validation\Validator;
  * RoleTypes Model
  *
  * @property \App\Model\Table\SectionTypesTable|\Cake\ORM\Association\BelongsTo $SectionTypes
- * @property \App\Model\Table\RolesTable|\Cake\ORM\Association\HasMany $Roles
+ * @property \App\Model\Table\ContactsTable|\Cake\ORM\Association\BelongsToMany $Contacts
  *
  * @method \App\Model\Entity\RoleType get($primaryKey, $options = [])
  * @method \App\Model\Entity\RoleType newEntity($data = null, array $options = [])
@@ -34,14 +34,18 @@ class RoleTypesTable extends Table
         parent::initialize($config);
 
         $this->setTable('role_types');
-        $this->setDisplayField('id');
+        $this->setDisplayField('role_type');
         $this->setPrimaryKey('id');
 
         $this->belongsTo('SectionTypes', [
             'foreignKey' => 'section_type_id'
         ]);
+        $this->belongsToMany('Contacts', [
+            'through' => 'Roles',
+        ]);
+
         $this->hasMany('Roles', [
-            'foreignKey' => 'role_type_id'
+            'foreignKey' => 'role_type_id',
         ]);
     }
 
@@ -65,9 +69,9 @@ class RoleTypesTable extends Table
 
         $validator
             ->scalar('role_abbreviation')
-            ->maxLength('role_abbreviation', 255)
-            ->requirePresence('role_abbreviation', 'create')
-            ->notEmpty('role_abbreviation');
+            ->maxLength('role_abbreviation', 32)
+            ->requirePresence('role_abbreviation', false)
+            ->allowEmpty('role_abbreviation');
 
         return $validator;
     }

@@ -27,7 +27,10 @@ class RolesTableTest extends TestCase
         'app.roles',
         'app.role_types',
         'app.section_types',
-        'app.sections'
+        'app.sections',
+        'app.wp_roles',
+        'app.contacts',
+        'app.scout_groups',
     ];
 
     /**

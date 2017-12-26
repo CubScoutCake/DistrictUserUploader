@@ -5,7 +5,7 @@
  */
 
 $this->Breadcrumbs->add(
-	__('Auth Users'),
+	__('File Uploads'),
 	['class' => 'breadcrumb-item active']
 );
 
@@ -13,7 +13,7 @@ $this->Breadcrumbs->add(
 ?>
 <div class="row">
     <div class="col" >
-        <h2><i class="fas fa-user fa-fw"></i> <?= __('Auth Users') ?></h2>
+        <h2><i class="fas fa-upload fa-fw"></i> <?= __('File Uploads') ?></h2>
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -36,7 +36,7 @@ $this->Breadcrumbs->add(
                         <td><?= h($fileUpload->updated_at) ?></td>
                         <td class="actions">
                             <?= $this->Html->link(__('View'), ['action' => 'view', $fileUpload->id]) ?>
-                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $fileUpload->id]) ?>
+                            <?= $this->Html->link(__('Auto Merge'), ['action' => 'autoMerge', $fileUpload->id]) ?>
                             <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $fileUpload->id], ['confirm' => __('Are you sure you want to delete # {0}?', $fileUpload->id)]) ?>
                         </td>
                     </tr>

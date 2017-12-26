@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Http\Response;
+use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -74,6 +76,10 @@ class CompassUploadsController extends AppController
             }
         }
 
+        // Remove Header Row Failure
+        $fail -= 1;
+        $total -= 1;
+
         if ($fail > 0) {
             $errorText = $fail . ' records failed of ' . $total . ' total records.';
             $this->Flash->error($errorText);
@@ -81,6 +87,36 @@ class CompassUploadsController extends AppController
             $successText = $total . ' records added successfully.';
             $this->Flash->success($successText);
         }
+
+        return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * @param int $contactId The Value of the Contact
+     *
+     * @return Response
+     */
+    public function merge($contactId)
+    {
+        $this->loadComponent('Merge');
+
+        $contact = $this->CompassUploads->get($contactId)->toArray();
+
+        $response = $this->Merge->contactUpload($contact);
+
+        if ($response instanceof Entity) {
+            $this->Flash->success('Uploaded Record Merged.');
+
+            $compassUpload = $this->CompassUploads->get($contactId);
+            if ($this->CompassUploads->delete($compassUpload)) {
+                $this->Flash->success(__('The compass upload entry has been Consumed.'));
+            } else {
+                $this->Flash->error(__('The compass upload could not be deleted. Please, try again.'));
+            }
+
+            return $this->redirect(['action' => 'view', 'controller' => 'Contacts', $response->id]);
+        }
+        $this->Flash->error('Issue Merging Record.');
 
         return $this->redirect(['action' => 'index']);
     }

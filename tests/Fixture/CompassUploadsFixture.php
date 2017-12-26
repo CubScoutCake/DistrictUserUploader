@@ -49,7 +49,6 @@ class CompassUploadsFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => 1,
             'file_upload_id' => 1,
             'membership_number' => 1,
             'title' => 'Lorem ipsum dolor sit amet',
@@ -67,6 +66,25 @@ class CompassUploadsFixture extends TestFixture
             'location' => 'Lorem ipsum dolor sit amet',
             'phone' => 'Lorem ipsum dolor sit amet',
             'email' => 'Lorem ipsum dolor sit amet'
+        ],
+        [
+            'file_upload_id' => 1,
+            'membership_number' => 999,
+            'title' => 'Lorem ipsum dolwor sit amet',
+            'forenames' => 'Lorem MKD',
+            'surname' => 'TYLER',
+            'address' => 'Lsorem ipsum a sit amet',
+            'address_line1' => 'Locrem ipsum dodlor sit amet',
+            'address_line2' => 'Lorem ipsum dolor sit amet',
+            'address_line3' => 'Lorem ipsum dolor sit amet',
+            'address_town' => 'Lorcem ipsum saf svit amet',
+            'address_county' => 'HERTBED',
+            'postcode' => 'SG88 9JS',
+            'address_country' => 'Lorems ipssgdum dolor sit amet',
+            'role' => 'Lorem ipssdgum dolor scit amet',
+            'location' => 'Loremv ipsum dolor sit amet',
+            'phone' => '01234 567 910',
+            'email' => 'jacob@llama.com'
         ],
     ];
 }

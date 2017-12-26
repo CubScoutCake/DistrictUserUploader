@@ -17,7 +17,8 @@ class SectionsControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'app.sections',
-        'app.section_types'
+        'app.section_types',
+        'app.scout_groups',
     ];
 
     /**

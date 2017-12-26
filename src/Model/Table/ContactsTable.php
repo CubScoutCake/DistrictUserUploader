@@ -1,15 +1,20 @@
 <?php
 namespace App\Model\Table;
 
+use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
 
 /**
  * Contacts Model
  *
  * @property \App\Model\Table\WpRolesTable|\Cake\ORM\Association\BelongsTo $WpRoles
+ * @property \App\Model\Table\ScoutGroupsTable|\Cake\ORM\Association\BelongsTo $AdminGroups
+ * @property \App\Model\Table\RoleTypesTable|\Cake\ORM\Association\BelongsToMany $RoleTypes
+ * @property \App\Model\Table\SectionsTable|\Cake\ORM\Association\BelongsToMany $Sections
  *
  * @method \App\Model\Entity\Contact get($primaryKey, $options = [])
  * @method \App\Model\Entity\Contact newEntity($data = null, array $options = [])
@@ -28,6 +33,7 @@ class ContactsTable extends Table
      * Initialize method
      *
      * @param array $config The configuration for the Table.
+     *
      * @return void
      */
     public function initialize(array $config)
@@ -51,12 +57,25 @@ class ContactsTable extends Table
             'property' => 'scout_group',
             'propertyName' => 'admin_group',
         ]);
+
+        $this->hasMany('Roles', [
+            'foreignKey' => 'contact_id',
+        ]);
+
+        $this->belongsToMany('RoleTypes', [
+            'through' => 'Roles',
+        ]);
+
+        $this->belongsToMany('Sections', [
+            'through' => 'Roles',
+        ]);
     }
 
     /**
      * Default validation rules.
      *
      * @param \Cake\Validation\Validator $validator Validator instance.
+     *
      * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator)
@@ -69,17 +88,17 @@ class ContactsTable extends Table
             ->integer('membership_number')
             ->requirePresence('membership_number', 'create')
             ->notEmpty('membership_number')
-            ->add('membership_number', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->add('membership_number', 'unique', [ 'rule' => 'validateUnique', 'provider' => 'table' ]);
 
         $validator
             ->integer('wp_id')
             ->allowEmpty('wp_id')
-            ->add('wp_id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->add('wp_id', 'unique', [ 'rule' => 'validateUnique', 'provider' => 'table' ]);
 
         $validator
             ->integer('mc_id')
             ->allowEmpty('mc_id')
-            ->add('mc_id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->add('mc_id', 'unique', [ 'rule' => 'validateUnique', 'provider' => 'table' ]);
 
         $validator
             ->scalar('first_name')
@@ -97,7 +116,7 @@ class ContactsTable extends Table
             ->email('email')
             ->requirePresence('email', 'create')
             ->notEmpty('email')
-            ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->add('email', 'unique', [ 'rule' => 'validateUnique', 'provider' => 'table' ]);
 
         $validator
             ->scalar('address_line_1')
@@ -132,16 +151,17 @@ class ContactsTable extends Table
      * application integrity.
      *
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     *
      * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['email']));
-        $rules->add($rules->isUnique(['membership_number']));
-        $rules->add($rules->isUnique(['wp_id']));
-        $rules->add($rules->isUnique(['mc_id']));
-        $rules->add($rules->existsIn(['wp_role_id'], 'WpRoles'));
-        $rules->add($rules->existsIn(['admin_group'], 'AdminGroups'));
+        $rules->add($rules->isUnique([ 'email' ]));
+        $rules->add($rules->isUnique([ 'membership_number' ]));
+        $rules->add($rules->isUnique([ 'wp_id' ]));
+        $rules->add($rules->isUnique([ 'mc_id' ]));
+        $rules->add($rules->existsIn([ 'wp_role_id' ], 'WpRoles'));
+        $rules->add($rules->existsIn([ 'admin_group' ], 'AdminGroups'));
 
         return $rules;
     }
@@ -150,6 +170,7 @@ class ContactsTable extends Table
      * Stores emails as lower case.
      *
      * @param \Cake\Event\Event $event The event being processed.
+     *
      * @return bool
      */
     public function beforeRules($event)
@@ -176,6 +197,68 @@ class ContactsTable extends Table
      */
     public function findNew($query)
     {
-        return $query->where(['wp_id IS' => null]);
+        return $query->where([ 'wp_id IS' => null ]);
+    }
+
+    /**
+     * @param array $ContactArray The Contact Data to be Merged
+     *
+     * @return \App\Model\Entity\Contact|bool
+     */
+    public function findContactOrCreate(array $ContactArray)
+    {
+        if (isset($ContactArray['membership_number']) && isset($ContactArray['email']) && isset($ContactArray['first_name']) && isset($ContactArray['last_name'])) {
+            $contactQuery = $this
+                ->query()
+                ->where([
+                    'OR' => [
+                        'membership_number' => $ContactArray['membership_number'],
+                        [
+                            'email' => $ContactArray['email'],
+                            'first_name' => $ContactArray['first_name'],
+                            'last_name' => $ContactArray['last_name'],
+                        ]
+                    ]
+                ]);
+
+            $row = $contactQuery->first();
+
+            if ($row == null) {
+                $row = $this->newEntity();
+            }
+
+            $contact = $row;
+
+            $contact = $this->patchEntity($contact, [
+                'email' => $ContactArray['email'],
+                'first_name' => $ContactArray['first_name'],
+                'last_name' => $ContactArray['last_name'],
+                'membership_number' => $ContactArray['membership_number'],
+                'address_line_1' => $ContactArray['address_line1'],
+                'address_line_2' => $ContactArray['address_line2'],
+                'city' => $ContactArray['address_town'],
+                'county' => $ContactArray['address_county'],
+                'postcode' => $ContactArray['postcode']
+            ]);
+
+            if (empty($contact->wp_role_id)) {
+                $wpRoles = TableRegistry::get('WpRoles');
+                $leaderRole = $wpRoles->find()->where(['wp_role' => 'Leader'])->first();
+
+                $id = $leaderRole->id;
+                if (!is_numeric($id)) {
+                    $id = 1;
+                }
+                $contact = $contact->set('wp_role_id', $id);
+            }
+
+            $response = $this->save($contact);
+
+            if ($response instanceof Entity) {
+                return $response;
+            }
+        }
+
+        return false;
     }
 }

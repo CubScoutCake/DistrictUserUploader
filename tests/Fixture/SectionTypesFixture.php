@@ -33,12 +33,10 @@ class SectionTypesFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => 1,
-            'section_type' => 'Lorem ipsum dolor sit amet'
+            'section_type' => 'Beavers'
         ],
         [
-            'id' => 2,
-            'section_type' => 'Lorem fsk dolor sit amet'
+            'section_type' => 'Cubs'
         ],
     ];
 }

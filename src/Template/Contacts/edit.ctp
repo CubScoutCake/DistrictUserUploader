@@ -35,6 +35,11 @@ $this->Breadcrumbs->add(
                 echo $this->Form->control('wp_role_id', ['options' => $wpRoles]);
                 echo $this->Form->control('wp_id', ['type' => 'number', 'empty' => true, 'label' => 'WordPress ID']);
                 echo $this->Form->control('mc_id', ['type' => 'number', 'empty' => true, 'label' => 'MailChimp ID']);
+                echo $this->Form->control('role_types.0.role_type', ['options' => $roleTypes, 'empty' => true]);
+                echo $this->Form->control('sections.0.scout_group_id', ['options' => $groups, 'empty' => true]);
+                echo $this->Form->control('sections.0.section_type_id', ['options' => $sectionTypes, 'empty' => true]);
+                echo $this->Form->control('sections.0.section');
+                echo $this->Form->control('role_types.0._joinData.provisional');
             ?>
         </fieldset>
         <?= $this->Form->button(__('Submit')) ?>

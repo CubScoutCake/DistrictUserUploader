@@ -9,9 +9,11 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property int $role_type_id
  * @property int $section_id
+ * @property int $contact_id
  *
  * @property \App\Model\Entity\RoleType $role_type
  * @property \App\Model\Entity\Section $section
+ * @property \App\Model\Entity\Contact $contact
  */
 class Role extends Entity
 {
@@ -28,7 +30,9 @@ class Role extends Entity
     protected $_accessible = [
         'role_type_id' => true,
         'section_id' => true,
+        'contact_id' => true,
         'role_type' => true,
-        'section' => true
+        'section' => true,
+        'provisional' => true,
     ];
 }

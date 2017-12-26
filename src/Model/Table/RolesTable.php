@@ -11,6 +11,7 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\RoleTypesTable|\Cake\ORM\Association\BelongsTo $RoleTypes
  * @property \App\Model\Table\SectionsTable|\Cake\ORM\Association\BelongsTo $Sections
+ * @property |App\Model\Table\ContactsTable|\Cake\ORM\Association\BelongsTo $Contacts
  *
  * @method \App\Model\Entity\Role get($primaryKey, $options = [])
  * @method \App\Model\Entity\Role newEntity($data = null, array $options = [])
@@ -45,6 +46,10 @@ class RolesTable extends Table
             'foreignKey' => 'section_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('Contacts', [
+            'foreignKey' => 'contact_id',
+            'joinType' => 'INNER'
+        ]);
     }
 
     /**
@@ -57,7 +62,11 @@ class RolesTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmpty('id');
+
+        $validator
+            ->boolean('provisional')
+            ->allowEmpty('provisional');
 
         return $validator;
     }
@@ -73,6 +82,7 @@ class RolesTable extends Table
     {
         $rules->add($rules->existsIn(['role_type_id'], 'RoleTypes'));
         $rules->add($rules->existsIn(['section_id'], 'Sections'));
+        $rules->add($rules->existsIn(['contact_id'], 'Contacts'));
 
         return $rules;
     }
