@@ -38,7 +38,14 @@ class WpRolesTable extends Table
         $this->setDisplayField('wp_role');
         $this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp');
+        $this->addBehavior('Timestamp', [
+            'events' => [
+                'Model.beforeSave' => [
+                    'created' => 'new',
+                    'modified' => 'always'
+                ]
+            ]
+        ]);
 
         $this->hasMany('Contacts', [
             'foreignKey' => 'wp_role_id'

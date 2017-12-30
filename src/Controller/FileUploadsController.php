@@ -61,12 +61,12 @@ class FileUploadsController extends AppController
         $fileUpload = $this->FileUploads->newEntity();
 
         /*[
-		    'name' => 'conference_schedule.pdf',
-		    'type' => 'application/pdf',
-		    'tmp_name' => 'C:/WINDOWS/TEMP/php1EE.tmp',
-		    'error' => 0, // On Windows this can be a string.
-		    'size' => 41737,
-	    ];*/
+            'name' => 'conference_schedule.pdf',
+            'type' => 'application/pdf',
+            'tmp_name' => 'C:/WINDOWS/TEMP/php1EE.tmp',
+            'error' => 0, // On Windows this can be a string.
+            'size' => 41737,
+        ];*/
 
         if ($this->request->is('post')) {
             $fileMeta = $this->request->getData('file_name');

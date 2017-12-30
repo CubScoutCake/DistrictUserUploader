@@ -20,6 +20,8 @@ use Cake\ORM\Entity;
  * @property string $city
  * @property string $county
  * @property string $postcode
+ * @property string $preferred_name
+ * @property string $validated
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
@@ -59,6 +61,8 @@ class Contact extends Entity
         'admin_group' => true,
         'role_type' => true,
         'section' => true,
+        'preferred_name' => true,
+        'validated' => true,
     ];
 
     /**

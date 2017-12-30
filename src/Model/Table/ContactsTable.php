@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Table;
 
+use Cake\Event\Event;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -44,7 +45,17 @@ class ContactsTable extends Table
         $this->setDisplayField('full_name');
         $this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp');
+        $this->addBehavior('Timestamp', [
+            'events' => [
+                'Model.beforeSave' => [
+                    'created' => 'new',
+                    'modified' => 'always'
+                ],
+                'AuthUsers.login' => [
+                    'last_login' => 'always'
+                ],
+            ]
+        ]);
 
         $this->belongsTo('WpRoles', [
             'foreignKey' => 'wp_role_id',
@@ -145,6 +156,15 @@ class ContactsTable extends Table
             ->allowEmpty('postcode')
             ->maxLength('postcode', 9);
 
+        $validator
+            ->scalar('preferred_name')
+            ->allowEmpty('preferred_name')
+            ->maxLength('preferred_name', 255);
+
+        $validator
+            ->boolean('validated')
+            ->allowEmpty('validated');
+
         return $validator;
     }
 
@@ -179,15 +199,30 @@ class ContactsTable extends Table
     {
         $entity = $event->data['entity'];
 
+        $dirty = $entity->getDirty();
+
         $entity->email = strtolower($entity->email);
+        $entity->setDirty('email', false);
+
         $entity->first_name = ucwords(strtolower($entity->first_name));
+        $entity->setDirty('first_name', false);
         $entity->last_name = ucwords(strtolower($entity->last_name));
+        $entity->setDirty('last_name', false);
 
         $entity->address_line_1 = ucwords(strtolower($entity->address_line_1));
+        $entity->setDirty('address_line_1', false);
         $entity->address_line_2 = ucwords(strtolower($entity->address_line_2));
+        $entity->setDirty('address_line_2', false);
         $entity->city = ucwords(strtolower($entity->city));
+        $entity->setDirty('city', false);
         $entity->county = ucwords(strtolower($entity->county));
+        $entity->setDirty('county', false);
         $entity->postcode = strtoupper($entity->postcode);
+        $entity->setDirty('postcode', false);
+
+        foreach ($dirty as $dirt) {
+            $entity->setDirty($dirt, true);
+        }
 
         return true;
     }
@@ -268,5 +303,54 @@ class ContactsTable extends Table
         }
 
         return false;
+    }
+
+    /**
+     * AuditSave Method for Saving Changed Values
+     *
+     * @param Entity $entity The Entity to be Audit Saved.
+     * @return Entity $entity The Entity being Saved.
+     */
+    public function auditSave(Entity $entity)
+    {
+        $dirtyValues = $entity->getDirty();
+        $audits = TableRegistry::get('Audits');
+
+        foreach ($dirtyValues as $dValue) {
+            $current = $entity->$dValue;
+            $original = $entity->getOriginal($dValue);
+
+            if ($entity->isNew()) {
+                $original = null;
+            }
+
+            if ($current <> $original) {
+                $auditData = [
+                    'audit_field' => $dValue,
+                    'audit_table' => 'Contacts',
+                    'original_value' => $original,
+                    'modified_value' => $current,
+                ];
+
+                $audit = $audits->newEntity($auditData);
+                $audit = $audits->save($audit);
+            }
+        }
+
+        return $entity;
+    }
+
+    /**
+     * before Save LifeCycle Callback
+     *
+     * @param Event $event The Event to be Processed
+     * @param Entity $entity The Entity on which the Save is being Called.
+     * @param array $options Options Values
+     *
+     * @return void
+     */
+    public function beforeSave(Event $event, Entity $entity, $options)
+    {
+        $this->auditSave($entity);
     }
 }

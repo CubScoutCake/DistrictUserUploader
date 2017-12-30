@@ -38,7 +38,14 @@ class ScoutGroupsTable extends Table
         $this->setDisplayField('group_alias');
         $this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp');
+        $this->addBehavior('Timestamp', [
+            'events' => [
+                'Model.beforeSave' => [
+                    'created' => 'new',
+                    'modified' => 'always'
+                ]
+            ]
+        ]);
 
         $this->hasMany('Sections', [
             'foreignKey' => 'scout_group_id',

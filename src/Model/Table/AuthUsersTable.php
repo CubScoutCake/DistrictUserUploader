@@ -38,7 +38,14 @@ class AuthUsersTable extends Table
         $this->setDisplayField('full_name');
         $this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp');
+        $this->addBehavior('Timestamp', [
+            'events' => [
+                'Model.beforeSave' => [
+                    'created' => 'new',
+                    'modified' => 'always'
+                ]
+            ]
+        ]);
     }
 
     /**

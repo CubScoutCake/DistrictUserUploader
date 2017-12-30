@@ -54,16 +54,16 @@
         },
         {
             "name": "cakephp/cakephp",
-            "version": "3.5.8",
+            "version": "3.5.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "ec1e3d7008602b0f28afa08200c28a2570dc3001"
+                "reference": "288a1e2c86319a6e51fdeca0d086b95be1853b11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/ec1e3d7008602b0f28afa08200c28a2570dc3001",
-                "reference": "ec1e3d7008602b0f28afa08200c28a2570dc3001",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/288a1e2c86319a6e51fdeca0d086b95be1853b11",
+                "reference": "288a1e2c86319a6e51fdeca0d086b95be1853b11",
                 "shasum": ""
             },
             "require": {
@@ -95,7 +95,7 @@
             },
             "require-dev": {
                 "cakephp/cakephp-codesniffer": "^3.0",
-                "phpunit/phpunit": "^5.7|^6.0"
+                "phpunit/phpunit": "^5.7.14|^6.0"
             },
             "suggest": {
                 "ext-openssl": "To use Security::encrypt() or have secure CSRF token generation.",
@@ -136,24 +136,24 @@
                 "rapid-development",
                 "validation"
             ],
-            "time": "2017-12-12T02:12:32+00:00"
+            "time": "2017-12-29T01:44:26+00:00"
         },
         {
             "name": "cakephp/chronos",
-            "version": "1.1.2",
+            "version": "1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/chronos.git",
-                "reference": "0621b191334d8dcb56907688986dd24eb8c38234"
+                "reference": "56d98330d366a469745848b07540373846c40561"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/chronos/zipball/0621b191334d8dcb56907688986dd24eb8c38234",
-                "reference": "0621b191334d8dcb56907688986dd24eb8c38234",
+                "url": "https://api.github.com/repos/cakephp/chronos/zipball/56d98330d366a469745848b07540373846c40561",
+                "reference": "56d98330d366a469745848b07540373846c40561",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5.9"
+                "php": "^5.5.9|^7"
             },
             "require-dev": {
                 "athletic/athletic": "~0.1",
@@ -193,7 +193,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2017-04-27T01:27:49+00:00"
+            "time": "2017-12-25T22:42:18+00:00"
         },
         {
             "name": "cakephp/migrations",
@@ -250,16 +250,16 @@
         },
         {
             "name": "cakephp/plugin-installer",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/plugin-installer.git",
-                "reference": "3449cb3251e3e741b123237765e278005565d8de"
+                "reference": "41373d0678490502f45adc7be88aa22d24ac1843"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/plugin-installer/zipball/3449cb3251e3e741b123237765e278005565d8de",
-                "reference": "3449cb3251e3e741b123237765e278005565d8de",
+                "url": "https://api.github.com/repos/cakephp/plugin-installer/zipball/41373d0678490502f45adc7be88aa22d24ac1843",
+                "reference": "41373d0678490502f45adc7be88aa22d24ac1843",
                 "shasum": ""
             },
             "require-dev": {
@@ -287,20 +287,20 @@
                 }
             ],
             "description": "A composer installer for CakePHP 3.0+ plugins.",
-            "time": "2017-03-21T13:48:47+00:00"
+            "time": "2017-12-24T21:09:29+00:00"
         },
         {
             "name": "composer/installers",
-            "version": "v1.4.0",
+            "version": "v1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "9ce17fb70e9a38dd8acff0636a29f5cf4d575c1b"
+                "reference": "049797d727261bf27f2690430d935067710049c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/9ce17fb70e9a38dd8acff0636a29f5cf4d575c1b",
-                "reference": "9ce17fb70e9a38dd8acff0636a29f5cf4d575c1b",
+                "url": "https://api.github.com/repos/composer/installers/zipball/049797d727261bf27f2690430d935067710049c2",
+                "reference": "049797d727261bf27f2690430d935067710049c2",
                 "shasum": ""
             },
             "require": {
@@ -312,7 +312,7 @@
             },
             "require-dev": {
                 "composer/composer": "1.0.*@dev",
-                "phpunit/phpunit": "4.1.*"
+                "phpunit/phpunit": "^4.8.36"
             },
             "type": "composer-plugin",
             "extra": {
@@ -383,15 +383,18 @@
                 "lavalite",
                 "lithium",
                 "magento",
+                "majima",
                 "mako",
                 "mediawiki",
                 "modulework",
+                "modx",
                 "moodle",
                 "osclass",
                 "phpbb",
                 "piwik",
                 "ppi",
                 "puppet",
+                "pxcms",
                 "reindex",
                 "roundcube",
                 "shopware",
@@ -404,7 +407,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2017-08-09T07:53:48+00:00"
+            "time": "2017-12-29T09:13:20+00:00"
         },
         {
             "name": "friendsofcake/bootstrap-ui",
@@ -1392,16 +1395,16 @@
         },
         {
             "name": "cakephp/bake",
-            "version": "1.5.5",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/bake.git",
-                "reference": "93e1f12c066152fcedd3c094e446b504a4a299a0"
+                "reference": "166f9af9b2acf44de5f674ae3972d05134a36363"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/bake/zipball/93e1f12c066152fcedd3c094e446b504a4a299a0",
-                "reference": "93e1f12c066152fcedd3c094e446b504a4a299a0",
+                "url": "https://api.github.com/repos/cakephp/bake/zipball/166f9af9b2acf44de5f674ae3972d05134a36363",
+                "reference": "166f9af9b2acf44de5f674ae3972d05134a36363",
                 "shasum": ""
             },
             "require": {
@@ -1436,25 +1439,25 @@
                 "bake",
                 "cakephp"
             ],
-            "time": "2017-12-07T06:14:52+00:00"
+            "time": "2017-12-29T01:45:25+00:00"
         },
         {
             "name": "cakephp/cakephp-codesniffer",
-            "version": "3.0.2",
+            "version": "3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp-codesniffer.git",
-                "reference": "4d13930311794f3b2a663c082bc29c146ecc9add"
+                "reference": "d77ac81199f2f1e5a8d8ebf96a5d6d7cd4e0542b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp-codesniffer/zipball/4d13930311794f3b2a663c082bc29c146ecc9add",
-                "reference": "4d13930311794f3b2a663c082bc29c146ecc9add",
+                "url": "https://api.github.com/repos/cakephp/cakephp-codesniffer/zipball/d77ac81199f2f1e5a8d8ebf96a5d6d7cd4e0542b",
+                "reference": "d77ac81199f2f1e5a8d8ebf96a5d6d7cd4e0542b",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.4",
-                "squizlabs/php_codesniffer": "~3.0.0"
+                "squizlabs/php_codesniffer": "^3.0.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "<6.0"
@@ -1481,20 +1484,20 @@
                 "codesniffer",
                 "framework"
             ],
-            "time": "2017-12-12T18:49:26+00:00"
+            "time": "2017-12-21T20:01:35+00:00"
         },
         {
             "name": "cakephp/debug_kit",
-            "version": "3.11.3",
+            "version": "3.11.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/debug_kit.git",
-                "reference": "fa9ddad4233297c545a629c629a1068f5f0b4c63"
+                "reference": "93bc9a1b4ac2f45587165b19e89cf86bac02120b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/fa9ddad4233297c545a629c629a1068f5f0b4c63",
-                "reference": "fa9ddad4233297c545a629c629a1068f5f0b4c63",
+                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/93bc9a1b4ac2f45587165b19e89cf86bac02120b",
+                "reference": "93bc9a1b4ac2f45587165b19e89cf86bac02120b",
                 "shasum": ""
             },
             "require": {
@@ -1541,7 +1544,7 @@
                 "debug",
                 "kit"
             ],
-            "time": "2017-12-15T18:49:40+00:00"
+            "time": "2017-12-22T17:55:46+00:00"
         },
         {
             "name": "codeclimate/php-test-reporter",
@@ -2252,16 +2255,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v3.1.2",
+            "version": "v3.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "08131e7ff29de6bb9f12275c7d35df71f25f4d89"
+                "reference": "579f4ce846734a1cf55d6a531d00ca07a43e3cda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/08131e7ff29de6bb9f12275c7d35df71f25f4d89",
-                "reference": "08131e7ff29de6bb9f12275c7d35df71f25f4d89",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/579f4ce846734a1cf55d6a531d00ca07a43e3cda",
+                "reference": "579f4ce846734a1cf55d6a531d00ca07a43e3cda",
                 "shasum": ""
             },
             "require": {
@@ -2299,7 +2302,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2017-11-04T11:48:34+00:00"
+            "time": "2017-12-26T14:43:21+00:00"
         },
         {
             "name": "padraic/humbug_get_contents",
@@ -2412,16 +2415,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.8.16",
+            "version": "v0.8.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "d4c8eab0683dc056f2ca54ca67f5388527c068b1"
+                "reference": "5069b70e8c4ea492c2b5939b6eddc78bfe41cfec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/d4c8eab0683dc056f2ca54ca67f5388527c068b1",
-                "reference": "d4c8eab0683dc056f2ca54ca67f5388527c068b1",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/5069b70e8c4ea492c2b5939b6eddc78bfe41cfec",
+                "reference": "5069b70e8c4ea492c2b5939b6eddc78bfe41cfec",
                 "shasum": ""
             },
             "require": {
@@ -2480,7 +2483,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2017-12-10T21:49:27+00:00"
+            "time": "2017-12-28T16:14:16+00:00"
         },
         {
             "name": "satooshi/php-coveralls",
@@ -2686,16 +2689,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.0.2",
+            "version": "3.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "c7594a88ae75401e8f8d0bd4deb8431b39045c51"
+                "reference": "d7c00c3000ac0ce79c96fcbfef86b49a71158cd1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/c7594a88ae75401e8f8d0bd4deb8431b39045c51",
-                "reference": "c7594a88ae75401e8f8d0bd4deb8431b39045c51",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/d7c00c3000ac0ce79c96fcbfef86b49a71158cd1",
+                "reference": "d7c00c3000ac0ce79c96fcbfef86b49a71158cd1",
                 "shasum": ""
             },
             "require": {
@@ -2705,7 +2708,7 @@
                 "php": ">=5.4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.0"
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0"
             },
             "bin": [
                 "bin/phpcs",
@@ -2733,7 +2736,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2017-07-18T01:12:32+00:00"
+            "time": "2017-12-19T21:44:46+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -3119,33 +3122,33 @@
         },
         {
             "name": "wyrihaximus/twig-view",
-            "version": "4.2.1",
+            "version": "4.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WyriHaximus/TwigView.git",
-                "reference": "153def65640cad8d4839c28a1e4ddc21858ab2ba"
+                "reference": "270996505482d6628dd1f8f3d35f1e0066368c55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WyriHaximus/TwigView/zipball/153def65640cad8d4839c28a1e4ddc21858ab2ba",
-                "reference": "153def65640cad8d4839c28a1e4ddc21858ab2ba",
+                "url": "https://api.github.com/repos/WyriHaximus/TwigView/zipball/270996505482d6628dd1f8f3d35f1e0066368c55",
+                "reference": "270996505482d6628dd1f8f3d35f1e0066368c55",
                 "shasum": ""
             },
             "require": {
                 "ajgl/breakpoint-twig-extension": "^0.3.0",
                 "aptoma/twig-markdown": "^2.0",
                 "asm89/twig-cache-extension": "^1.0",
-                "cakephp/cakephp": "^3.2",
+                "cakephp/cakephp": "^3.5",
                 "jasny/twig-extensions": "^1.0",
-                "php": "^5.5.9 || ^7.0",
+                "php": "^5.6 || ^7.0",
                 "twig/twig": "^1.18",
                 "umpirsky/twig-php-function": "0.1"
             },
             "require-dev": {
-                "cakephp/bake": "^1.2.2",
+                "cakephp/bake": "^1.5",
                 "cakephp/debug_kit": "^3.0",
                 "phake/phake": "^1.0.4",
-                "phpunit/phpunit": "^4.8 || ^5.0",
+                "phpunit/phpunit": "^5.7.14",
                 "squizlabs/php_codesniffer": "^1.5.6",
                 "wyrihaximus/phpunit-class-reflection-helpers": "dev-master"
             },
@@ -3173,7 +3176,7 @@
                 "twig",
                 "view"
             ],
-            "time": "2017-12-06T15:48:00+00:00"
+            "time": "2017-12-27T07:23:04+00:00"
         }
     ],
     "aliases": [],

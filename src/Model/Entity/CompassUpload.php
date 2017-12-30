@@ -58,8 +58,8 @@ class CompassUpload extends Entity
         'phone' => true,
         'email' => true,
         'file_upload' => true,
-//	    'provisional' => true,
-//	    'clean_role' => true,
+//      'provisional' => true,
+//      'clean_role' => true,
     ];
 
     /**
@@ -131,7 +131,7 @@ class CompassUpload extends Entity
         //
         //$roleSection = $roleSectionArr[0];
         //if (!empty($roleSectionArr[1])) {
-        //	$roleSection = $roleSectionArr[1];
+        //  $roleSection = $roleSectionArr[1];
         //}
         //$roleSection = trim($roleSection);
 
