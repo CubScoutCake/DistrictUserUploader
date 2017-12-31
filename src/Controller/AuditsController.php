@@ -21,7 +21,7 @@ class AuditsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['AuthUsers']
+            'contain' => ['AuthUsers', 'Contacts']
         ];
         $audits = $this->paginate($this->Audits);
 

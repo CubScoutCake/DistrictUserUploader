@@ -19,6 +19,7 @@
         <?php
             echo $this->Form->control('section');
             echo $this->Form->control('section_type_id', ['options' => $sectionTypes]);
+            echo $this->Form->control('scout_group_id', ['options' => $scoutGroups]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

@@ -7,6 +7,7 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
+use Cake\Utility\Text;
 use Cake\Validation\Validator;
 
 /**
@@ -88,8 +89,7 @@ class SectionsTable extends Table
             ->scalar('section')
             ->maxLength('section', 255)
             ->requirePresence('section', 'create')
-            ->notEmpty('section')
-            ->add('section', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->notEmpty('section');
 
         return $validator;
     }
@@ -170,5 +170,41 @@ class SectionsTable extends Table
         }
 
         return false;
+    }
+
+    /**
+     * Stores emails as lower case.
+     *
+     * @param \Cake\Event\Event $event The event being processed.
+     *
+     * @return bool
+     */
+    public function beforeRules($event)
+    {
+        $entity = $event->data['entity'];
+
+        if ($entity->isNew()) {
+            $section = $entity->section;
+            if (strpos($section, 'Scout 1') !== false) {
+                $scoutGroups = TableRegistry::get('ScoutGroups');
+                $group = $scoutGroups->get($entity->scout_group_id);
+
+                $shortGroupName = Text::truncate($group->scout_group, 15, [
+                    'ellipsis' => false,
+                    'exact' => false,
+                    'html' => false,
+                ]);
+                $shortGroupName = ucwords(trim($shortGroupName));
+
+                if ($section == 'Scout 1') {
+                    $entity->section = $shortGroupName . ' - Scouts';
+                } else {
+                    $section = ucwords(Inflector::pluralize(trim(str_replace('Scout 1', '', $section))));
+                    $entity->section = $shortGroupName . ' - ' . $section;
+                }
+            }
+        }
+
+        return true;
     }
 }

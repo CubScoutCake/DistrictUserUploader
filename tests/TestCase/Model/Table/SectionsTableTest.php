@@ -121,4 +121,44 @@ class SectionsTableTest extends TestCase
         $response = $this->Sections->findOrMakeSection($badArray);
         $this->assertFalse($response);
     }
+
+    /**
+     * Test Duplicate Placeholder Array
+     */
+    public function testDuplicatePlaceHolder()
+    {
+        $data = [
+            'scout_group_id' => 1,
+            'section_type_id' => 1,
+            'section' => 'Cub Scout 1'
+        ];
+
+        $newEnt = $this->Sections->newEntity($data);
+        $this->assertInstanceOf('\Cake\ORM\Entity', $newEnt);
+
+        $newEnt = $this->Sections->save($newEnt);
+        $this->assertInstanceOf('\Cake\ORM\Entity', $newEnt);
+
+        $retrieved = $this->Sections->get($newEnt->id);
+        $this->assertInstanceOf('\Cake\ORM\Entity', $retrieved);
+
+        $this->assertTextEquals('Lorem Ipsum - Cubs', $retrieved->section);
+
+        $data = [
+            'scout_group_id' => 1,
+            'section_type_id' => 1,
+            'section' => 'Scout 1'
+        ];
+
+        $newEnt = $this->Sections->newEntity($data);
+        $this->assertInstanceOf('\Cake\ORM\Entity', $newEnt);
+
+        $newEnt = $this->Sections->save($newEnt);
+        $this->assertInstanceOf('\Cake\ORM\Entity', $newEnt);
+
+        $retrieved = $this->Sections->get($newEnt->id);
+        $this->assertInstanceOf('\Cake\ORM\Entity', $retrieved);
+
+        $this->assertTextEquals('Lorem Ipsum - Scouts', $retrieved->section);
+    }
 }

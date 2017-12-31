@@ -43,7 +43,10 @@ class AuthUsersTable extends Table
                 'Model.beforeSave' => [
                     'created' => 'new',
                     'modified' => 'always'
-                ]
+                ],
+                'AuthUsers.login' => [
+                    'last_login' => 'always'
+                ],
             ]
         ]);
     }

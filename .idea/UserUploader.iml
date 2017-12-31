@@ -31,6 +31,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/justinrainbow/json-schema" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/m1/env" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/mobiledetect/mobiledetectlib" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/muffin/footprint" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/nikic/php-parser" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/padraic/humbug_get_contents" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/padraic/phar-updater" />
@@ -89,6 +90,7 @@
           <root url="file://$MODULE_DIR$/vendor/justinrainbow/json-schema" />
           <root url="file://$MODULE_DIR$/vendor/m1/env" />
           <root url="file://$MODULE_DIR$/vendor/mobiledetect/mobiledetectlib" />
+          <root url="file://$MODULE_DIR$/vendor/muffin/footprint" />
           <root url="file://$MODULE_DIR$/vendor/nikic/php-parser" />
           <root url="file://$MODULE_DIR$/vendor/padraic/humbug_get_contents" />
           <root url="file://$MODULE_DIR$/vendor/padraic/phar-updater" />
@@ -143,6 +145,7 @@
           <root url="file://$MODULE_DIR$/vendor/justinrainbow/json-schema" />
           <root url="file://$MODULE_DIR$/vendor/m1/env" />
           <root url="file://$MODULE_DIR$/vendor/mobiledetect/mobiledetectlib" />
+          <root url="file://$MODULE_DIR$/vendor/muffin/footprint" />
           <root url="file://$MODULE_DIR$/vendor/nikic/php-parser" />
           <root url="file://$MODULE_DIR$/vendor/padraic/humbug_get_contents" />
           <root url="file://$MODULE_DIR$/vendor/padraic/phar-updater" />

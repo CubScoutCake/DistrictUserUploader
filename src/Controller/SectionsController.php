@@ -21,7 +21,7 @@ class SectionsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['SectionTypes']
+            'contain' => ['SectionTypes', 'ScoutGroups']
         ];
         $sections = $this->paginate($this->Sections);
 
@@ -39,7 +39,7 @@ class SectionsController extends AppController
     public function view($id = null)
     {
         $section = $this->Sections->get($id, [
-            'contain' => ['SectionTypes']
+            'contain' => ['SectionTypes', 'ScoutGroups']
         ]);
 
         $this->set('section', $section);
@@ -64,7 +64,8 @@ class SectionsController extends AppController
             $this->Flash->error(__('The section could not be saved. Please, try again.'));
         }
         $sectionTypes = $this->Sections->SectionTypes->find('list', ['limit' => 200]);
-        $this->set(compact('section', 'sectionTypes'));
+        $scoutGroups = $this->Sections->ScoutGroups->find('list', ['limit' => 200]);
+        $this->set(compact('section', 'sectionTypes', 'scoutGroups'));
         $this->set('_serialize', ['section']);
     }
 

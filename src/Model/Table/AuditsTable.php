@@ -10,6 +10,7 @@ use Cake\Validation\Validator;
  * Audits Model
  *
  * @property \App\Model\Table\AuthUsersTable|\Cake\ORM\Association\BelongsTo $AuthUsers
+ * @property \App\Model\Table\ContactsTable|\Cake\ORM\Association\BelongsTo $Contacts
  *
  * @method \App\Model\Entity\Audit get($primaryKey, $options = [])
  * @method \App\Model\Entity\Audit newEntity($data = null, array $options = [])
@@ -44,8 +45,23 @@ class AuditsTable extends Table
             ]
         ]);
 
+        $this->addBehavior('Muffin/Footprint.Footprint', [
+            'events' => [
+                'Model.beforeSave' => [
+                    'auth_user_id' => 'always',
+                ]
+            ],
+            'propertiesMap' => [
+                'auth_user_id' => '_footprint.id',
+            ],
+        ]);
+
         $this->belongsTo('AuthUsers', [
             'foreignKey' => 'auth_user_id'
+        ]);
+
+        $this->belongsTo('Contacts', [
+            'foreignKey' => 'contact_id'
         ]);
     }
 
@@ -68,10 +84,14 @@ class AuditsTable extends Table
             ->notEmpty('audit_field');
 
         $validator
-            ->scalar('audit_table')
-            ->maxLength('audit_table', 255)
-            ->requirePresence('audit_table', 'create')
-            ->notEmpty('audit_table');
+            ->integer('contact_id')
+            ->requirePresence('contact_id', 'create')
+            ->notEmpty('contact_id');
+
+        $validator
+            ->integer('auth_user_id')
+            ->requirePresence('auth_user_id', false)
+            ->allowEmpty('auth_user_id');
 
         $validator
             ->scalar('original_value')
@@ -98,7 +118,24 @@ class AuditsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['auth_user_id'], 'AuthUsers'));
+        $rules->add($rules->existsIn(['contact_id'], 'Contacts'));
 
         return $rules;
+    }
+
+    /**
+     * before Save LifeCycle Callback
+     *
+     * @param Event $event The Event to be Processed
+     * @param Entity $entity The Entity on which the Save is being Called.
+     * @param array $options Options Values
+     *
+     * @return void
+     */
+    public function beforeSave($event, $entity, $options)
+    {
+        if ($entity->auth_user_id == 0) {
+            $entity->auth_user_id = null;
+        }
     }
 }

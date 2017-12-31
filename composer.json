@@ -12,7 +12,8 @@
         "cakephp/plugin-installer": "~1.0",
         "josegonzalez/dotenv": "2.*",
         "friendsofcake/bootstrap-ui": "^1.2",
-        "ProLoser/CakePHP-CSV": "dev-master"
+        "ProLoser/CakePHP-CSV": "dev-master",
+        "muffin/footprint": "^1.1"
     },
     "require-dev": {
         "psy/psysh": "@stable",

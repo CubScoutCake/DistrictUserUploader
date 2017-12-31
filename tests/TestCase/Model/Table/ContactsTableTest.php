@@ -187,7 +187,7 @@ class ContactsTableTest extends TestCase
                 'wp_role_id' => 1,
             ]);
 
-        $this->Contacts->auditSave($newThing);
+        $this->Contacts->auditSave($newThing, 1);
         $this->assertInstanceOf('Cake\ORM\Entity', $newThing);
 
         $this->Contacts->save($newThing);

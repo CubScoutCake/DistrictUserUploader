@@ -9,10 +9,12 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $section
  * @property int $section_type_id
+ * @property int $scout_group_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
  * @property \App\Model\Entity\SectionType $section_type
+ * @property \App\Model\Entity\ScoutGroup $scout_group
  */
 class Section extends Entity
 {
@@ -31,6 +33,8 @@ class Section extends Entity
         'section_type_id' => true,
         'created' => true,
         'modified' => true,
-        'section_type' => true
+        'section_type' => true,
+        'scout_group_id' => true,
+        'scout_group' => true,
     ];
 }

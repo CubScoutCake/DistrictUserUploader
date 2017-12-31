@@ -22,7 +22,7 @@ $cakeDescription = 'User Uploader Functional Hub';
             <div class="card-header">View & Authorise Contacts</div>
             <div class="card-body">
 			    <?= $this->Html->link(__('Authorise Contacts for Sync'), ['controller' => 'Contacts', 'action' => 'authorise'], ['class' => 'btn btn-primary']) ?>
-			    <?= $this->Html->link(__('View Audit Logs'), ['controller' => 'Contacts', 'action' => 'audit'], ['class' => 'btn btn-primary']) ?>
+			    <?= $this->Html->link(__('View Audit Logs'), ['controller' => 'Audits', 'action' => 'index'], ['class' => 'btn btn-primary']) ?>
             </div>
         </div>
     </div>

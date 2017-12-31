@@ -17,7 +17,9 @@ class AuditsControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'app.audits',
-        'app.auth_users'
+        'app.auth_users',
+        'app.contacts',
+        'app.wp_roles',
     ];
 
     /**

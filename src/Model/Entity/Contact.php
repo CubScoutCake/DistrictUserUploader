@@ -29,6 +29,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\ScoutGroup $admin_group
  * @property \App\Model\Entity\Section $section
  * @property \App\Model\Entity\RoleType $role_type
+ * @property \App\Model\Entity\Audit $audit
  */
 class Contact extends Entity
 {
@@ -63,6 +64,7 @@ class Contact extends Entity
         'section' => true,
         'preferred_name' => true,
         'validated' => true,
+        'audit' => true,
     ];
 
     /**

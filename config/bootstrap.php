@@ -218,6 +218,8 @@ if (Configure::read('debug')) {
 
 Plugin::load('Migrations');
 
+Plugin::load('Muffin/Footprint');
+
 Plugin::load('BootstrapUI');
 
 Plugin::load('JacobAGTyler/GitHubIssueSubmitter', ['bootstrap' => false, 'routes' => true]);

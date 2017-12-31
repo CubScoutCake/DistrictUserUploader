@@ -16,6 +16,7 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Muffin\Footprint\Auth\FootprintAwareTrait;
 
 /**
  * Application Controller
@@ -27,6 +28,7 @@ use Cake\Event\Event;
  */
 class AppController extends Controller
 {
+    use FootprintAwareTrait;
 
     /**
      * Initialization hook method.
@@ -51,6 +53,8 @@ class AppController extends Controller
         $this->loadComponent('Security');
         $this->loadComponent('Csrf');
 
+        $this->_userModel = 'AuthUsers';
+
         $this->loadComponent('Auth', [
             'authenticate' => [
                 'Form' => [
@@ -58,7 +62,7 @@ class AppController extends Controller
                         'username' => 'username',
                         'password' => 'password'
                     ],
-                    'userModel' => 'AuthUsers'
+                    'userModel' => $this->_userModel
                 ]
             ],
             'flash' => [

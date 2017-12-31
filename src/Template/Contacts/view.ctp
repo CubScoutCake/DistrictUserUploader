@@ -1,4 +1,7 @@
 <?php
+
+use \Cake\Utility\Inflector;
+
 $this->Breadcrumbs->add(
 	'Contacts',
 	['controller' => 'Contacts', 'action' => 'index']
@@ -20,6 +23,10 @@ $this->Breadcrumbs->add(
 				['controller' => 'Roles', 'action' => 'add', $contact->id],
 				['class' => 'button btn btn-secondary']
 			) ?>
+	        <?= $this->Html->link('Edit',
+		        ['controller' => 'Contacts', 'action' => 'edit', $contact->id],
+		        ['class' => 'button btn btn-secondary']
+	        ) ?>
 			<?= $this->Form->postLink(__('Delete'), ['controller' => 'Contacts', 'action' => 'delete', $contact->id], ['confirm' => __('Are you sure you want to delete # {0}?', $contact->id), 'class' => 'button btn btn-secondary']) ?>
 
             <!--<div class="btn-group" role="group">
@@ -98,6 +105,7 @@ $this->Breadcrumbs->add(
     </div>
 </div>
 <br>
+<?php if (!empty($contact->roles)): ?>
 <div class="row">
     <div class="col">
         <div class="card card-primary">
@@ -105,31 +113,64 @@ $this->Breadcrumbs->add(
                 <h4 class="card-title"><i class="fas fa-lock-open fa-fw"></i> <?= __('Contact Roles') ?></h4>
             </div>
             <div class="card-body">
-				<?php if (!empty($contact->roles)): ?>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <tr>
+                            <th scope="col"><?= __('Section') ?></th>
+                            <th scope="col"><?= __('Scout Group') ?></th>
+                            <th scope="col"><?= __('Section Type') ?></th>
+                            <th scope="col"><?= __('Role Type') ?></th>
+                            <th scope="col" class="actions"><?= __('Actions') ?></th>
+                        </tr>
+                        <?php foreach ($contact->roles as $roles): ?>
                             <tr>
-                                <th scope="col"><?= __('Section') ?></th>
-                                <th scope="col"><?= __('Scout Group') ?></th>
-                                <th scope="col"><?= __('Section Type') ?></th>
-                                <th scope="col"><?= __('Role Type') ?></th>
-                                <th scope="col" class="actions"><?= __('Actions') ?></th>
+                                <td><?= $this->Html->link($roles->section->section, ['controller' => 'Sections', 'action' => 'view', $roles->section->id]) ?></td>
+                                <td><?= $this->Html->link($roles->section->scout_group->group_alias, ['controller' => 'Sections', 'action' => 'view', $roles->section->scout_group->id]) ?></td>
+                                <td><?= $this->Html->link($roles->section->section_type->section_type, ['controller' => 'SectionTypes', 'action' => 'view', $roles->section->section_type->id]) ?></td>
+                                <td><?= $this->Html->link($roles->role_type->role_type, ['controller' => 'RoleTypes', 'action' => 'view', $roles->role_type->id]) ?></td>
+                                <td class="actions">
+                                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Roles', 'action' => 'delete', $roles->id], ['confirm' => __('Are you sure you want to delete # {0}?', $roles->id)]) ?>
+                                </td>
                             </tr>
-							<?php foreach ($contact->roles as $roles): ?>
-                                <tr>
-                                    <td><?= $this->Html->link($roles->section->section, ['controller' => 'Sections', 'action' => 'view', $roles->section->id]) ?></td>
-                                    <td><?= $this->Html->link($roles->section->scout_group->group_alias, ['controller' => 'Sections', 'action' => 'view', $roles->section->scout_group->id]) ?></td>
-                                    <td><?= $this->Html->link($roles->section->section_type->section_type, ['controller' => 'SectionTypes', 'action' => 'view', $roles->section->section_type->id]) ?></td>
-                                    <td><?= $this->Html->link($roles->role_type->role_type, ['controller' => 'RoleTypes', 'action' => 'view', $roles->role_type->id]) ?></td>
-                                    <td class="actions">
-										<?= $this->Form->postLink(__('Delete'), ['controller' => 'Roles', 'action' => 'delete', $roles->id], ['confirm' => __('Are you sure you want to delete # {0}?', $roles->id)]) ?>
-                                    </td>
-                                </tr>
-							<?php endforeach; ?>
-                        </table>
-                    </div>
-				<?php endif; ?>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<br>
+<?php endif; ?>
+<?php if (!empty($contact->audits)): ?>
+<div class="row">
+    <div class="col">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h4 class="card-title"><i class="fas fa-exchange-alt fa-fw"></i> <?= __('Change Audits') ?></h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <tr>
+                            <th scope="col"><?= __('Audit Field') ?></th>
+                            <th scope="col"><?= __('Original Value') ?></th>
+                            <th scope="col"><?= __('Modified Value') ?></th>
+                            <th scope="col"><?= __('Auth User') ?></th>
+                            <th scope="col"><?= __('Change Date') ?></th>
+                        </tr>
+                        <?php foreach ($contact->audits as $audits): ?>
+                            <tr>
+                                <td><?= Inflector::humanize(Inflector::underscore($audits->audit_field)) ?></td>
+                                <td><?= h($audits->original_value) ?></td>
+                                <td><?= h($audits->modified_value) ?></td>
+                                <td><?= $audits->has('auth_user') ? $this->Html->link($audits->auth_user->full_name, ['controller' => 'AuthUsers', 'action' => 'view', $audits->auth_user->id]) : '' ?></td>
+                                <td><?= h($audits->change_date) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>

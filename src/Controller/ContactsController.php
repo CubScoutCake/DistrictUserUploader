@@ -51,7 +51,7 @@ class ContactsController extends AppController
     public function view($id = null)
     {
         $contact = $this->Contacts->get($id, [
-            'contain' => ['WpRoles', 'Roles.Sections.ScoutGroups', 'Roles.Sections.SectionTypes', 'Roles.RoleTypes']
+            'contain' => ['WpRoles', 'Roles.Sections.ScoutGroups', 'Roles.Sections.SectionTypes', 'Roles.RoleTypes', 'Audits.AuthUsers']
         ]);
 
         $this->set('contact', $contact);

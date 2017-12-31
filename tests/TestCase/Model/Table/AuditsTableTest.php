@@ -25,7 +25,9 @@ class AuditsTableTest extends TestCase
      */
     public $fixtures = [
         'app.audits',
-        'app.auth_users'
+        'app.auth_users',
+        'app.contacts',
+        'app.wp_roles',
     ];
 
     /**
@@ -71,9 +73,9 @@ class AuditsTableTest extends TestCase
     {
         $saveData = [
             'audit_field' => 'membership_number',
-            'audit_table' => 'Contacts',
+            'contact_id' => 1,
             'original_value' => null,
-            'modified_value' => (int)989898
+            'modified_value' => '989898',
         ];
 
         $response = $this->Audits->newEntity($saveData);

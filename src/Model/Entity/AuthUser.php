@@ -35,7 +35,8 @@ class AuthUser extends Entity
         'email' => true,
         'password' => true,
         'created' => true,
-        'modified' => true
+        'modified' => true,
+        'last_login' => true,
     ];
 
     /**

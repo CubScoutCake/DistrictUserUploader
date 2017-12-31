@@ -16,6 +16,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\ScoutGroupsTable|\Cake\ORM\Association\BelongsTo $AdminGroups
  * @property \App\Model\Table\RoleTypesTable|\Cake\ORM\Association\BelongsToMany $RoleTypes
  * @property \App\Model\Table\SectionsTable|\Cake\ORM\Association\BelongsToMany $Sections
+ * @property \App\Model\Table\AuditsTable|\Cake\ORM\Association\HasMany $Audits
  *
  * @method \App\Model\Entity\Contact get($primaryKey, $options = [])
  * @method \App\Model\Entity\Contact newEntity($data = null, array $options = [])
@@ -51,9 +52,6 @@ class ContactsTable extends Table
                     'created' => 'new',
                     'modified' => 'always'
                 ],
-                'AuthUsers.login' => [
-                    'last_login' => 'always'
-                ],
             ]
         ]);
 
@@ -81,6 +79,12 @@ class ContactsTable extends Table
 
         $this->belongsToMany('Sections', [
             'through' => 'Roles',
+        ]);
+
+        $this->hasMany('Audits', [
+            'foreignKey' => 'contact_id',
+            'dependent' => true,
+            'cascadeCallbacks' => true,
         ]);
     }
 
@@ -313,8 +317,10 @@ class ContactsTable extends Table
      */
     public function auditSave(Entity $entity)
     {
-        $dirtyValues = $entity->getDirty();
         $audits = TableRegistry::get('Audits');
+
+        $dirtyValues = $entity->getDirty();
+        $contactId = $entity->id;
 
         foreach ($dirtyValues as $dValue) {
             $current = $entity->$dValue;
@@ -327,13 +333,13 @@ class ContactsTable extends Table
             if ($current <> $original) {
                 $auditData = [
                     'audit_field' => $dValue,
-                    'audit_table' => 'Contacts',
+                    'contact_id' => $contactId,
                     'original_value' => $original,
                     'modified_value' => $current,
                 ];
 
                 $audit = $audits->newEntity($auditData);
-                $audit = $audits->save($audit);
+                $audits->save($audit);
             }
         }
 
