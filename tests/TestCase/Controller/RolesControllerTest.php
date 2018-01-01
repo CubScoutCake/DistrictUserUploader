@@ -32,7 +32,13 @@ class RolesControllerTest extends IntegrationTestCase
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get(['controller' => 'Roles', 'action' => 'index']);
+        $this->assertRedirectContains('/login');
+
+        $this->session(['Auth.User.id' => 1]);
+
+        $this->get(['controller' => 'Roles', 'action' => 'index']);
+        $this->assertResponseOk();
     }
 
     /**
@@ -42,7 +48,13 @@ class RolesControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get(['controller' => 'Roles', 'action' => 'view', 1]);
+        $this->assertRedirectContains('/login');
+
+        $this->session(['Auth.User.id' => 1]);
+
+        $this->get(['controller' => 'Roles', 'action' => 'view', 1]);
+        $this->assertResponseOk();
     }
 
     /**
@@ -52,7 +64,30 @@ class RolesControllerTest extends IntegrationTestCase
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get(['controller' => 'Roles', 'action' => 'add']);
+        $this->assertRedirectContains('/login');
+
+        $this->session(['Auth.User.id' => 1]);
+
+        $this->get(['controller' => 'Roles', 'action' => 'add']);
+        $this->assertResponseOk();
+
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+
+        $this->post(
+            [
+                'controller' => 'Roles',
+                'action' => 'add'
+            ],
+            [
+                'contact_id' => 1,
+                'role_type_id' => 1,
+                'section_id' => 2,
+                'provisional' => true,
+            ]
+        );
+        $this->assertRedirect();
     }
 
     /**
@@ -62,7 +97,31 @@ class RolesControllerTest extends IntegrationTestCase
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get(['controller' => 'Roles', 'action' => 'edit', 1]);
+        $this->assertRedirectContains('/login');
+
+        $this->session(['Auth.User.id' => 1]);
+
+        $this->get(['controller' => 'Roles', 'action' => 'edit', 1]);
+        $this->assertResponseOk();
+
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+
+        $this->post(
+            [
+                'controller' => 'Roles',
+                'action' => 'edit',
+                1
+            ],
+            [
+                'contact_id' => 1,
+                'role_type_id' => 1,
+                'section_id' => 2,
+                'provisional' => true,
+            ]
+        );
+        $this->assertRedirect();
     }
 
     /**
@@ -72,6 +131,17 @@ class RolesControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get(['controller' => 'Roles', 'action' => 'delete']);
+
+        $this->assertRedirectContains('/login');
+
+        $this->session(['Auth.User.id' => 1]);
+
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+
+        $this->post(['controller' => 'Roles', 'action' => 'delete', 1]);
+
+        $this->assertRedirect();
     }
 }

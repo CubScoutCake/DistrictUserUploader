@@ -2,10 +2,8 @@
 namespace App\Controller\Component;
 
 use Cake\Controller\Component;
-use Cake\Controller\ComponentRegistry;
 use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
-use Cake\Utility\Inflector;
 
 /**
  * Merge component
@@ -73,7 +71,12 @@ class MergeComponent extends Component
             $sectionId = $section->id;
         }
 
-        $roleType = $roleTypes->findOrMakeRoleType($mergeContact['clean_role']);
+        $roleTypeArr = [
+            'role' => $mergeContact['clean_role'],
+            'section_type_id' => $section->section_type_id,
+        ];
+
+        $roleType = $roleTypes->findOrMakeRoleType($roleTypeArr);
 
         if ($roleType instanceof Entity) {
             $roleTypeId = $roleType->id;

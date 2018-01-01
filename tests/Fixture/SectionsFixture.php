@@ -45,5 +45,12 @@ class SectionsFixture extends TestFixture
             'modified' => 1514297911,
             'scout_group_id' => 1
         ],
+        [
+            'section' => 'Lorem MInsa dolor sit amet',
+            'section_type_id' => 1,
+            'created' => 1514297911,
+            'modified' => 1514297911,
+            'scout_group_id' => 1
+        ],
     ];
 }

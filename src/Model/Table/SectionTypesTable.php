@@ -1,9 +1,11 @@
 <?php
 namespace App\Model\Table;
 
+use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\Utility\Inflector;
 use Cake\Validation\Validator;
 
 /**
@@ -75,5 +77,30 @@ class SectionTypesTable extends Table
         $rules->add($rules->isUnique(['section_type']));
 
         return $rules;
+    }
+
+    /**
+     * Find Or Make SectionType
+     *
+     * @param string $sectionType The Section Type to be made
+     *
+     * @return \App\Model\Entity\SectionType|bool
+     */
+    public function findOrMakeSectionType($sectionType)
+    {
+        if (!isset($sectionType) || empty($sectionType)) {
+            return false;
+        }
+
+        $sectionType = Inflector::pluralize($sectionType);
+        $sectionType = ucwords($sectionType);
+
+        $sectionTypeEnt = $this->findOrCreate(['section_type' => $sectionType]);
+
+        if ($sectionTypeEnt instanceof Entity) {
+            return $sectionTypeEnt;
+        }
+
+        return false;
     }
 }

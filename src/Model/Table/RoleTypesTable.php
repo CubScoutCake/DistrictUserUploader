@@ -5,6 +5,7 @@ use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
 
 /**
@@ -88,27 +89,55 @@ class RoleTypesTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['section_type_id'], 'SectionTypes'));
+        $rules->add($rules->isUnique(['section_type_id', 'role_type']));
+        $rules->add($rules->isUnique(['section_type_id', 'role_abbreviation']));
 
         return $rules;
     }
 
     /**
-     * @param string $role The Name of The Role Type
+     * @param array $roleArray an array containing Role & SectionType
      *
      * @return \Cake\ORM\Entity|bool
      */
-    public function findOrMakeRoleType($role)
+    public function findOrMakeRoleType($roleArray)
     {
-        if (!isset($role) || empty($role)) {
+        if (!is_array($roleArray)) {
             return false;
         }
 
-        $roleType = $this->findOrCreate(['role_type' => $role]);
+        if (!key_exists('role', $roleArray)
+            && !key_exists('section_type', $roleArray)
+            && !key_exists('section_type_id', $roleArray)
+            ) {
+            return false;
+        }
+
+        if (key_exists('section_type', $roleArray)) {
+            $sectionType = $roleArray['section_type'];
+            $sectionTypeId = $this->SectionTypes->findOrMakeSectionType($sectionType)->id;
+        }
+
+        if (key_exists('section_type_id', $roleArray)) {
+            $sectionTypeId = $roleArray['section_type_id'];
+            $sectionType = $this->SectionTypes->get($sectionTypeId);
+        }
+
+        if (!isset($sectionTypeId)) {
+            return false;
+        }
+
+        $role = $roleArray['role'];
+
+        $roleType = $this->findOrCreate([
+            'role_type' => $role,
+            'section_type_id' => $sectionTypeId,
+        ]);
 
         if ($roleType instanceof Entity) {
             if (empty($roleType->role_abbreviation)) {
-                $abbrev = $role;
-                if (preg_match_all('/\b(\w)/', strtoupper($role), $exploded)) {
+                $abbrev = $sectionType . ' ' . $role;
+                if (preg_match_all('/\b(\w)/', strtoupper($abbrev), $exploded)) {
                     $abbrev = implode('', $exploded[1]); // $v is now SOQTU
                 }
 

@@ -32,7 +32,13 @@ class RoleTypesControllerTest extends IntegrationTestCase
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get(['controller' => 'RoleTypes', 'action' => 'index']);
+        $this->assertRedirectContains('/login');
+
+        $this->session(['Auth.User.id' => 1]);
+
+        $this->get(['controller' => 'RoleTypes', 'action' => 'index']);
+        $this->assertResponseOk();
     }
 
     /**
@@ -42,7 +48,13 @@ class RoleTypesControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get(['controller' => 'RoleTypes', 'action' => 'view', 1]);
+        $this->assertRedirectContains('/login');
+
+        $this->session(['Auth.User.id' => 1]);
+
+        $this->get(['controller' => 'RoleTypes', 'action' => 'view', 1]);
+        $this->assertResponseOk();
     }
 
     /**
@@ -52,7 +64,29 @@ class RoleTypesControllerTest extends IntegrationTestCase
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get(['controller' => 'RoleTypes', 'action' => 'add']);
+        $this->assertRedirectContains('/login');
+
+        $this->session(['Auth.User.id' => 1]);
+
+        $this->get(['controller' => 'RoleTypes', 'action' => 'add']);
+        $this->assertResponseOk();
+
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+
+        $this->post(
+            [
+                'controller' => 'RoleTypes',
+                'action' => 'add'
+            ],
+            [
+                'role_type' => 'New Role Type',
+                'role_abbreviation' => 'New',
+                'section_type_id' => 1,
+            ]
+        );
+        $this->assertRedirect();
     }
 
     /**
@@ -62,7 +96,30 @@ class RoleTypesControllerTest extends IntegrationTestCase
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get(['controller' => 'RoleTypes', 'action' => 'edit', 1]);
+        $this->assertRedirectContains('/login');
+
+        $this->session(['Auth.User.id' => 1]);
+
+        $this->get(['controller' => 'RoleTypes', 'action' => 'edit', 1]);
+        $this->assertResponseOk();
+
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+
+        $this->post(
+            [
+                'controller' => 'RoleTypes',
+                'action' => 'edit',
+                1
+            ],
+            [
+                'role_type' => 'New Role Type',
+                'role_abbreviation' => 'New',
+                'section_type_id' => 1,
+            ]
+        );
+        $this->assertRedirect();
     }
 
     /**
@@ -72,6 +129,17 @@ class RoleTypesControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get(['controller' => 'RoleTypes', 'action' => 'delete']);
+
+        $this->assertRedirectContains('/login');
+
+        $this->session(['Auth.User.id' => 1]);
+
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+
+        $this->post(['controller' => 'RoleTypes', 'action' => 'delete', 1]);
+
+        $this->assertRedirect();
     }
 }

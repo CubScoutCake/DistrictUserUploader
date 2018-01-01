@@ -4,6 +4,7 @@ namespace App\Test\TestCase\Model\Table;
 use App\Model\Table\SectionTypesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use Cake\Utility\Inflector;
 
 /**
  * App\Model\Table\SectionTypesTable Test Case
@@ -27,6 +28,12 @@ class SectionTypesTableTest extends TestCase
         'app.section_types',
         'app.sections',
         'app.scout_groups',
+        'app.contacts',
+        'app.wp_roles',
+        'app.roles',
+        'app.role_types',
+        'app.audits',
+        'app.auth_users'
     ];
 
     /**
@@ -81,5 +88,24 @@ class SectionTypesTableTest extends TestCase
     public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test findOrMakeSectionType method
+     *
+     * @return void
+     */
+    public function testFindOrMakeSectionType()
+    {
+        $stringData = 'cub';
+        $response = $this->SectionTypes->findOrMakeSectionType($stringData);
+
+        $this->assertNotFalse($response);
+
+        $stringData = Inflector::pluralize(ucwords($stringData));
+        $this->assertTextEquals($stringData, $response->section_type);
+
+        $response = $this->SectionTypes->findOrMakeSectionType('');
+        $this->assertFalse($response);
     }
 }

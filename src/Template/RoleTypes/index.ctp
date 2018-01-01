@@ -13,7 +13,7 @@ $this->Breadcrumbs->add(
 ?>
 <div class="row">
     <div class="col" >
-        <h2><i class="fas fa-user fa-fw"></i> <?= __('Auth Users') ?></h2>
+        <h2><i class="fas fa-cog fa-fw"></i> <?= __('Role Types') ?></h2>
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -31,7 +31,7 @@ $this->Breadcrumbs->add(
                         <td><?= $this->Number->format($roleType->id) ?></td>
                         <td><?= h($roleType->role_type) ?></td>
                         <td><?= h($roleType->role_abbreviation) ?></td>
-                        <td><?= $roleType->has('section_type') ? $this->Html->link($roleType->section_type->id, ['controller' => 'SectionTypes', 'action' => 'view', $roleType->section_type->id]) : '' ?></td>
+                        <td><?= $roleType->has('section_type') ? $this->Html->link($roleType->section_type->section_type, ['controller' => 'SectionTypes', 'action' => 'view', $roleType->section_type->id]) : '' ?></td>
                         <td class="actions">
                             <?= $this->Html->link(__('View'), ['action' => 'view', $roleType->id]) ?>
                             <?= $this->Html->link(__('Edit'), ['action' => 'edit', $roleType->id]) ?>

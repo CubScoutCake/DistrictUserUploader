@@ -95,7 +95,18 @@ class RoleTypesTableTest extends TestCase
     public function testFindOrMakeRoleType()
     {
         $response = $this->RoleTypes->findOrMakeRoleType('Happy Fishy');
+        $this->assertFalse($response);
 
+        $response = $this->RoleTypes->findOrMakeRoleType([]);
+        $this->assertFalse($response);
+
+        $response = $this->RoleTypes->findOrMakeRoleType(['role' => 'Section Leader']);
+        $this->assertFalse($response);
+
+        $response = $this->RoleTypes->findOrMakeRoleType(['role' => 'Section Leader', 'section_type_id' => 1]);
+        $this->assertInstanceOf('\Cake\ORM\Entity', $response);
+
+        $response = $this->RoleTypes->findOrMakeRoleType(['role' => 'Section Leader', 'section_type' => 'cub']);
         $this->assertInstanceOf('\Cake\ORM\Entity', $response);
     }
 }

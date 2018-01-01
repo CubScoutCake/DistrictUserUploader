@@ -24,8 +24,8 @@ before_script:
   - composer install
   - composer run-script post-install-cmd --no-interaction
   - psql -c 'create database cake;' -U postgres
-  - sh -c "bin/cake migrations migrate"
-#  - sh -c "bin/cake database seed"
+  - sh -c "bin/cake database build"
+  - sh -c "bin/cake database seed"
 
 script:
   - if [[ $PHPCS = 1 ]]; then composer cs-check; fi
