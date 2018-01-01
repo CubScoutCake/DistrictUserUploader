@@ -54,19 +54,11 @@ class FileUploadsController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return void|\Cake\Http\Response Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
         $fileUpload = $this->FileUploads->newEntity();
-
-        /*[
-            'name' => 'conference_schedule.pdf',
-            'type' => 'application/pdf',
-            'tmp_name' => 'C:/WINDOWS/TEMP/php1EE.tmp',
-            'error' => 0, // On Windows this can be a string.
-            'size' => 41737,
-        ];*/
 
         if ($this->request->is('post')) {
             $fileMeta = $this->request->getData('file_name');
@@ -85,8 +77,6 @@ class FileUploadsController extends AppController
             $fileUpload->file_path = $path;
             $fileUpload->file_name = $fileMeta['name'];
             $fileUpload->auth_user_id = $this->Auth->user('id');
-
-            //$fileUpload = $this->FileUploads->patchEntity($fileUpload, $this->request->getData());
 
             if ($this->FileUploads->save($fileUpload)) {
                 $this->Flash->success(__('The file upload has been saved.'));
@@ -126,7 +116,6 @@ class FileUploadsController extends AppController
 
                 if ($test) {
                     $merged = $this->Merge->contactUpload($compass->id);
-
                     $total += 1;
 
                     if ($merged instanceof Entity) {
@@ -138,6 +127,7 @@ class FileUploadsController extends AppController
                         }
                     } else {
                         $fail += 1;
+                        $this->log($compass->id . ' Failed Merge.', 'warning');
                     }
                 }
             }

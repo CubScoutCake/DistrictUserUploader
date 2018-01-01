@@ -69,15 +69,11 @@ class MergeComponent extends Component
         ];
         $section = $sections->findOrMakeSection($sectionCreate);
 
-//      debug($section);
-
         if ($section instanceof Entity) {
             $sectionId = $section->id;
         }
 
         $roleType = $roleTypes->findOrMakeRoleType($mergeContact['clean_role']);
-
-//      debug($roleType);
 
         if ($roleType instanceof Entity) {
             $roleTypeId = $roleType->id;
@@ -93,15 +89,9 @@ class MergeComponent extends Component
                     'provisional' => $mergeContact['provisional'],
                 ];
 
-//          debug($roleArray);
-
             $role = $roles->newEntity($roleArray);
 
-//          debug($role);
-
-            $role = $roles->save($role);
-
-//          debug($role);
+            $roles->save($role);
         }
 
         return $contact;

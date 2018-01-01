@@ -126,6 +126,16 @@ class AuthUsersController extends AppController
      */
     public function login()
     {
+        $loggedIn = ( is_numeric($this->Auth->user('id')) );
+
+        if (!$loggedIn) {
+            $this->viewBuilder()->setLayout('outside');
+        }
+
+        if ($loggedIn) {
+            return $this->redirect(['controller' => 'Landing', 'action' => 'welcome']);
+        }
+
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
             if ($user) {

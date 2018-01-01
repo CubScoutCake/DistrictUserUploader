@@ -17,7 +17,7 @@ $this->Breadcrumbs->add(
     <div class="col">
         <div class="btn-group float-right" role="group" aria-label="Button group with nested dropdown">
 			<?= $this->Html->link('Auto Merge',
-				['controller' => 'FileUploads', 'action' => 'auto', $fileUpload->id],
+				['controller' => 'FileUploads', 'action' => 'autoMerge', $fileUpload->id],
 				['class' => 'button btn btn-secondary']
 			) ?>
 			<?= $this->Form->postLink(__('Delete'), ['controller' => 'FileUploads', 'action' => 'delete', $fileUpload->id], ['confirm' => __('Are you sure you want to delete # {0}?', $fileUpload->id), 'class' => 'button btn btn-secondary']) ?>

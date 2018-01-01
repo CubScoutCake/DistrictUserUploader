@@ -114,8 +114,8 @@ class SectionsTableTest extends TestCase
 
         // Test Empty Section
         $badArray = [
-            'grp' => '5th Letchworth',
-            'section' => 'Cub Scout 1'
+            'group' => '5th Letchworth',
+            'section' => null
         ];
 
         $response = $this->Sections->findOrMakeSection($badArray);
@@ -160,5 +160,22 @@ class SectionsTableTest extends TestCase
         $this->assertInstanceOf('\Cake\ORM\Entity', $retrieved);
 
         $this->assertTextEquals('Lorem Ipsum - Scouts', $retrieved->section);
+    }
+
+    /**
+     * Test findOrMakeSection method
+     *
+     * @return void
+     */
+    public function testFindOrMakeDistrictSection()
+    {
+        // Test Success
+        $goodArray = [
+            'group' => 'Letchworth And Baldock',
+            'section' => 'District'
+        ];
+
+        $response = $this->Sections->findOrMakeSection($goodArray);
+        $this->assertInstanceOf('Cake\ORM\Entity', $response);
     }
 }

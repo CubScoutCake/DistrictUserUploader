@@ -232,13 +232,17 @@ class ContactsTable extends Table
     }
 
     /**
-     * @param Cake/Orm/Query $query The Query to be Modified
+     * @param \Cake\ORM\Query $query The Query to be Modified
      *
      * @return mixed
      */
     public function findNew($query)
     {
-        return $query->where([ 'wp_id IS' => null ]);
+        $query
+            ->where([ 'wp_id IS' => null ])
+            ->where([ 'validated' => true ]);
+
+        return $query;
     }
 
     /**
@@ -291,7 +295,7 @@ class ContactsTable extends Table
 
         if (empty($contact->wp_role_id)) {
             $wpRoles = TableRegistry::get('WpRoles');
-            $leaderRole = $wpRoles->find()->where(['wp_role' => 'Leader'])->first();
+            $leaderRole = $wpRoles->findOrCreate(['wp_role' => 'Leader']);
 
             $id = $leaderRole->id;
             if (!is_numeric($id)) {

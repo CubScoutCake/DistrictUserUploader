@@ -16,17 +16,62 @@ class ContactsController extends AppController
     /**
      * Index method
      *
+     * @param int $new Whether to just show New Authorised Contacts or Not Contacts
+     *
      * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index($new = null)
     {
         $this->paginate = [
             'contain' => ['WpRoles']
         ];
+
+        $new = boolval($new);
+
+        if ($new) {
+            $this->paginate = [
+                'contain' => ['WpRoles'],
+                'finder' => 'new'
+            ];
+        }
+
         $contacts = $this->paginate($this->Contacts);
 
         $this->set(compact('contacts'));
         $this->set('_serialize', ['contacts']);
+    }
+
+    /**
+     * Index method
+     *
+     * @param int $contactId The ID of the User to be Authorised
+     *
+     * @return \Cake\Http\Response
+     */
+    public function authorise($contactId = null)
+    {
+        if ($this->request->is('get')) {
+            $this->paginate = [
+                'conditions' => ['validated' => false]
+            ];
+            $contacts = $this->paginate($this->Contacts);
+
+            $this->set(compact('contacts'));
+            $this->set('_serialize', ['contacts']);
+        }
+
+        if ($this->request->is('post') && !empty($contactId)) {
+            $contact = $this->Contacts->get($contactId);
+            $contact->set('validated', true);
+            if ($this->Contacts->save($contact)) {
+                $this->Flash->success('Contact Authorised');
+
+                return $this->redirect(['action' => 'authorise']);
+            }
+            $this->Flash->error('An Error Occurred');
+
+            return $this->redirect(['action' => 'authorise']);
+        }
     }
 
     /**

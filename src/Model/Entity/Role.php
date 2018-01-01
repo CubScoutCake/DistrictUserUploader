@@ -33,6 +33,7 @@ class Role extends Entity
         'contact_id' => true,
         'role_type' => true,
         'section' => true,
+        'contact' => true,
         'provisional' => true,
     ];
 }

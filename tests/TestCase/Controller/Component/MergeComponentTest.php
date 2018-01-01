@@ -35,6 +35,7 @@ class MergeComponentTest extends TestCase
         'app.roles',
         'app.section_types',
         'app.sections',
+        'app.audits',
     ];
 
     /**
@@ -77,24 +78,23 @@ class MergeComponentTest extends TestCase
     public function testIntegrateContact()
     {
         $testHim = [
-            'id' => 3,
             'file_upload_id' => 1,
-            'membership_number' => 895271,
+            'membership_number' => 990990,
             'title' => 'Mr',
-            'first_name' => 'Alan',
-            'last_name' => 'Mann',
-            'address' => ' 24 Broughton Hill Letchworth Garden City. SG6 1QB',
-            'address_line1' => '24 Broughton Hill',
-            'address_line2' => '',
+            'first_name' => 'Jonathon',
+            'last_name' => 'Creek',
+            'address' => 'The Windmill, Somewhere, Spooky, CR3 0EK',
+            'address_line1' => 'The Windmill',
+            'address_line2' => 'Somewhere',
             'address_line3' => '',
-            'address_town' => 'Letchworth Garden City',
-            'address_county' => 'Hertfordshire',
-            'postcode' => 'SG6 1QB',
+            'address_town' => 'Spooky',
+            'address_county' => '',
+            'postcode' => 'CR3 0EK',
             'address_country' => 'United Kingdom',
             'role' => 'Assistant Section Leader - Beaver Scouts',
             'location' => 'Beaver Section @ 4th Letchworth (St Pauls)',
-            'phone' => '01462637289',
-            'email' => 'alan.j.mann@gmail.com',
+            'phone' => '01234 567890',
+            'email' => 'someone@fish.llama',
             'clean_role' => 'Assistant Section Leader',
             'clean_group' => '4th Letchworth (St Pauls)',
             'clean_section' => 'Beaver Section',
@@ -105,6 +105,201 @@ class MergeComponentTest extends TestCase
 
         $this->assertNotFalse($response);
         $this->assertInstanceOf('App\Model\Entity\Contact', $response);
+
+        $contacts = TableRegistry::get('Contacts');
+        $contactQuery = $contacts
+            ->find()
+            ->where([
+                'membership_number' => 990990,
+                'email' => 'someone@fish.llama',
+                'first_name' => 'Jonathon',
+                'last_name' => 'Creek',
+            ]);
+
+        $contactCount = $contactQuery->count();
+        $this->assertEquals(1, $contactCount);
+    }
+
+    /**
+     * Test Integrate Contact Function
+     */
+    public function testIntegrateContactRole()
+    {
+        $testHim = [
+            'file_upload_id' => 1,
+            'membership_number' => 990990,
+            'title' => 'Mr',
+            'first_name' => 'Jonathon',
+            'last_name' => 'Creek',
+            'address' => 'The Windmill, Somewhere, Spooky, CR3 0EK',
+            'address_line1' => 'The Windmill',
+            'address_line2' => 'Somewhere',
+            'address_line3' => '',
+            'address_town' => 'Spooky',
+            'address_county' => '',
+            'postcode' => 'CR3 0EK',
+            'address_country' => 'United Kingdom',
+            'role' => 'Assistant Section Leader - Beaver Scouts',
+            'location' => 'Beaver Section @ 4th Letchworth (St Pauls)',
+            'phone' => '01234 567890',
+            'email' => 'someone@fish.llama',
+            'clean_role' => 'Assistant Section Leader',
+            'clean_group' => '4th Letchworth (St Pauls)',
+            'clean_section' => 'Beaver Section',
+            'provisional' => null,
+        ];
+
+        $response = $this->Merge->integrateContact($testHim);
+
+        $this->assertNotFalse($response);
+        $this->assertInstanceOf('App\Model\Entity\Contact', $response);
+
+        $sections = TableRegistry::get('Sections');
+        $roleTypes = TableRegistry::get('RoleTypes');
+        $groups = TableRegistry::get('ScoutGroups');
+        $contacts = TableRegistry::get('Contacts');
+        $roles = TableRegistry::get('Roles');
+
+        $contactQuery = $contacts
+            ->find()
+            ->where([
+                'membership_number' => 990990,
+                'email' => 'someone@fish.llama',
+                'first_name' => 'Jonathon',
+                'last_name' => 'Creek',
+            ]);
+
+        $groupQuery = $groups
+            ->find()
+            ->where([
+                'scout_group' => '4th Letchworth (St Pauls)'
+            ]);
+
+        $roleTypeQuery = $roleTypes
+            ->find()
+            ->where([
+                'role_type' => 'Assistant Section Leader',
+            ]);
+
+        $sectionQuery = $sections
+            ->find()
+            ->where([
+                'section' => 'Beaver Section',
+                'scout_group_id' => $groupQuery->first()->id,
+            ]);
+
+        $contactCount = $contactQuery->count();
+        $this->assertEquals(1, $contactCount);
+
+        $groupCount = $groupQuery->count();
+        $this->assertEquals(1, $groupCount);
+
+        $roleTypeCount = $roleTypeQuery->count();
+        $this->assertEquals(1, $roleTypeCount);
+
+        $sectionCount = $sectionQuery->count();
+        $this->assertEquals(1, $sectionCount);
+
+        $roleCount = $roles
+            ->find()
+            ->where([
+                'contact_id' => $contactQuery->first()->id,
+                'section_id' => $sectionQuery->first()->id,
+                'role_type_id' => $roleTypeQuery->first()->id,
+            ])
+            ->count();
+        $this->assertEquals(1, $roleCount);
+    }
+
+    /**
+     * Test Integrate Contact Function
+     */
+    public function testIntegrateContactBlankDistrict()
+    {
+        $testHim = [
+            'file_upload_id' => 1,
+            'membership_number' => 8876,
+            'title' => 'Mr',
+            'first_name' => 'Johan',
+            'last_name' => 'Midas',
+            'address' => 'The Windmill, Somewhere, Spooky, CR3 0EK',
+            'address_line1' => 'The Windmill',
+            'address_line2' => 'Somewhere',
+            'address_line3' => '',
+            'address_town' => 'Spooky',
+            'address_county' => '',
+            'postcode' => 'CR3 0EK',
+            'address_country' => 'United Kingdom',
+            'role' => 'Assistant Section Leader - Beaver Scouts',
+            'location' => 'Beaver Section @ 4th Letchworth (St Pauls)',
+            'phone' => '01234 567890',
+            'email' => 'someone@goat.com',
+            'clean_role' => 'District Scouter',
+            'clean_group' => 'Letchworth And Baldock',
+            'clean_section' => 'District',
+            'provisional' => null,
+        ];
+
+        $response = $this->Merge->integrateContact($testHim);
+
+        $this->assertNotFalse($response);
+        $this->assertInstanceOf('App\Model\Entity\Contact', $response);
+
+        $sections = TableRegistry::get('Sections');
+        $roleTypes = TableRegistry::get('RoleTypes');
+        $groups = TableRegistry::get('ScoutGroups');
+        $contacts = TableRegistry::get('Contacts');
+        $roles = TableRegistry::get('Roles');
+
+        $contactQuery = $contacts
+            ->find()
+            ->where([
+                'membership_number' => 8876,
+                'email' => 'someone@goat.com',
+                'first_name' => 'Johan',
+                'last_name' => 'Midas',
+            ]);
+
+        $groupQuery = $groups
+            ->find()
+            ->where([
+                'scout_group' => 'Letchworth And Baldock'
+            ]);
+
+        $roleTypeQuery = $roleTypes
+            ->find()
+            ->where([
+                'role_type' => 'District Scouter',
+            ]);
+
+        $sectionQuery = $sections
+            ->find()
+            ->where([
+                'section' => 'District',
+                'scout_group_id' => $groupQuery->first()->id,
+            ]);
+
+        $contactCount = $contactQuery->count();
+        $this->assertEquals(1, $contactCount);
+
+        $groupCount = $groupQuery->count();
+        $this->assertEquals(1, $groupCount);
+
+        $roleTypeCount = $roleTypeQuery->count();
+        $this->assertEquals(1, $roleTypeCount);
+
+        $sectionCount = $sectionQuery->count();
+        $this->assertEquals(1, $sectionCount);
+
+        $roleCount = $roles
+            ->find()
+            ->where([
+                'contact_id' => $contactQuery->first()->id,
+                'section_id' => $sectionQuery->first()->id,
+                'role_type_id' => $roleTypeQuery->first()->id,
+            ])
+            ->count();
+        $this->assertEquals(1, $roleCount);
     }
 
     /**

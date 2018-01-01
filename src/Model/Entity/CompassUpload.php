@@ -152,6 +152,10 @@ class CompassUpload extends Entity
             return $section;
         }
 
+        if ($section == $group) {
+            return 'Group';
+        }
+
         return null;
     }
 

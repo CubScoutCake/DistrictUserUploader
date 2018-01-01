@@ -92,6 +92,7 @@ class RolesTable extends Table
         $rules->add($rules->existsIn(['role_type_id'], 'RoleTypes'));
         $rules->add($rules->existsIn(['section_id'], 'Sections'));
         $rules->add($rules->existsIn(['contact_id'], 'Contacts'));
+        $rules->add($rules->isUnique(['role_type_id', 'contact_id', 'section_id'], 'Role must be Unique'));
 
         return $rules;
     }

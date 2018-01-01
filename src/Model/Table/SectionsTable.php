@@ -132,7 +132,9 @@ class SectionsTable extends Table
             $termMatch = 0;
             $scoutMatch = 0;
 
-            $types = $sectionTypes->find('all')->toArray();
+            $types = $sectionTypes->find('all')->where(function ($exp, $q) {
+                return $exp->notIn('section_type', ['District', 'Group']);
+            })->toArray();
 
             foreach ($types as $type) {
                 $sectionType = strtoupper(Inflector::singularize($type->section_type));
@@ -154,6 +156,26 @@ class SectionsTable extends Table
                 $typeId = $termId;
             } elseif ($scoutMatch == 1 && isset($scoutId)) {
                 $typeId = $scoutId;
+            }
+
+            if (!isset($typeId)) {
+                $groupTerms = explode(' ', $sectionArr['group']);
+                $districtMatch = 0;
+                foreach ($groupTerms as $key => $grpTerm) {
+                    $groupTerms[$key] = Inflector::singularize(strtolower($grpTerm));
+                }
+
+                if (in_array('district', $groupTerms)) {
+                    $districtMatch += 1;
+                } elseif (in_array('and', $groupTerms)) {
+                    $districtMatch += 1;
+                }
+
+                if ($districtMatch > 0) {
+                    $typeId = $sectionTypes->findOrCreate(['section_type' => 'District'])->id;
+                } else {
+                    $typeId = $sectionTypes->findOrCreate(['section_type' => 'Group'])->id;
+                }
             }
 
             if (isset($groupId) && isset($typeId)) {
