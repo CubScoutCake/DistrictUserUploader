@@ -139,10 +139,13 @@ class AuthUsersTable extends Table
     {
         $entity = $event->data['entity'];
         // Make a password for basic auth.
-        if ($entity->isNew() || empty($entity->api_key_plain) || empty($entity->api_key)) {
-            $hasher = new DefaultPasswordHasher();
+        if ($entity->isNew() || empty($entity->api_key_plain)) {
             // Generate an API 'token'
             $entity->api_key_plain = sha1(Text::uuid());
+        }
+
+        if (empty($entity->api_key) || $entity->getDirty('api_key_plain')) {
+            $hasher = new DefaultPasswordHasher();
             // Bcrypt the token so BasicAuthenticate can check
             // it during login.
             $entity->api_key = $hasher->hash($entity->api_key_plain);

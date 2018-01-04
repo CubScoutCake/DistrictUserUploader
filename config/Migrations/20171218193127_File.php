@@ -26,7 +26,7 @@ class File extends AbstractMigration
 			    'null' => true,
 		    ])
 		    ->addForeignKey('auth_user_id', 'auth_users', ['id'])
-		    ->addTimestamps()
+		    ->addTimestamps('created','modified')
 		    ->save();
 
     	$table = $this->table('compass_uploads');

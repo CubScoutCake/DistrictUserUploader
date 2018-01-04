@@ -21,7 +21,7 @@ class RolesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['RoleTypes', 'Sections']
+            'contain' => ['RoleTypes', 'Sections', 'Contacts']
         ];
         $roles = $this->paginate($this->Roles);
 
@@ -49,9 +49,11 @@ class RolesController extends AppController
     /**
      * Add method
      *
+     * @param int $contactId The ID for the Contact Default
+     *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($contactId = null)
     {
         $role = $this->Roles->newEntity();
         if ($this->request->is('post')) {
@@ -65,7 +67,8 @@ class RolesController extends AppController
         }
         $roleTypes = $this->Roles->RoleTypes->find('list', ['limit' => 200]);
         $sections = $this->Roles->Sections->find('list', ['limit' => 200]);
-        $this->set(compact('role', 'roleTypes', 'sections'));
+        $contacts = $this->Roles->Contacts->find('list', ['limit' => 200]);
+        $this->set(compact('role', 'roleTypes', 'sections', 'contacts', 'contactId'));
         $this->set('_serialize', ['role']);
     }
 
@@ -92,7 +95,8 @@ class RolesController extends AppController
         }
         $roleTypes = $this->Roles->RoleTypes->find('list', ['limit' => 200]);
         $sections = $this->Roles->Sections->find('list', ['limit' => 200]);
-        $this->set(compact('role', 'roleTypes', 'sections'));
+        $contacts = $this->Roles->Contacts->find('list', ['limit' => 200]);
+        $this->set(compact('role', 'roleTypes', 'sections', 'contacts'));
         $this->set('_serialize', ['role']);
     }
 

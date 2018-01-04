@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\Entity;
+use Cake\Utility\Text;
 
 /**
  * AuthUsers Controller
@@ -49,7 +51,12 @@ class AuthUsersController extends AppController
             'contain' => []
         ]);
 
-        $this->set('authUser', $authUser);
+        $loggedInUser = false;
+        if ($this->Auth->user('id') == $id) {
+            $loggedInUser = true;
+        }
+
+        $this->set(compact('authUser', 'loggedInUser'));
         $this->set('_serialize', ['authUser']);
     }
 
@@ -157,5 +164,28 @@ class AuthUsersController extends AppController
         $this->Flash->success('You are now logged out.');
 
         return $this->redirect($this->Auth->logout());
+    }
+
+    /**
+     * @param int $authUserId The User Id for the AuthUser to have the API Regenerated
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function regenerateApi($authUserId = null)
+    {
+        $authUser = $this->AuthUsers->get($authUserId);
+
+        if ($this->request->is('post') && $authUser instanceof Entity) {
+            $authUser = $authUser->set('api_key_plain', sha1(Text::uuid()));
+            if ($this->AuthUsers->save($authUser)) {
+                $this->Flash->success('API Key Updated Successfully.');
+
+                return $this->redirect($this->referer(['action' => 'view', $authUserId]));
+            }
+        }
+
+        $this->Flash->error('Error Regenerating API Key');
+
+        return $this->redirect($this->referer(['action' => 'view', $authUserId]));
     }
 }

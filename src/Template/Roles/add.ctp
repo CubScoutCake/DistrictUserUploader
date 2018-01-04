@@ -2,18 +2,34 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Role $role
+ * @var int $contactId
+ * @var array $contacts
+ * @var array $sections
+ * @var array $roleTypes
  */
+
+$this->Breadcrumbs->add(
+	'Contacts',
+	['controller' => 'Contacts', 'action' => 'index']
+);
+
+$this->Breadcrumbs->add(
+	'Roles',
+	['controller' => 'Roles', 'action' => 'index'],
+	['class' => 'breadcrumb-item']
+);
+
+$roleLink = 'Add Role';
+if(!empty($contactId)) {
+    $roleLink = 'Add Role to Contact #' . $contactId;
+}
+
+$this->Breadcrumbs->add(
+	$roleLink,
+	['controller' => 'Roles', 'action' => 'add'],
+	['class' => 'active']
+);
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Roles'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Role Types'), ['controller' => 'RoleTypes', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Role Type'), ['controller' => 'RoleTypes', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Sections'), ['controller' => 'Sections', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Section'), ['controller' => 'Sections', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
 <div class="roles form large-9 medium-8 columns content">
     <?= $this->Form->create($role) ?>
     <fieldset>
@@ -21,7 +37,7 @@
         <?php
             echo $this->Form->control('role_type_id', ['options' => $roleTypes]);
             echo $this->Form->control('section_id', ['options' => $sections]);
-            echo $this->Form->control('contact_id');
+            echo $this->Form->control('contact_id', ['options' => $contacts, 'default' => $contactId]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

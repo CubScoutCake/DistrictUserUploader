@@ -12,8 +12,20 @@ $this->Breadcrumbs->add(
 
 ?>
 <div class="row">
-    <div class="col" >
+    <div class="col">
         <h2><i class="fas fa-user fa-fw"></i> <?= __('Auth Users') ?></h2>
+    </div>
+    <div class="col">
+        <div class="btn-group float-right" role="group" aria-label="Button group with nested dropdown">
+			<?= $this->Html->link('Add Auth User',
+				['controller' => 'AuthUsers', 'action' => 'add'],
+				['class' => 'button btn btn-secondary']
+			) ?>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col" >
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>

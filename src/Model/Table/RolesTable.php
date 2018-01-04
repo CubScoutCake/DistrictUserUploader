@@ -11,7 +11,7 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\RoleTypesTable|\Cake\ORM\Association\BelongsTo $RoleTypes
  * @property \App\Model\Table\SectionsTable|\Cake\ORM\Association\BelongsTo $Sections
- * @property |App\Model\Table\ContactsTable|\Cake\ORM\Association\BelongsTo $Contacts
+ * @property \App\Model\Table\ContactsTable|\Cake\ORM\Association\BelongsTo $Contacts
  *
  * @method \App\Model\Entity\Role get($primaryKey, $options = [])
  * @method \App\Model\Entity\Role newEntity($data = null, array $options = [])

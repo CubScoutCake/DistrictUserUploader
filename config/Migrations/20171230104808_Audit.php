@@ -16,10 +16,6 @@ class Audit extends AbstractMigration
 
     	$table
 		    ->addTimestamps()
-		    ->addColumn('last_login', 'datetime', [
-		    	'default' => null,
-			    'null' => true,
-		    ])
 		    ->save();
 
     	$table = $this->table('audits');

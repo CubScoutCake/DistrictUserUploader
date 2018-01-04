@@ -3,13 +3,18 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\AuthUser $authUser
  */
+
+$this->Breadcrumbs->add(
+	'AuthUsers',
+	['controller' => 'AuthUsers', 'action' => 'index']
+);
+
+$this->Breadcrumbs->add(
+	'Add',
+	['controller' => 'AuthUsers', 'action' => 'add'],
+	['class' => 'breadcrumb-item active']
+);
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Auth Users'), ['action' => 'index']) ?></li>
-    </ul>
-</nav>
 <div class="authUsers form large-9 medium-8 columns content">
     <?= $this->Form->create($authUser) ?>
     <fieldset>
