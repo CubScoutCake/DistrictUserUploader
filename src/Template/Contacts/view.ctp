@@ -29,6 +29,9 @@ $this->Breadcrumbs->add(
 	        ) ?>
 			<?= $this->Form->postLink(__('Delete'), ['controller' => 'Contacts', 'action' => 'delete', $contact->id], ['confirm' => __('Are you sure you want to delete # {0}?', $contact->id), 'class' => 'button btn btn-secondary']) ?>
 
+            <?php if (!$contact->validated) : ?>
+	            <?= $this->Form->postLink(__('Authorise'), ['controller' => 'Contacts', 'action' => 'authorise', $contact->id], ['class' => 'button btn btn-secondary']) ?>
+            <?php endif; ?>
             <!--<div class="btn-group" role="group">
                 <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Dropdown
