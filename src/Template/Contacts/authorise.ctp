@@ -1,13 +1,20 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\AuthUser[]|\Cake\Collection\CollectionInterface $authUsers
+ * @var \App\Model\Entity\Contact[]|\Cake\Collection\CollectionInterface $contacts
  */
 
 $this->Breadcrumbs->add(
-	__('Contacts'),
+	'Contacts',
+	['controller' => 'Contacts', 'action' => 'index']
+);
+
+$this->Breadcrumbs->add(
+	'Authorise Contacts',
+	['controller' => 'Contacts', 'action' => 'authorise'],
 	['class' => 'breadcrumb-item active']
 );
+
 
 
 ?>
@@ -37,6 +44,7 @@ $this->Breadcrumbs->add(
                         <td><?= h($contact->created) ?></td>
                         <td><?= h($contact->modified) ?></td>
                         <td class="actions">
+	                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id]) ?>
 		                    <?= $this->Form->postLink(__('Authorise'), ['action' => 'authorise', $contact->id]) ?>
                         </td>
                     </tr>
