@@ -69,17 +69,17 @@ class MergeComponent extends Component
 
         if ($section instanceof Entity) {
             $sectionId = $section->id;
-        }
 
-        $roleTypeArr = [
-            'role' => $mergeContact['clean_role'],
-            'section_type_id' => $section->section_type_id,
-        ];
+            $roleTypeArr = [
+                'role' => $mergeContact['clean_role'],
+                'section_type_id' => $section->section_type_id,
+            ];
 
-        $roleType = $roleTypes->findOrMakeRoleType($roleTypeArr);
+            $roleType = $roleTypes->findOrMakeRoleType($roleTypeArr);
 
-        if ($roleType instanceof Entity) {
-            $roleTypeId = $roleType->id;
+            if ($roleType instanceof Entity) {
+                $roleTypeId = $roleType->id;
+            }
         }
 
         if (isset($sectionId) && isset($roleTypeId)) {

@@ -103,4 +103,70 @@ class SectionTypesTable extends Table
 
         return false;
     }
+
+    /**
+     * @param array $sectionTypeArr An array containing Group & Section Names
+     *
+     * @return int|bool The ID of the SectionType or false
+     */
+    public function matchTerms($sectionTypeArr)
+    {
+        if (!isset($sectionTypeArr['group']) || !isset($sectionTypeArr['section'])) {
+            return false;
+        }
+
+        $terms = explode(' ', $sectionTypeArr['section']);
+
+        $termMatch = 0;
+        $scoutMatch = 0;
+
+        $types = $this->find('all')->where(function ($exp, $q) {
+            return $exp->notIn('section_type', ['District', 'Group']);
+        })->toArray();
+
+        foreach ($types as $type) {
+            $sectionType = strtoupper(Inflector::singularize($type->section_type));
+            foreach ($terms as $pos => $term) {
+                $terms[$pos] = strtoupper(Inflector::singularize($term));
+            }
+
+            if (in_array($sectionType, $terms)) {
+                $termMatch += 1;
+                if ($sectionType == 'SCOUT') {
+                    $scoutMatch += 1;
+                    $scoutId = $type->id;
+                } else {
+                    $termId = $type->id;
+                }
+            }
+        }
+
+        if (($termMatch - $scoutMatch) == 1 && isset($termId)) {
+            $typeId = $termId;
+        } elseif ($scoutMatch == 1 && isset($scoutId)) {
+            $typeId = $scoutId;
+        }
+
+        if (!isset($typeId)) {
+            $groupTerms = explode(' ', $sectionTypeArr['group']);
+            $districtMatch = 0;
+            foreach ($groupTerms as $key => $grpTerm) {
+                $groupTerms[$key] = Inflector::singularize(strtolower($grpTerm));
+            }
+
+            if (in_array('district', $groupTerms)) {
+                $districtMatch += 1;
+            } elseif (in_array('and', $groupTerms)) {
+                $districtMatch += 1;
+            }
+
+            if ($districtMatch > 0) {
+                $typeId = $this->findOrCreate(['section_type' => 'District'])->id;
+            } else {
+                $typeId = $this->findOrCreate(['section_type' => 'Group'])->id;
+            }
+        }
+
+        return $typeId;
+    }
 }

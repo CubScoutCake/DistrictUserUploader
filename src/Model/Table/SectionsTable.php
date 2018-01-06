@@ -118,65 +118,13 @@ class SectionsTable extends Table
     public function findOrMakeSection(array $sectionArr)
     {
         if (isset($sectionArr['group']) && isset($sectionArr['section'])) {
-            $scoutGroups = TableRegistry::get('ScoutGroups');
-            $sectionTypes = TableRegistry::get('SectionTypes');
-
-            $group = $scoutGroups->findOrCreate([ 'scout_group' => $sectionArr['group'] ], null, ['atomic' => false]);
+            $group = $this->ScoutGroups->findOrCreate([ 'scout_group' => $sectionArr['group'] ], null, ['atomic' => false]);
 
             if ($group instanceof Entity) {
                 $groupId = $group->id;
             }
 
-            $terms = explode(' ', $sectionArr['section']);
-
-            $termMatch = 0;
-            $scoutMatch = 0;
-
-            $types = $sectionTypes->find('all')->where(function ($exp, $q) {
-                return $exp->notIn('section_type', ['District', 'Group']);
-            })->toArray();
-
-            foreach ($types as $type) {
-                $sectionType = strtoupper(Inflector::singularize($type->section_type));
-                foreach ($terms as $pos => $term) {
-                    $terms[$pos] = strtoupper(Inflector::singularize($term));
-                }
-
-                if (in_array($sectionType, $terms)) {
-                    $termMatch += 1;
-                    if ($sectionType == 'SCOUT') {
-                        $scoutMatch += 1;
-                        $scoutId = $type->id;
-                    }
-                    $termId = $type->id;
-                }
-            }
-
-            if ($termMatch == 1 && isset($termId)) {
-                $typeId = $termId;
-            } elseif ($scoutMatch == 1 && isset($scoutId)) {
-                $typeId = $scoutId;
-            }
-
-            if (!isset($typeId)) {
-                $groupTerms = explode(' ', $sectionArr['group']);
-                $districtMatch = 0;
-                foreach ($groupTerms as $key => $grpTerm) {
-                    $groupTerms[$key] = Inflector::singularize(strtolower($grpTerm));
-                }
-
-                if (in_array('district', $groupTerms)) {
-                    $districtMatch += 1;
-                } elseif (in_array('and', $groupTerms)) {
-                    $districtMatch += 1;
-                }
-
-                if ($districtMatch > 0) {
-                    $typeId = $sectionTypes->findOrCreate(['section_type' => 'District'])->id;
-                } else {
-                    $typeId = $sectionTypes->findOrCreate(['section_type' => 'Group'])->id;
-                }
-            }
+            $typeId = $this->SectionTypes->matchTerms($sectionArr);
 
             if (isset($groupId) && isset($typeId)) {
                 $section = $this->findOrCreate([
