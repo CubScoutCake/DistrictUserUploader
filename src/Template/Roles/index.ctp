@@ -23,8 +23,8 @@ $this->Breadcrumbs->add(
     </div>
     <div class="col">
         <div class="btn-group float-right" role="group" aria-label="Button group with nested dropdown">
-			<?= $this->Html->link('Upload New Spreadsheet',
-				['controller' => 'FileUploads', 'action' => 'add'],
+			<?= $this->Html->link('Add New Role',
+				['controller' => 'Roles', 'action' => 'add'],
 				['class' => 'button btn btn-secondary']
 			) ?>
         </div>
@@ -41,7 +41,7 @@ $this->Breadcrumbs->add(
                     <th scope="col"><?= $this->Paginator->sort('contact_id') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('created_at') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('modified_at') ?></th>
-                    <th scope="col" class="actions"><?= __('Actions') ?></th>
+                    <th scope="col" class="actions text-right"><?= __('Actions') ?></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -52,10 +52,10 @@ $this->Breadcrumbs->add(
                         <td><?= $role->has('contact') ? $this->Html->link($role->contact->full_name, ['controller' => 'Sections', 'action' => 'view', $role->contact->id]) : '' ?></td>
                         <td><?= $this->Time->i18nformat($role->created_at,'dd-MMM-yy HH:mm') ?></td>
                         <td><?= $this->Time->i18nformat($role->modified_at,'dd-MMM-yy HH:mm') ?></td>
-                        <td class="actions">
-		                    <?= $this->Html->link(__('View'), ['action' => 'view', $role->id]) ?>
-		                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $role->id]) ?>
-		                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $role->id], ['confirm' => __('Are you sure you want to delete # {0}?', $role->id)]) ?>
+                        <td class="actions float-right">
+		                    <?= $this->Html->link(__('View'), ['action' => 'view', $role->id], ['class' => 'button btn btn-outline-secondary btn-sm']) ?>
+		                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $role->id], ['class' => 'button btn btn-outline-secondary btn-sm']) ?>
+		                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $role->id], ['confirm' => __('Are you sure you want to delete # {0}?', $role->id), 'class' => 'button btn btn-outline-secondary btn-sm']) ?>
                         </td>
                     </tr>
 				<?php endforeach; ?>

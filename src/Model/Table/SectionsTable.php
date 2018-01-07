@@ -103,7 +103,7 @@ class SectionsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['section']));
+        $rules->add($rules->isUnique(['section', 'scout_group_id']));
         $rules->add($rules->existsIn(['section_type_id'], 'SectionTypes'));
         $rules->add($rules->existsIn(['scout_group_id'], 'ScoutGroups'));
 
@@ -155,7 +155,7 @@ class SectionsTable extends Table
 
         if ($entity->isNew()) {
             $section = $entity->section;
-            if (strpos($section, 'Scout 1') !== false) {
+            if (strpos($section, 'Scout 1') !== false || $section == 'Group') {
                 $scoutGroups = TableRegistry::get('ScoutGroups');
                 $group = $scoutGroups->get($entity->scout_group_id);
 
@@ -168,6 +168,8 @@ class SectionsTable extends Table
 
                 if ($section == 'Scout 1') {
                     $entity->section = $shortGroupName . ' - Scouts';
+                } elseif ($section == 'Group') {
+                    $entity->section = $shortGroupName . ' - Group';
                 } else {
                     $section = ucwords(Inflector::pluralize(trim(str_replace('Scout 1', '', $section))));
                     $entity->section = $shortGroupName . ' - ' . $section;

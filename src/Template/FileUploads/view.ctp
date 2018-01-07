@@ -89,6 +89,7 @@ $this->Breadcrumbs->add(
                                 <th scope="col"><?= __('First Name') ?></th>
                                 <th scope="col"><?= __('Last Name') ?></th>
                                 <th scope="col"><?= __('Clean Group') ?></th>
+                                <th scope="col"><?= __('Clean Role') ?></th>
                                 <th scope="col" class="actions"><?= __('Actions') ?></th>
                             </tr>
                             <?php foreach ($fileUpload->compass_uploads as $compassUploads): ?>
@@ -98,6 +99,7 @@ $this->Breadcrumbs->add(
                                 <td><?= h($compassUploads->first_name) ?></td>
                                 <td><?= h($compassUploads->last_name) ?></td>
                                 <td><?= h($compassUploads->clean_group) ?></td>
+                                <td><?= h($compassUploads->clean_role) ?></td>
                                 <td class="actions">
                                     <?= $this->Html->link(__('View'), ['controller' => 'CompassUploads', 'action' => 'view', $compassUploads->id]) ?>
                                     <?= $this->Html->link(__('Merge'), ['controller' => 'CompassUploads', 'action' => 'merge', $compassUploads->id]) ?>

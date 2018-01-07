@@ -61,12 +61,26 @@ class RolesController extends AppController
             if ($this->Roles->save($role)) {
                 $this->Flash->success(__('The role has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'Contacts', 'action' => 'view', $role->contact_id]);
             }
             $this->Flash->error(__('The role could not be saved. Please, try again.'));
         }
-        $roleTypes = $this->Roles->RoleTypes->find('list', ['limit' => 200]);
-        $sections = $this->Roles->Sections->find('list', ['limit' => 200]);
+        $roleTypes = $this->Roles->RoleTypes->find(
+            'list',
+            [
+                'keyField' => 'id',
+                'valueField' => 'role_type',
+                'groupField' => 'section_type.section_type'
+            ]
+        )->contain(['SectionTypes']);
+        $sections = $this->Roles->Sections->find(
+            'list',
+            [
+                'keyField' => 'id',
+                'valueField' => 'section',
+                'groupField' => 'scout_group.scout_group'
+            ]
+        ) ->contain(['ScoutGroups']);
         $contacts = $this->Roles->Contacts->find('list', ['limit' => 200]);
         $this->set(compact('role', 'roleTypes', 'sections', 'contacts', 'contactId'));
         $this->set('_serialize', ['role']);
@@ -93,8 +107,22 @@ class RolesController extends AppController
             }
             $this->Flash->error(__('The role could not be saved. Please, try again.'));
         }
-        $roleTypes = $this->Roles->RoleTypes->find('list', ['limit' => 200]);
-        $sections = $this->Roles->Sections->find('list', ['limit' => 200]);
+        $roleTypes = $this->Roles->RoleTypes->find(
+            'list',
+            [
+                'keyField' => 'id',
+                'valueField' => 'role_type',
+                'groupField' => 'section_type.section_type'
+            ]
+        )->contain(['SectionTypes']);
+        $sections = $this->Roles->Sections->find(
+            'list',
+            [
+                'keyField' => 'id',
+                'valueField' => 'section',
+                'groupField' => 'scout_group.scout_group'
+            ]
+        ) ->contain(['ScoutGroups']);
         $contacts = $this->Roles->Contacts->find('list', ['limit' => 200]);
         $this->set(compact('role', 'roleTypes', 'sections', 'contacts'));
         $this->set('_serialize', ['role']);

@@ -26,6 +26,12 @@ $this->Breadcrumbs->add(
 	            ['controller' => 'CompassUploads', 'action' => 'merge', $compassUpload->id],
 	            ['class' => 'button btn btn-secondary']
             ) ?>
+            <?php if(empty($compassUpload->email)) : ?>
+                <?= $this->Html->link('Add Email',
+                    ['controller' => 'CompassUploads', 'action' => 'edit', $compassUpload->id],
+                    ['class' => 'button btn btn-secondary']
+                ) ?>
+            <?php endif; ?>
 	        <?= $this->Form->postLink(__('Delete'), ['controller' => 'CompassUploads', 'action' => 'delete', $compassUpload->id], ['confirm' => __('Are you sure you want to delete # {0}?', $compassUpload->id), 'class' => 'button btn btn-secondary']) ?>
 
             <!--<div class="btn-group" role="group">

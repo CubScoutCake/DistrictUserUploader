@@ -66,23 +66,11 @@ class ContactsController extends AppController
             if ($this->Contacts->save($contact)) {
                 $this->Flash->success('Contact Authorised');
 
-                return $this->redirect(['action' => 'authorise']);
+                return $this->redirect($this->referer(['action' => 'authorise']));
             }
             $this->Flash->error('An Error Occurred');
 
             return $this->redirect(['action' => 'authorise']);
-        }
-    }
-
-    /**
-     * Create Sync Method
-     *
-     * @return void
-     */
-    public function sync()
-    {
-        if ($this->request->is('post')) {
-            $incomingUsers = $this->request->getData('users');
         }
     }
 
@@ -158,7 +146,7 @@ class ContactsController extends AppController
             ])) {
                 $this->Flash->success(__('The contact has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect($this->referer(['action' => 'view', $contact->id]));
             }
             $this->Flash->error(__('The contact could not be saved. Please, try again.'));
         }

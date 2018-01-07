@@ -39,7 +39,7 @@ class RoleTypesController extends AppController
     public function view($id = null)
     {
         $roleType = $this->RoleTypes->get($id, [
-            'contain' => ['SectionTypes', 'Roles']
+            'contain' => ['SectionTypes', 'Contacts']
         ]);
 
         $this->set('roleType', $roleType);

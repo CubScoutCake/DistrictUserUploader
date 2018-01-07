@@ -32,6 +32,7 @@ $this->Breadcrumbs->add(
             <?php if (!$contact->validated) : ?>
 	            <?= $this->Form->postLink(__('Authorise'), ['controller' => 'Contacts', 'action' => 'authorise', $contact->id], ['class' => 'button btn btn-secondary']) ?>
             <?php endif; ?>
+
             <!--<div class="btn-group" role="group">
                 <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Dropdown
@@ -128,10 +129,11 @@ $this->Breadcrumbs->add(
                         <?php foreach ($contact->roles as $roles): ?>
                             <tr>
                                 <td><?= $this->Html->link($roles->section->section, ['controller' => 'Sections', 'action' => 'view', $roles->section->id]) ?></td>
-                                <td><?= $this->Html->link($roles->section->scout_group->group_alias, ['controller' => 'Sections', 'action' => 'view', $roles->section->scout_group->id]) ?></td>
+                                <td><?= $this->Html->link($roles->section->scout_group->group_alias, ['controller' => 'ScoutGroups', 'action' => 'view', $roles->section->scout_group->id]) ?></td>
                                 <td><?= $this->Html->link($roles->section->section_type->section_type, ['controller' => 'SectionTypes', 'action' => 'view', $roles->section->section_type->id]) ?></td>
                                 <td><?= $this->Html->link($roles->role_type->role_type, ['controller' => 'RoleTypes', 'action' => 'view', $roles->role_type->id]) ?></td>
                                 <td class="actions">
+	                                <?= $this->Html->link(__('Edit'), ['controller' => 'Roles', 'action' => 'edit', $roles->id]) ?>
                                     <?= $this->Form->postLink(__('Delete'), ['controller' => 'Roles', 'action' => 'delete', $roles->id], ['confirm' => __('Are you sure you want to delete # {0}?', $roles->id)]) ?>
                                 </td>
                             </tr>

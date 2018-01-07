@@ -36,7 +36,7 @@ class ScoutGroupsController extends AppController
     public function view($id = null)
     {
         $scoutGroup = $this->ScoutGroups->get($id, [
-            'contain' => []
+            'contain' => [ 'Sections.SectionTypes', 'Sections.Roles.Contacts', 'Sections.Roles.RoleTypes']
         ]);
 
         $this->set('scoutGroup', $scoutGroup);

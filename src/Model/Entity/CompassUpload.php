@@ -126,15 +126,6 @@ class CompassUpload extends Entity
         $section = $sectionArr[0];
         $section = trim($section);
 
-        //$roleSection = preg_replace('/[(](Pre-)*(Prov)[)]/', '', $this->_properties['role']);
-        //$roleSectionArr = explode(' - ', $roleSection);
-        //
-        //$roleSection = $roleSectionArr[0];
-        //if (!empty($roleSectionArr[1])) {
-        //  $roleSection = $roleSectionArr[1];
-        //}
-        //$roleSection = trim($roleSection);
-
         $entityMap = [
             'Hertfordshire' => 'County',
             'Bedfordshire' => 'County',
