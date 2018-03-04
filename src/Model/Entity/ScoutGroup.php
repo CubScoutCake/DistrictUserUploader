@@ -10,6 +10,7 @@ use Cake\ORM\Entity;
  * @property string $scout_group
  * @property int $number_stripped
  * @property string $group_alias
+ * @property int $wp_group_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  */

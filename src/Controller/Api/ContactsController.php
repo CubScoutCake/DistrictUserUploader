@@ -2,6 +2,15 @@
 
 namespace App\Controller\Api;
 
+use App\Model\Entity\RoleType;
+use Cake\ORM\TableRegistry;
+
+/**
+ * Class ContactsController
+ * @package App\Controller\Api
+ *
+ * @property RoleType $RoleTypes
+ */
 class ContactsController extends AppController
 {
     /**

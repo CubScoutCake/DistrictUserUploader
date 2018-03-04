@@ -91,6 +91,10 @@ class SectionsTable extends Table
             ->requirePresence('section', 'create')
             ->notEmpty('section');
 
+        $validator
+            ->integer('wp_section_id')
+            ->allowEmpty('wp_section_id');
+
         return $validator;
     }
 

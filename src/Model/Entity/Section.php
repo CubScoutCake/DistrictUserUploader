@@ -10,6 +10,7 @@ use Cake\ORM\Entity;
  * @property string $section
  * @property int $section_type_id
  * @property int $scout_group_id
+ * @property int $wp_section_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
@@ -31,6 +32,7 @@ class Section extends Entity
     protected $_accessible = [
         'section' => true,
         'section_type_id' => true,
+        'wp_section_id' => true,
         'created' => true,
         'modified' => true,
         'section_type' => true,

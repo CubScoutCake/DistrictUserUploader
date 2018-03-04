@@ -71,6 +71,10 @@ class RoleTypesTable extends Table
             ->notEmpty('role_type');
 
         $validator
+            ->integer('wp_role_id')
+            ->allowEmpty('wp_role_id');
+
+        $validator
             ->scalar('role_abbreviation')
             ->maxLength('role_abbreviation', 32)
             ->requirePresence('role_abbreviation', false)

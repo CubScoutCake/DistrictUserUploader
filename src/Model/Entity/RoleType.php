@@ -10,6 +10,7 @@ use Cake\ORM\Entity;
  * @property string $role_type
  * @property string $role_abbreviation
  * @property int $section_type_id
+ * @property int $wp_role_id
  *
  * @property \App\Model\Entity\SectionType $section_type
  * @property \App\Model\Entity\Role[] $roles
@@ -28,6 +29,7 @@ class RoleType extends Entity
      */
     protected $_accessible = [
         'role_type' => true,
+        'wp_role_id' => true,
         'role_abbreviation' => true,
         'section_type_id' => true,
         'section_type' => true,

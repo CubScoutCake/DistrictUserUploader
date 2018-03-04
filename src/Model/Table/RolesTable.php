@@ -77,6 +77,10 @@ class RolesTable extends Table
             ->boolean('provisional')
             ->allowEmpty('provisional');
 
+        $validator
+            ->integer('wp_placement_id')
+            ->allowEmpty('wp_placement_id');
+
         return $validator;
     }
 

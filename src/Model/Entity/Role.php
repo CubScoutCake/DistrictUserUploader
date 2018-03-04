@@ -10,6 +10,7 @@ use Cake\ORM\Entity;
  * @property int $role_type_id
  * @property int $section_id
  * @property int $contact_id
+ * @property int $wp_placement_id
  *
  * @property \App\Model\Entity\RoleType $role_type
  * @property \App\Model\Entity\Section $section
@@ -31,6 +32,7 @@ class Role extends Entity
         'role_type_id' => true,
         'section_id' => true,
         'contact_id' => true,
+        'wp_placement_id' => true,
         'role_type' => true,
         'section' => true,
         'contact' => true,
