@@ -61,7 +61,7 @@ class ContactsController extends AppController
      *
      * @return void
      */
-    public function new_contact()
+    public function newContact()
     {
         $this->request->allowMethod('get');
 
@@ -100,22 +100,24 @@ class ContactsController extends AppController
                 $email = $body['email'];
                 $wpId = $body['wp_id'];
 
-	            $email_contact = $this->Contacts->findByEmail($email, [
-		            'fields' => [
-			            'id'
-		            ]
-	            ])->first();
+                $email_contact = $this->Contacts->findByEmail($email, [
+                    'fields' => [
+                        'id'
+                    ]
+                ])->first();
 
-	            $contact = $this->Contacts->get($email_contact->id);
+                $contact = $this->Contacts->get($email_contact->id);
 
-	            $contact->wp_id = $wpId;
+                $contact->wp_id = $wpId;
 
-	            if ($this->Contacts->save($contact)) {
-		            return $this->response->withStatus(202);
-	            }
+                if ($this->Contacts->save($contact)) {
+                    return $this->response->withStatus(202);
+                }
             }
-	        return $this->response->withStatus(418);
+
+            return $this->response->withStatus(418);
         }
+
         return $this->response->withStatus(404, 'Record not Found');
     }
 }
