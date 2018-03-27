@@ -2,14 +2,16 @@
 
 namespace App\Controller\Api;
 
+use App\Model\Entity\Contact;
 use App\Model\Entity\RoleType;
+use App\Model\Table\ContactsTable;
 use Cake\ORM\TableRegistry;
 
 /**
  * Class ContactsController
  * @package App\Controller\Api
  *
- * @property RoleType $RoleTypes
+ * @property ContactsTable $Contacts
  */
 class ContactsController extends AppController
 {
@@ -59,7 +61,7 @@ class ContactsController extends AppController
      *
      * @return void
      */
-    public function new()
+    public function new_contact()
     {
         $this->request->allowMethod('get');
 
@@ -85,39 +87,35 @@ class ContactsController extends AppController
     }
 
     /**
-     * @param string $email The Email of the User to be Updated
-     * @param int $wpId The WordPress ID of the User
-     *
-     * @return Cake/Http/Response
+     * @return \Cake\Http\Response
      */
-    public function assign($email, $wpId)
+    public function assign()
     {
         $this->request->allowMethod('post');
 
         if (!isset($email) || empty($email) || !isset($wpId) || empty($wpId)) {
-            $body = $this->request->getBody();
-            $body = json_decode($body);
+            $body = $this->request->getData();
 
             if (array_key_exists('wp_id', $body) && array_key_exists('email', $body)) {
                 $email = $body['email'];
                 $wpId = $body['wp_id'];
+
+	            $email_contact = $this->Contacts->findByEmail($email, [
+		            'fields' => [
+			            'id'
+		            ]
+	            ])->first();
+
+	            $contact = $this->Contacts->get($email_contact->id);
+
+	            $contact->wp_id = $wpId;
+
+	            if ($this->Contacts->save($contact)) {
+		            return $this->response->withStatus(202);
+	            }
             }
+	        return $this->response->withStatus(418);
         }
-
-        $email_contact = $this->Contacts->findByEmail($email, [
-                'fields' => [
-                    'id'
-                ]
-            ])->first();
-
-        $contact = $this->Contacts->get($email_contact->id);
-
-        $contact->wp_id = $wpId;
-
-        if ($this->Contacts->save($contact)) {
-            return $this->response->withStatus(202);
-        }
-
-        return $this->response->withStatus(418);
+        return $this->response->withStatus(404, 'Record not Found');
     }
 }
