@@ -108,10 +108,60 @@ class ContactsController extends AppController
 
                 $contact = $this->Contacts->get($email_contact->id);
 
-                $contact->wp_id = $wpId;
+                $contact->set('wp_id', $wpId);
 
                 if ($this->Contacts->save($contact)) {
-                    return $this->response->withStatus(202);
+                    return $this->response->withStatus(201, 'User Updated.');
+                }
+            }
+
+            if (count($body) > 0) {
+                $countPass = 0;
+                $failCount = 0;
+
+                if (array_key_exists('data', $body)) {
+                    $body = $body['data'];
+                }
+
+                foreach ($body as $user) {
+                    if (array_key_exists('wp_id', $user) && array_key_exists('email', $user)) {
+                        $email = $user['email'];
+                        $wpId = $user['wp_id'];
+
+                        $emailCount = $this->Contacts->findByEmail($email, [
+                            'fields' => [
+                                'id'
+                            ]
+                        ])->count();
+
+                        if ($emailCount != 1) {
+                            $failCount += 1;
+                        }
+
+                        if ($emailCount == 1) {
+                            $email_contact = $this->Contacts->findByEmail($email, [
+                                'fields' => [
+                                    'id'
+                                ]
+                            ])->first();
+
+                            $contact = $this->Contacts->get($email_contact->id);
+
+                            $contact->set('wp_id', $wpId);
+
+                            if ($this->Contacts->save($contact)) {
+                                $countPass += 1;
+                            }
+                        }
+                    }
+                }
+
+                if ($countPass > 0) {
+                    if ($failCount > 0) {
+                        return $this->response->withStatus(201, $countPass . ' Users Updated. ' . $failCount . ' Users Not Found.');
+                    }
+
+                    return $this->response->withStatus(201, $countPass . ' Users Updated.');
                 }
             }
 
