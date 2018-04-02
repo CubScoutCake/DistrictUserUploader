@@ -150,4 +150,76 @@ class RolesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    /**
+     * Respond
+     *
+     * @return \Cake\Http\Response
+     */
+    public function send()
+    {
+        if ($this->request->is('post')) {
+            $data = $this->request->getData();
+
+            if (key_exists('placements', $data)) {
+                $data = $data['placements'];
+
+                $successCount = 0;
+                $keyCount = 0;
+                $count = 0;
+
+                $roleRefs = $this->Roles->find('all')
+                    ->contain(['RoleTypes', 'Sections', 'Contacts'])
+                    ->toArray();
+
+                $placementRefs = [];
+                foreach ($roleRefs as $role) {
+                    $roleType = $role['role_type'];
+                    $section = $role['section'];
+                    $contact = $role['contact'];
+
+                    if (!is_null($roleType['wp_role_id']) && !is_null($section['wp_section_id']) && !is_null($contact['wp_id'])) {
+                        $ref = $roleType['wp_role_id'] . '-' . $section['wp_section_id'] . '-' . $contact['wp_id'];
+                        $placementRefs[$role['id']] = $ref;
+                    }
+                }
+
+                foreach ($data as $point) {
+                    $count += 1;
+                    if (key_exists('wp_placement_id', $point) && key_exists('user_id', $point) && key_exists('role_id', $point) && key_exists('section_id', $point)) {
+                        $keyCount += 1;
+                        $reference = $point['role_id'] . '-' . $point['section_id'] . '-' . $point['user_id'];
+                        if (in_array($reference, $placementRefs)) {
+                            $section = $this->Roles->find('all')->where([
+                                    'RoleTypes.wp_role_id' => $point['role_id'],
+                                    'Contacts.wp_id' => $point['user_id'],
+                                    'Sections.wp_section_id' => $point['section_id']
+                                ])
+                                ->contain(['RoleTypes', 'Contacts', 'Sections'])
+                                ->first();
+                            $section->set('wp_placement_id', $point['wp_placement_id']);
+                            if ($this->Roles->save($section)) {
+                                $successCount += 1;
+                            }
+                        }
+                    }
+                }
+
+                $responseArray = [
+                    'success' => $successCount,
+                    'correct_keys' => $keyCount,
+                    'total' => $count
+                ];
+
+                $this->set('counts', $responseArray);
+                $this->set('_serialize', ['counts']);
+
+                return $this->response->withStatus(201, $successCount . ' Updates Successful.');
+            }
+
+            return $this->response->withStatus(400, 'Malformed Payload');
+        } else {
+            return $this->response->withStatus(401, 'Method Unauthorised');
+        }
+    }
 }
