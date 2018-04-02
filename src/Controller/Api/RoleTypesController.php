@@ -77,15 +77,19 @@ class RoleTypesController extends AppController
                 $keyCount = 0;
                 $count = 0;
 
+                $roleIDs = $this->RoleTypes->find('list')->toArray();
+
                 foreach ($data as $point) {
                     $count += 1;
                     if (key_exists('wp_role_id', $point) && key_exists('uah_id', $point)) {
                         $keyCount += 1;
-                        $roleType = $this->RoleTypes->get($point['uah_id']);
-                        $roleType->set('wp_role_id', $point['wp_role_id']);
-                        if ($this->RoleTypes->save($roleType)) {
-                            $successCount += 1;
-                        };
+                        if (key_exists($point['uah_id'], $roleIDs)) {
+                            $roleType = $this->RoleTypes->get($point['uah_id']);
+                            $roleType->set('wp_role_id', $point['wp_role_id']);
+                            if ($this->RoleTypes->save($roleType)) {
+                                $successCount += 1;
+                            }
+                        }
                     }
                 }
 

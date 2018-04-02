@@ -116,4 +116,55 @@ class ScoutGroupsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    /**
+     * Respond
+     *
+     * @return \Cake\Http\Response
+     */
+    public function send()
+    {
+        if ($this->request->is('post')) {
+            $data = $this->request->getData();
+
+            if (key_exists('groups', $data)) {
+                $data = $data['groups'];
+
+                $successCount = 0;
+                $keyCount = 0;
+                $count = 0;
+
+                $groupRefs = $this->ScoutGroups->find('list')->toArray();
+
+                foreach ($data as $point) {
+                    $count += 1;
+                    if (key_exists('wp_group_id', $point) && key_exists('uah_name', $point)) {
+                        $keyCount += 1;
+                        if (in_array($point['uah_name'], $groupRefs)) {
+                            $group = $this->ScoutGroups->find('all')->where(['group_alias' => $point['uah_name']])->first();
+                            $group->set('wp_group_id', $point['wp_group_id']);
+                            if ($this->ScoutGroups->save($group)) {
+                                $successCount += 1;
+                            }
+                        }
+                    }
+                }
+
+                $responseArray = [
+                    'success' => $successCount,
+                    'correct_keys' => $keyCount,
+                    'total' => $count
+                ];
+
+                $this->set('counts', $responseArray);
+                $this->set('_serialize', ['counts']);
+
+                return $this->response->withStatus(201, 'Update Successful.');
+            }
+
+            return $this->response->withStatus(400, 'Malformed Payload');
+        } else {
+            return $this->response->withStatus(401, 'Method Unauthorised');
+        }
+    }
 }

@@ -52,7 +52,13 @@ class RolesController extends AppController
                 'group_id' => $role->section->scout_group->wp_group_id,
             ];
 
-            array_push($placements, $placement);
+            if (!is_null($placement['user_id']) &&
+                !is_null($placement['section_id']) &&
+                !is_null($placement['group_id']) &&
+                !is_null($placement['role_id'])
+            ) {
+                array_push($placements, $placement);
+            }
         }
 
         $this->set(compact('placements'));
