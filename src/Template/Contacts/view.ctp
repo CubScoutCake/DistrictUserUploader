@@ -133,8 +133,8 @@ $this->Breadcrumbs->add(
                                 <td><?= $this->Html->link($roles->section->section_type->section_type, ['controller' => 'SectionTypes', 'action' => 'view', $roles->section->section_type->id]) ?></td>
                                 <td><?= $this->Html->link($roles->role_type->role_type, ['controller' => 'RoleTypes', 'action' => 'view', $roles->role_type->id]) ?></td>
                                 <td class="actions">
-	                                <?= $this->Html->link(__('Edit'), ['controller' => 'Roles', 'action' => 'edit', $roles->id]) ?>
-                                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Roles', 'action' => 'delete', $roles->id], ['confirm' => __('Are you sure you want to delete # {0}?', $roles->id)]) ?>
+	                                <?= $this->Html->link(__('Edit'), ['controller' => 'Roles', 'action' => 'edit', $roles->id], ['class' => 'button btn btn-sm btn-outline-secondary']) ?>
+                                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Roles', 'action' => 'delete', $roles->id], ['class' => 'button btn btn-sm btn-outline-secondary', 'confirm' => __('Are you sure you want to delete # {0}?', $roles->id)]) ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

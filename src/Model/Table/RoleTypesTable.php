@@ -40,6 +40,8 @@ class RoleTypesTable extends Table
         $this->setDisplayField('role_type');
         $this->setPrimaryKey('id');
 
+        $this->addBehavior('Search.Search');
+
         $this->belongsTo('SectionTypes', [
             'foreignKey' => 'section_type_id'
         ]);
@@ -154,5 +156,30 @@ class RoleTypesTable extends Table
         }
 
         return false;
+    }
+
+    /**
+     * @return \Search\Manager
+     * @uses \Search\Model\Behavior\SearchBehavior
+     */
+    public function searchManager()
+    {
+        $searchManager = $this->behaviors()->Search->searchManager();
+        $searchManager
+            ->add('q_text', 'Search.Like', [
+                'before' => true,
+                'after' => true,
+                'mode' => 'or',
+                'comparison' => 'ILIKE',
+                'wildcardAny' => '*',
+                'wildcardOne' => '?',
+                'field' => [
+                    'role_type',
+                    'role_abbreviation',
+                ],
+                'filterEmpty' => true,
+            ]);
+
+        return $searchManager;
     }
 }

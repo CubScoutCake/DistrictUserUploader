@@ -34,12 +34,12 @@ $this->Breadcrumbs->add(
                         <td><?= h($scoutGroup->scout_group) ?></td>
                         <td><?= h($scoutGroup->group_alias) ?></td>
                         <td><?= $this->Number->format($scoutGroup->number_stripped) ?></td>
-                        <td><?= h($scoutGroup->created) ?></td>
-                        <td><?= h($scoutGroup->modified) ?></td>
+                        <td><?= $this->Time->format($scoutGroup->created, 'dd-MMM-yy HH:ss') ?></td>
+                        <td><?= $this->Time->format($scoutGroup->modified, 'dd-MMM-yy HH:ss') ?></td>
                         <td class="actions">
-			                <?= $this->Html->link(__('View'), ['action' => 'view', $scoutGroup->id]) ?>
-			                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $scoutGroup->id]) ?>
-			                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $scoutGroup->id], ['confirm' => __('Are you sure you want to delete # {0}?', $scoutGroup->id)]) ?>
+			                <?= $this->Html->link(__('View'), ['action' => 'view', $scoutGroup->id], ['class' => 'button btn btn-sm btn-outline-secondary']) ?>
+			                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $scoutGroup->id], ['class' => 'button btn btn-sm btn-outline-secondary']) ?>
+			                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $scoutGroup->id], ['class' => 'button btn btn-sm btn-outline-secondary', 'confirm' => __('Are you sure you want to delete # {0}?', $scoutGroup->id)]) ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

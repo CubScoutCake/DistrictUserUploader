@@ -3,19 +3,19 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\ScoutGroup $scoutGroup
  */
+
+$this->Breadcrumbs->add(
+	'Scout Groups',
+	['controller' => 'Scout Groups', 'action' => 'index']
+);
+
+$this->Breadcrumbs->add(
+	'Edit Scout Group #' . $scoutGroup->id,
+	['controller' => 'ScoutGroups', 'action' => 'edit', $scoutGroup->id],
+	['class' => 'breadcrumb-item']
+);
+
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $scoutGroup->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $scoutGroup->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Scout Groups'), ['action' => 'index']) ?></li>
-    </ul>
-</nav>
 <div class="scoutGroups form large-9 medium-8 columns content">
     <?= $this->Form->create($scoutGroup) ?>
     <fieldset>

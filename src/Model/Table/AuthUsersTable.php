@@ -49,6 +49,8 @@ class AuthUsersTable extends Table
                 ],
             ]
         ]);
+
+        $this->addBehavior('Search.Search');
     }
 
     /**
@@ -152,5 +154,31 @@ class AuthUsersTable extends Table
         }
 
         return true;
+    }
+
+    /**
+     * @return \Search\Manager
+     * @uses \Search\Model\Behavior\SearchBehavior
+     */
+    public function searchManager()
+    {
+        $searchManager = $this->behaviors()->Search->searchManager();
+        $searchManager
+            ->add('q_text', 'Search.Like', [
+                'before' => true,
+                'after' => true,
+                'mode' => 'or',
+                'comparison' => 'ILIKE',
+                'wildcardAny' => '*',
+                'wildcardOne' => '?',
+                'field' => [
+                    'first_name',
+                    'last_name',
+                    'email',
+                ],
+                'filterEmpty' => true,
+            ]);
+
+        return $searchManager;
     }
 }

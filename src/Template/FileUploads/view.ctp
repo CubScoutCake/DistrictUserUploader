@@ -101,9 +101,9 @@ $this->Breadcrumbs->add(
                                 <td><?= h($compassUploads->clean_group) ?></td>
                                 <td><?= h($compassUploads->clean_role) ?></td>
                                 <td class="actions">
-                                    <?= $this->Html->link(__('View'), ['controller' => 'CompassUploads', 'action' => 'view', $compassUploads->id]) ?>
-                                    <?= $this->Html->link(__('Merge'), ['controller' => 'CompassUploads', 'action' => 'merge', $compassUploads->id]) ?>
-                                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'CompassUploads', 'action' => 'delete', $compassUploads->id], ['confirm' => __('Are you sure you want to delete # {0}?', $compassUploads->id)]) ?>
+                                    <?= $this->Html->link(__('View'), ['controller' => 'CompassUploads', 'action' => 'view', $compassUploads->id], ['class' => 'button btn btn-sm btn-outline-secondary']) ?>
+                                    <?= $this->Html->link(__('Merge'), ['controller' => 'CompassUploads', 'action' => 'merge', $compassUploads->id], ['class' => 'button btn btn-sm btn-outline-secondary']) ?>
+                                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'CompassUploads', 'action' => 'delete', $compassUploads->id], ['class' => 'button btn btn-sm btn-outline-secondary', 'confirm' => __('Are you sure you want to delete # {0}?', $compassUploads->id)]) ?>
                                 </td>
                             </tr>
                             <?php endforeach; ?>

@@ -46,12 +46,12 @@ $this->Breadcrumbs->add(
                             <td><?= h($authUser->first_name) ?></td>
                             <td><?= h($authUser->last_name) ?></td>
                             <td><?= h($authUser->email) ?></td>
-                            <td><?= h($authUser->created) ?></td>
-                            <td><?= h($authUser->modified) ?></td>
+                            <td><?= $this->Time->format($authUser->created, 'dd-MMM-yy HH:ss') ?></td>
+                            <td><?= $this->Time->format($authUser->modified, 'dd-MMM-yy HH:ss') ?></td>
                             <td class="actions">
-                                <?= $this->Html->link(__('View'), ['action' => 'view', $authUser->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $authUser->id]) ?>
-                                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $authUser->id], ['confirm' => __('Are you sure you want to delete # {0}?', $authUser->id)]) ?>
+                                <?= $this->Html->link(__('View'), ['action' => 'view', $authUser->id], ['class' => 'button btn btn-sm btn-outline-secondary']) ?>
+                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $authUser->id], ['class' => 'button btn btn-sm btn-outline-secondary']) ?>
+                                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $authUser->id], ['class' => 'button btn btn-sm btn-outline-secondary', 'confirm' => __('Are you sure you want to delete # {0}?', $authUser->id)]) ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

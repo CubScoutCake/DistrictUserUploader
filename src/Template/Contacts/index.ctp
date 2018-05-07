@@ -36,12 +36,12 @@ $this->Breadcrumbs->add(
                         <td><?= h($contact->last_name) ?></td>
                         <td><?= h($contact->email) ?></td>
                         <td><?= $contact->has('wp_role') ? $this->Html->link($contact->wp_role->wp_role, ['controller' => 'WpRoles', 'action' => 'view', $contact->wp_role->id]) : '' ?></td>
-                        <td><?= h($contact->created) ?></td>
-                        <td><?= h($contact->modified) ?></td>
+                        <td><?= $this->Time->format($contact->created, 'dd-MMM-yy HH:ss') ?></td>
+                        <td><?= $this->Time->format($contact->modified, 'dd-MMM-yy HH:ss') ?></td>
                         <td class="actions">
-		                    <?= $this->Html->link(__('View'), ['action' => 'view', $contact->id]) ?>
-		                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id]) ?>
-		                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $contact->id], ['confirm' => __('Are you sure you want to delete # {0}?', $contact->id)]) ?>
+		                    <?= $this->Html->link(__('View'), ['action' => 'view', $contact->id], ['class' => 'button btn btn-sm btn-outline-secondary']) ?>
+		                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'button btn btn-sm btn-outline-secondary']) ?>
+		                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $contact->id], ['class' => 'button btn btn-sm btn-outline-secondary', 'confirm' => __('Are you sure you want to delete # {0}?', $contact->id)]) ?>
                         </td>
                     </tr>
 				<?php endforeach; ?>

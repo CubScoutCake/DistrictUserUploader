@@ -7,7 +7,7 @@
 <div class="wpRoles form large-9 medium-8 columns content">
     <?= $this->Form->create($wpRole) ?>
     <fieldset>
-        <legend><?= __('Add Wp Role') ?></legend>
+        <legend><?= __('Add Wordpress Role') ?></legend>
         <?php
             echo $this->Form->control('wp_role');
         ?>

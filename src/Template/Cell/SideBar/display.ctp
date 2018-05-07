@@ -1,44 +1,37 @@
 <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
     <ul class="nav nav-pills flex-column">
         <li class="nav-item">
-            <a class="nav-link" href="<?php echo $this->Url->build([
-		        'controller' => 'AuthUsers',
-		        'action' => 'index',
-		        'prefix' => false]); ?>">
-                <i class="fas fa-user fa-fw"></i> Auth Users
-            </a>
+            <a class="nav-link btn-sm btn-outline-secondary" href="/">Uploader Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="<?php echo $this->Url->build([
-		        'controller' => 'Contacts',
-		        'action' => 'index',
-		        'prefix' => false]); ?>">
-                <i class="fas fa-address-card fa-fw"></i> Contacts
-            </a>
+            <a class="nav-link btn-sm btn-outline-secondary" href="https://lbdscouts.org.uk">Word Press Site</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="<?php echo $this->Url->build([
-			    'controller' => 'FileUploads',
-			    'action' => 'index',
-			    'prefix' => false]); ?>">
-                <i class="fas fa-upload fa-fw"></i> File uploads
-            </a>
+            <a class="nav-link btn-sm btn-outline-secondary" href="https://compass.scouts.org.uk/login/User/Login">Compass</a>
         </li>
+
         <li class="nav-item">
-            <a class="nav-link" href="<?php echo $this->Url->build([
-		        'controller' => 'ScoutGroups',
-		        'action' => 'index',
-		        'prefix' => false]); ?>">
-                <i class="fas fa-paw fa-fw"></i> Scout Groups
-            </a>
+            <?= $this->Html->link(__('Upload Compass Spreadsheet'), ['controller' => 'FileUploads', 'action' => 'add'], ['class' => 'nav-link btn-sm btn-primary']) ?>
         </li>
+
         <li class="nav-item">
-            <a class="nav-link" href="<?php echo $this->Url->build([
-		        'controller' => 'Sections',
-		        'action' => 'index',
-		        'prefix' => false]); ?>">
-                <i class="fas fa-puzzle-piece fa-fw"></i> Sections
-            </a>
+	        <?= $this->Html->link(__('Add Contact'), ['controller' => 'Contacts', 'action' => 'add'], ['class' => 'nav-link btn-sm btn-primary']) ?>
+        </li>
+
+        <li class="nav-item">
+	        <?= $this->Html->link(__('View Contacts'), ['controller' => 'Contacts', 'action' => 'index'], ['class' => 'nav-link btn-sm btn-info']) ?>
+        </li>
+
+        <li class="nav-item">
+	        <?= $this->Html->link(__('View Audit Logs'), ['controller' => 'Audits', 'action' => 'index'], ['class' => 'nav-link btn-sm btn-info']) ?>
+        </li>
+
+        <li class="nav-item">
+	        <?= $this->Html->link(__('Authorise Contacts for Sync'), ['controller' => 'Contacts', 'action' => 'authorise'], ['class' => 'nav-link btn-sm btn-warning']) ?>
+        </li>
+
+        <li class="nav-item">
+	        <?= $this->Html->link(__('View Contacts Pending Sync'), ['controller' => 'Contacts', 'action' => 'index', 1], ['class' => 'nav-link btn-sm btn-warning']) ?>
         </li>
     </ul>
 </nav>

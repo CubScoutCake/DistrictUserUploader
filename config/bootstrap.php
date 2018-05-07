@@ -223,3 +223,5 @@ Plugin::load('Muffin/Footprint');
 Plugin::load('BootstrapUI');
 
 Plugin::load('JacobAGTyler/GitHubIssueSubmitter', ['bootstrap' => false, 'routes' => true]);
+
+Plugin::load('Search');

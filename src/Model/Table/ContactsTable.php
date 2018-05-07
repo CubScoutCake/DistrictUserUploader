@@ -8,6 +8,7 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
+use Search\Model\Behavior\SearchBehavior;
 
 /**
  * Contacts Model
@@ -27,6 +28,9 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Contact findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Search\Model\Behavior\SearchBehavior
+ *
+ * @property $this->behaviours()->Search SearchBehaviour
  */
 class ContactsTable extends Table
 {
@@ -54,6 +58,7 @@ class ContactsTable extends Table
                 ],
             ]
         ]);
+        $this->addBehavior('Search.Search');
 
         $this->belongsTo('WpRoles', [
             'foreignKey' => 'wp_role_id',
@@ -362,5 +367,36 @@ class ContactsTable extends Table
     public function beforeSave(Event $event, Entity $entity, $options)
     {
         $this->auditSave($entity);
+    }
+
+    /**
+     * @return \Search\Manager
+     * @uses \Search\Model\Behavior\SearchBehavior
+     */
+    public function searchManager()
+    {
+        $searchManager = $this->behaviors()->Search->searchManager();
+        $searchManager
+            ->add('q_text', 'Search.Like', [
+                'before' => true,
+                'after' => true,
+                'mode' => 'or',
+                'comparison' => 'ILIKE',
+                'wildcardAny' => '*',
+                'wildcardOne' => '?',
+                'field' => [
+                    'first_name',
+                    'last_name',
+                    'email',
+                    'preferred_name',
+                    'postcode',
+                    'address_line_1',
+                    'address_line_2',
+                    'city',
+                ],
+                'filterEmpty' => true,
+            ]);
+
+        return $searchManager;
     }
 }

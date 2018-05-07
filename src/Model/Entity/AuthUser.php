@@ -67,11 +67,15 @@ class AuthUser extends Entity
     /**
      * Full Name Virtual Field
      *
-     * @return string
+     * @return string|null
      */
     protected function _getFullName()
     {
-        return $this->_properties['first_name'] . ' ' . $this->_properties['last_name'];
+        if (isset($this->_properties['first_name'])) {
+            return $this->_properties['first_name'] . ' ' . $this->_properties['last_name'];
+        }
+
+        return null;
     }
 
     protected $_virtual = ['full_name'];

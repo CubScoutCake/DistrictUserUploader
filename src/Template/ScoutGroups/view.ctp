@@ -72,11 +72,11 @@ $this->Breadcrumbs->add(
                         <table class="table table-striped">
                             <tr>
                                 <th scope="row"><?= __('Created') ?></th>
-                                <td><?= $this->Time->i18nformat($scoutGroup->created,'dd-MMM-yy HH:mm') ?></td>
+                                <td><?= $this->Time->format($scoutGroup->created,'dd-MMM-yy HH:mm') ?></td>
                             </tr>
                             <tr>
                                 <th scope="row"><?= __('Modified') ?></th>
-                                <td><?= $this->Time->i18nformat($scoutGroup->modified,'dd-MMM-yy HH:mm') ?></td>
+                                <td><?= $this->Time->format($scoutGroup->modified,'dd-MMM-yy HH:mm') ?></td>
                             </tr>
                         </table>
                     </div>

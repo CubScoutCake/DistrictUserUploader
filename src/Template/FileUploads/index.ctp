@@ -33,8 +33,8 @@ $this->Breadcrumbs->add(
                         <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('file_name') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('auth_user_id') ?></th>
-                        <th scope="col"><?= $this->Paginator->sort('created_at') ?></th>
-                        <th scope="col"><?= $this->Paginator->sort('updated_at') ?></th>
+                        <th scope="col"><?= $this->Paginator->sort('created') ?></th>
+                        <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
                         <th scope="col" class="actions"><?= __('Actions') ?></th>
                     </tr>
                 </thead>
@@ -44,12 +44,12 @@ $this->Breadcrumbs->add(
                         <td><?= $this->Number->format($fileUpload->id) ?></td>
                         <td><?= h($fileUpload->file_name) ?></td>
                         <td><?= $fileUpload->has('auth_user') ? $this->Html->link($fileUpload->auth_user->full_name, ['controller' => 'AuthUsers', 'action' => 'view', $fileUpload->auth_user->id]) : '' ?></td>
-                        <td><?= h($fileUpload->created_at) ?></td>
-                        <td><?= h($fileUpload->updated_at) ?></td>
+                        <td><?= $this->Time->format($fileUpload->created, 'dd-MMM-yy HH:ss') ?></td>
+                        <td><?= $this->Time->format($fileUpload->modified, 'dd-MMM-yy HH:ss') ?></td>
                         <td class="actions">
-                            <?= $this->Html->link(__('View'), ['action' => 'view', $fileUpload->id]) ?>
-                            <?= $this->Html->link(__('Auto Merge'), ['action' => 'autoMerge', $fileUpload->id]) ?>
-                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $fileUpload->id], ['confirm' => __('Are you sure you want to delete # {0}?', $fileUpload->id)]) ?>
+                            <?= $this->Html->link(__('View'), ['action' => 'view', $fileUpload->id], ['class' => 'button btn btn-sm btn-outline-secondary']) ?>
+                            <?= $this->Html->link(__('Auto Merge'), ['action' => 'autoMerge', $fileUpload->id], ['class' => 'button btn btn-sm btn-outline-secondary']) ?>
+                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $fileUpload->id], ['class' => 'button btn btn-sm btn-outline-secondary', 'confirm' => __('Are you sure you want to delete # {0}?', $fileUpload->id)]) ?>
                         </td>
                     </tr>
                     <?php endforeach; ?>

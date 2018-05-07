@@ -2,18 +2,29 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\RoleType $roleType
+ * @var array $sectionTypes
+ * @var array $contacts
  */
+
+$this->Breadcrumbs->add(
+	'Contacts',
+	['controller' => 'Contacts', 'action' => 'index']
+);
+
+$this->Breadcrumbs->add(
+	'Roles',
+	['controller' => 'Roles', 'action' => 'index'],
+	['class' => 'breadcrumb-item']
+);
+
+$this->Breadcrumbs->add(
+	'Role Types',
+	['controller' => 'RoleTypes', 'action' => 'index'],
+	['class' => 'active']
+);
+
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Role Types'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Section Types'), ['controller' => 'SectionTypes', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Section Type'), ['controller' => 'SectionTypes', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Contacts'), ['controller' => 'Contacts', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Contact'), ['controller' => 'Contacts', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
+
 <div class="roleTypes form large-9 medium-8 columns content">
     <?= $this->Form->create($roleType) ?>
     <fieldset>
@@ -22,7 +33,6 @@
             echo $this->Form->control('role_type');
             echo $this->Form->control('role_abbreviation');
             echo $this->Form->control('section_type_id', ['options' => $sectionTypes, 'empty' => true]);
-            echo $this->Form->control('contacts._ids', ['options' => $contacts]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

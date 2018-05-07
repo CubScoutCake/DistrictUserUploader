@@ -40,9 +40,9 @@ $this->Breadcrumbs->add(
                         <td><?= h($compassUpload->surname) ?></td>
                         <td><?= h($compassUpload->email) ?></td>
                         <td class="actions">
-                            <?= $this->Html->link(__('View'), ['action' => 'view', $compassUpload->id]) ?>
-                            <?= $this->Html->link(__('Merge'), ['action' => 'merge', $compassUpload->id]) ?>
-                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $compassUpload->id], ['confirm' => __('Are you sure you want to delete # {0}?', $compassUpload->id)]) ?>
+                            <?= $this->Html->link(__('View'), ['action' => 'view', $compassUpload->id], ['class' => 'button btn btn-sm btn-outline-secondary']) ?>
+                            <?= $this->Html->link(__('Merge'), ['action' => 'merge', $compassUpload->id], ['class' => 'button btn btn-sm btn-outline-secondary']) ?>
+                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $compassUpload->id], ['class' => 'button btn btn-sm btn-outline-secondary', 'confirm' => __('Are you sure you want to delete # {0}?', $compassUpload->id)]) ?>
                         </td>
                     </tr>
                     <?php endforeach; ?>
