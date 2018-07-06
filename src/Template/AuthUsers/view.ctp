@@ -2,6 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\AuthUser $authUser
+ * @var boolean $loggedInUser
  */
 
 $this->Breadcrumbs->add(
@@ -25,7 +26,7 @@ $this->Breadcrumbs->add(
 				['controller' => 'AuthUsers', 'action' => 'edit', $authUser->id],
 				['class' => 'button btn btn-secondary']
 			) ?>
-	        <?= $this->Form->postLink(__('Regenerate API'), ['controller' => 'AuthUsers', 'action' => 'regenerateApi', $authUser->id], ['confirm' => __('Are you sure you want to regenerate the API Key for # {0}?', $authUser->id), 'class' => 'button btn btn-secondary']) ?>
+	        <?= $loggedInUser ? $this->Form->postLink(__('Regenerate API'), ['controller' => 'AuthUsers', 'action' => 'regenerateApi', $authUser->id], ['confirm' => __('Are you sure you want to regenerate the API Key for # {0}?', $authUser->id), 'class' => 'button btn btn-secondary']) : null ?>
             <?= $this->Form->postLink(__('Delete'), ['controller' => 'AuthUsers', 'action' => 'delete', $authUser->id], ['confirm' => __('Are you sure you want to delete # {0}?', $authUser->id), 'class' => 'button btn btn-secondary']) ?>
 
             <!--<div class="btn-group" role="group">
@@ -71,10 +72,12 @@ $this->Breadcrumbs->add(
                 <div class="card card-primary">
                     <div class="table-responsive">
                         <table class="table table-striped">
-                            <tr>
-                                <th scope="row"><?= __('API Key') ?></th>
-                                <td><?= h($authUser->api_key_plain) ?></td>
-                            </tr>
+                            <?php if($loggedInUser) : ?>
+                                <tr>
+                                    <th scope="row"><?= __('API Key') ?></th>
+                                    <td><?= h($authUser->api_key_plain) ?></td>
+                                </tr>
+                            <?php endif; ?>
                             <tr>
                                 <th scope="row"><?= __('Created') ?></th>
                                 <td><?= $this->Time->i18nformat($authUser->created,'dd-MMM-yy HH:mm') ?></td>

@@ -56,6 +56,10 @@ class AuthUsersController extends AppController
             $loggedInUser = true;
         }
 
+        if (!$loggedInUser) {
+            $authUser->unsetProperty('api_key_plain');
+        }
+
         $this->set(compact('authUser', 'loggedInUser'));
         $this->set('_serialize', ['authUser']);
     }
