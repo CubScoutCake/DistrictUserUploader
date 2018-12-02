@@ -13,6 +13,7 @@ use Cake\ORM\Entity;
  * @property int $wp_section_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ * @property int $section_order
  *
  * @property \App\Model\Entity\SectionType $section_type
  * @property \App\Model\Entity\ScoutGroup $scout_group

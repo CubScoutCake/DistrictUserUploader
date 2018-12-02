@@ -169,7 +169,7 @@ $this->Breadcrumbs->add(
                                 <td><?= h($audits->original_value) ?></td>
                                 <td><?= h($audits->modified_value) ?></td>
                                 <td><?= $audits->has('auth_user') ? $this->Html->link($audits->auth_user->full_name, ['controller' => 'AuthUsers', 'action' => 'view', $audits->auth_user->id]) : '' ?></td>
-                                <td><?= h($audits->change_date) ?></td>
+                                <td><?= $this->Time->i18nformat($audits->change_date,'dd-MMM-yy HH:mm') ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </table>

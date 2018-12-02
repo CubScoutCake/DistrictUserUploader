@@ -21,5 +21,6 @@ class DataSeed extends AbstractSeed
 	    $this->call('SectionTypesSeed');
 	    $this->call('WpRolesSeed');
 	    $this->call('AuthUsersSeed');
+	    $this->call('JoinStatusesSeed');
     }
 }

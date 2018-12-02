@@ -71,6 +71,12 @@ class SectionsTable extends Table
         $this->hasMany('Roles', [
             'foreignKey' => 'section_id',
         ]);
+
+	    $this->belongsToMany('JoinRequests', [
+		    'foreignKey' => 'section_id',
+		    'targetForeignKey' => 'join_request_id',
+		    'joinTable' => 'join_requests_sections'
+	    ]);
     }
 
     /**

@@ -84,6 +84,7 @@
       <path value="$PROJECT_DIR$/vendor/josegonzalez/dotenv" />
       <path value="$PROJECT_DIR$/vendor/wyrihaximus/twig-view" />
       <path value="$PROJECT_DIR$/vendor/friendsofcake/search" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7" />
