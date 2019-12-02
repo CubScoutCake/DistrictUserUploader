@@ -11,7 +11,7 @@ env:
   - DB=postgres
 
 services:
-  - postgres
+  - postgresql
 
 matrix:
   fast_finish: true

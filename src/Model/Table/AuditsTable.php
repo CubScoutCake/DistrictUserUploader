@@ -126,8 +126,8 @@ class AuditsTable extends Table
     /**
      * before Save LifeCycle Callback
      *
-     * @param Event $event The Event to be Processed
-     * @param Entity $entity The Entity on which the Save is being Called.
+     * @param \Cake\Event\Event $event The Event to be Processed
+     * @param \App\Model\Entity\Audit $entity The Entity on which the Save is being Called.
      * @param array $options Options Values
      *
      * @return void

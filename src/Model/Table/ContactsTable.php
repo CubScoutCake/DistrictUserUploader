@@ -364,7 +364,7 @@ class ContactsTable extends Table
      *
      * @return void
      */
-    public function beforeSave(Event $event, Entity $entity, $options)
+    public function afterSave(Event $event, Entity $entity, $options)
     {
         $this->auditSave($entity);
     }
