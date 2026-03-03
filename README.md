@@ -1,5 +1,9 @@
 # User Uploader
 
+
+> [!IMPORTANT]
+> ARCHIVING - This project has been superceeded by subsequent projects (e.g. [DistrictLeaders](https://github.com/LBDistrictScouts/DistrictLeaders) or the new [DistrictBadges](https://github.com/LBDistrictScouts/DistrictBadges))
+
 An Integration Hub for District Directory Contacts
 
 Integrates with Wordpress & Mailchimp
